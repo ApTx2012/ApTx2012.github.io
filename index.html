@@ -1,39 +1,44 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <style>
+            body {
+              background-image: url('images/blue_background.jpg');
+            }
+        </style>            
         <meta charset="utf-8">
         <meta name="viewport" content="width=device=width,initial-scale=1">
         <meta name="keywords" content="ApTx,ApTx2012,小安,Ap_Tx,FiveNormal74013">
         <meta name="author" content="Ap_Tx">
         <link rel="icon" href="icon.png">
         <title>ApTx的个人网站</title>
+        <script type="text/javascript" src="http://libs.baidu.com/jquery/1.8.3/jquery.js"></script>
+        <!-- JavaScript 文件-->
+        <script src="javascript/snow.js"></script>
+        <!-- CSS 属性-->
+        <style>
+            .fixed-footer {
+                position: fixed;
+                bottom: 0;
+                width: 100%;
+                padding: 10px;
+                text-align: center;
+            }
+        </style>
     </head>
-        <nobr>
+    <body>
         <div id="header" style="
-            background-color: #f1f1f1;
             text-align: center;">
             <p style="margin-bottom:0;">Welcome to ApTx的个人网站</p>
-            <a href="https://aptx2012.github.io/login.html" style="float: right;">
-                <button>登录</button>
-                </a> 
-            <a href="https://aptx2012.github.io/register.html" style="float: right;">
-                <button>注册</button>
-                </a> 
-        </nobr>
             <img src="https://aptx2012.github.io/icon.png" alt="Ap_Tx" width="80px" height="80px">
         </div>
-        <div id="menu" style="background-color: #FFD700;height: 200px;width:100px;float:left;">
+        <div id="menu">
             <b>菜单</b><br>
             no<br>
             no<br>
             no
         </div>
-        <div id="footer" style="
-            background-color: #f1f1f1;
-            text-align: center;
-            padding: 40px;
-            font-size: 12px;
-            clear:both;">
+        <div id="footer" class="fixed-footer">
             <a style="font-family: 'Courier New', Courier, monospace;
             color:aqua;
             font-size:15px;
