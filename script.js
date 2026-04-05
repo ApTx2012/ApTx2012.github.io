@@ -101,3 +101,35 @@ window.addEventListener('load', () => {
 if (typeof importScripts === 'function') {
     console.warn("当前环境可能不支持ES6模块，建议使用现代浏览器（Chrome、Edge、Firefox等）访问");
 }
+import { calculateReadingTime, initCopyCode, initVisitCount, countBlogWords } from './js-functions/utils.js';
+import { initGuessNumberGame } from './js-functions/mini-game.js';
+import { initMessageBoard } from './js-functions/messageBoard.js';
+import { initSuzhouWeather } from './js-functions/weather.js';
+import { initBilibiliPlayer } from './js-functions/bilibiliPlayer.js';
+
+window.addEventListener('load', () => {
+    try {
+        initVisitCount();
+        initCopyCode();
+
+        const blogContent = document.querySelector('.blog-detail-content');
+        if (blogContent) {
+            const contentText = blogContent.innerText;
+            const readingTime = calculateReadingTime(contentText);
+            const wordCount = countBlogWords(contentText);
+            const readingTimeElem = document.querySelector('.blog-detail-meta span:last-child');
+            if (readingTimeElem) {
+                readingTimeElem.innerText = '阅读时长：' + readingTime + '分钟 | 字数：' + wordCount + '字';
+            }
+        }
+
+        initGuessNumberGame();
+        initMessageBoard();
+        initSuzhouWeather();
+        initBilibiliPlayer();
+
+        console.log('all loaded');
+    } catch (error) {
+        console.error('load error', error);
+    }
+});
