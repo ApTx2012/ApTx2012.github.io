@@ -81,7 +81,7 @@ export function countBlogWords(content) {
     return content.replace(/\s+/g, '').length;
 }
 
-// 新增功能5：深色模式切换（记忆用户偏好，贴合蓝色主题）
+// 新增功能5：深色模式切换（记忆用户偏好，贴合蓝色主题，修复未适配区域）
 export function initDarkMode() {
     // 1. 定义深色模式样式变量，贴合原有蓝色主题
     const darkModeStyle = `
@@ -92,26 +92,76 @@ export function initDarkMode() {
             --text-light: #ffffff; /* 深色模式文本 */
             --card-bg: #1E1E1E; /* 深色模式卡片背景 */
             --border-color: #333333; /* 深色模式边框 */
+            --meta-color: #aaaaaa; /* 深色模式元信息文本色 */
         }
         body.dark-mode {
             background-color: var(--bg-light);
             color: var(--text-light);
         }
-        body.dark-mode .container {
+        /* 容器、导航栏、页脚基础适配 */
+        body.dark-mode .container,
+        body.dark-mode .blog-container,
+        body.dark-mode .blog-detail-container {
             background-color: var(--bg-light);
         }
         body.dark-mode .navbar {
             background-color: #0A0A0A;
             border-bottom: 1px solid var(--border-color);
         }
-        body.dark-mode .blog-card {
+        body.dark-mode .navbar .logo,
+        body.dark-mode .navbar .nav-links a {
+            color: var(--text-light);
+        }
+        body.dark-mode .navbar .nav-links a.active {
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+        }
+        body.dark-mode footer p {
+            color: var(--meta-color);
+        }
+        /* 主页、博客列表、详情页核心区域适配 */
+        body.dark-mode .header h1,
+        body.dark-mode .header .subtitle,
+        body.dark-mode .about h2,
+        body.dark-mode .links h2,
+        body.dark-mode .blog-entry h2,
+        body.dark-mode .blog-header h1,
+        body.dark-mode .blog-header p,
+        body.dark-mode .blog-detail-header h1 {
+            color: var(--text-light);
+        }
+        body.dark-mode .about p,
+        body.dark-mode .blog-entry p,
+        body.dark-mode .blog-excerpt,
+        body.dark-mode .blog-detail-content p,
+        body.dark-mode .blog-detail-content h3,
+        body.dark-mode .blog-detail-content h4,
+        body.dark-mode .blog-detail-content li {
+            color: var(--text-light);
+        }
+        /* 卡片、按钮、链接适配 */
+        body.dark-mode .blog-card,
+        body.dark-mode .blog-detail,
+        body.dark-mode .message-board,
+        body.dark-mode .message-list > div {
             background-color: var(--card-bg);
             border: 1px solid var(--border-color);
         }
-        body.dark-mode .blog-detail {
-            background-color: var(--card-bg);
-            border: 1px solid var(--border-color);
+        body.dark-mode .blog-meta span,
+        body.dark-mode .blog-detail-meta span,
+        body.dark-mode .message-list .msgTime {
+            color: var(--meta-color);
         }
+        body.dark-mode .blog-title a,
+        body.dark-mode .back-blog,
+        body.dark-mode .next-blog,
+        body.dark-mode .prev-blog {
+            color: var(--primary);
+        }
+        body.dark-mode .blog-title a:hover {
+            color: #4080ff;
+        }
+        /* 代码块、表单、按钮适配 */
         body.dark-mode pre {
             background-color: #2D2D2D;
             border: 1px solid var(--border-color);
@@ -124,7 +174,8 @@ export function initDarkMode() {
         body.dark-mode .blog-btn,
         body.dark-mode .read-more,
         body.dark-mode .back-blog,
-        body.dark-mode .next-blog {
+        body.dark-mode .next-blog,
+        body.dark-mode .prev-blog {
             background-color: var(--primary);
             color: white;
             border: 1px solid var(--dark-blue);
@@ -134,7 +185,8 @@ export function initDarkMode() {
         body.dark-mode .blog-btn:hover,
         body.dark-mode .read-more:hover,
         body.dark-mode .back-blog:hover,
-        body.dark-mode .next-blog:hover {
+        body.dark-mode .next-blog:hover,
+        body.dark-mode .prev-blog:hover {
             background-color: var(--dark-blue);
         }
         body.dark-mode input,
@@ -142,6 +194,24 @@ export function initDarkMode() {
             background-color: #2D2D2D;
             color: var(--text-light);
             border: 1px solid var(--border-color);
+        }
+        body.dark-mode input::placeholder,
+        body.dark-mode textarea::placeholder {
+            color: var(--meta-color);
+        }
+        /* 留言板专项适配 */
+        body.dark-mode .message-board .emptyTip,
+        body.dark-mode .message-list .msgName {
+            color: var(--text-light);
+        }
+        body.dark-mode .message-list .msgContent {
+            color: var(--text-light);
+        }
+        body.dark-mode .message-list .deleteBtn {
+            background: #dc3545;
+        }
+        body.dark-mode .message-list .deleteBtn:hover {
+            background: #bb2d3b;
         }
     `;
 
@@ -178,6 +248,12 @@ export function initDarkMode() {
         const isDark = document.body.classList.toggle('dark-mode');
         localStorage.setItem('dark_mode', isDark);
         darkModeBtn.innerText = isDark ? '浅色模式' : '深色模式';
+        // 切换时同步更新留言板样式（解决切换不实时问题）
+        const messageItems = document.querySelectorAll('.message-list > div');
+        messageItems.forEach(item => {
+            item.style.backgroundColor = isDark ? 'var(--card-bg)' : 'white';
+            item.style.borderColor = isDark ? 'var(--border-color)' : '#e9ecef';
+        });
     });
 
     // 6. 鼠标悬浮效果

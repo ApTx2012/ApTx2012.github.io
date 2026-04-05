@@ -105,6 +105,7 @@ export function initMessageBoard() {
         // 无留言时显示提示
         if (messages.length === 0) {
             const emptyTip = document.createElement('p');
+            emptyTip.className = 'emptyTip';
             emptyTip.innerText = '暂无留言，快来留下你的足迹吧～';
             emptyTip.style.cssText = `
                 text-align: center;
@@ -112,6 +113,10 @@ export function initMessageBoard() {
                 padding: 2rem;
             `;
             messageList.appendChild(emptyTip);
+            // 深色模式同步提示文本色
+            if (localStorage.getItem('dark_mode') === 'true') {
+                emptyTip.style.color = 'var(--meta-color)';
+            }
             return;
         }
 
@@ -134,6 +139,7 @@ export function initMessageBoard() {
 
             // 留言昵称
             const msgName = document.createElement('h4');
+            msgName.className = 'msgName';
             msgName.innerText = msg.name;
             msgName.style.cssText = `
                 margin: 0 0 0.5rem 0;
@@ -145,22 +151,33 @@ export function initMessageBoard() {
 
             // 留言时间
             const msgTime = document.createElement('span');
+            msgTime.className = 'msgTime';
             msgTime.innerText = formatTime(msg.time);
             msgTime.style.cssText = `
                 font-size: 0.8rem;
                 color: #6c757d;
             `;
+            // 深色模式同步时间文本色
+            if (localStorage.getItem('dark_mode') === 'true') {
+                msgTime.style.color = 'var(--meta-color)';
+            }
 
             // 留言内容
             const msgContent = document.createElement('p');
+            msgContent.className = 'msgContent';
             msgContent.innerText = msg.content;
             msgContent.style.cssText = `
                 margin: 0 0 0.5rem 0;
                 line-height: 1.6;
             `;
+            // 深色模式同步内容文本色
+            if (localStorage.getItem('dark_mode') === 'true') {
+                msgContent.style.color = 'var(--text-light)';
+            }
 
             // 删除按钮
             const deleteBtn = document.createElement('button');
+            deleteBtn.className = 'deleteBtn';
             deleteBtn.innerText = '删除';
             deleteBtn.style.cssText = `
                 padding: 0.3rem 0.6rem;
@@ -248,14 +265,31 @@ export function initMessageBoard() {
         alert('留言提交成功！');
     });
 
-    // 10. 深色模式切换时，同步更新留言板样式
+    // 10. 深色模式切换时，同步更新留言板样式（优化实时同步）
     window.addEventListener('click', (e) => {
         if (e.target.innerText === '浅色模式' || e.target.innerText === '深色模式') {
             const isDark = localStorage.getItem('dark_mode') === 'true';
             const messageItems = document.querySelectorAll('.message-list > div');
+            const emptyTip = document.querySelector('.emptyTip');
+            const msgTimes = document.querySelectorAll('.msgTime');
+            const msgContents = document.querySelectorAll('.msgContent');
+
+            // 留言卡片样式同步
             messageItems.forEach(item => {
                 item.style.backgroundColor = isDark ? 'var(--card-bg)' : 'white';
                 item.style.borderColor = isDark ? 'var(--border-color)' : '#e9ecef';
+            });
+            // 无留言提示文本色同步
+            if (emptyTip) {
+                emptyTip.style.color = isDark ? 'var(--meta-color)' : '#6c757d';
+            }
+            // 留言时间文本色同步
+            msgTimes.forEach(time => {
+                time.style.color = isDark ? 'var(--meta-color)' : '#6c757d';
+            });
+            // 留言内容文本色同步
+            msgContents.forEach(content => {
+                content.style.color = isDark ? 'var(--text-light)' : '#333';
             });
         }
     });
