@@ -49,12 +49,12 @@ window.addEventListener('scroll', () => {
   }
 });
 // -------------------------- 新增JS功能与小游戏调用 --------------------------
-// 导入新增的JS功能和小游戏
+// 导入新增的JS功能和小游戏（确保所有导入路径正确，与文件实际位置一致）
 import { calculateReadingTime, initCopyCode, initVisitCount, countBlogWords, initDarkMode } from './js-functions/utils.js';
 import { initGuessNumberGame } from './js-functions/mini-game.js';
 import { initMessageBoard } from './js-functions/messageBoard.js'; // 新增留言板导入
 
-// 页面加载完成后，初始化所有功能
+// 页面加载完成后，初始化所有功能（包裹所有逻辑，避免全局作用域冲突）
 window.addEventListener('load', () => {
     try {
         // 1. 初始化访问次数统计
@@ -91,3 +91,8 @@ window.addEventListener('load', () => {
     }
 });
 // -------------------------- JS功能与小游戏调用结束 --------------------------
+
+// 补充：防止部分浏览器不支持module类型，添加降级提示（可选，提升兼容性）
+if (typeof importScripts === 'function') {
+    console.warn("当前环境可能不支持ES6模块，建议使用现代浏览器（Chrome、Edge、Firefox等）访问");
+}
