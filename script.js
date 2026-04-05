@@ -29,12 +29,12 @@ window.addEventListener('DOMContentLoaded', () => {
   }, 500);
 
   // 初始化核心高级效果（粒子背景必启用，其他功能可按需启用）
-  // initTheme();
+  initTheme();
   initParticles(); // 高级粒子背景（核心效果，已修复）
   initBlog();
-  // initWeather();
-  // initMessageBoard();
-  // initVideoPlayer();
+  initWeather();
+  initMessageBoard();
+  initVideoPlayer();
 
   // 初始化导航锚点跳转（平滑滚动，高级交互）
   initNavAnchor();
