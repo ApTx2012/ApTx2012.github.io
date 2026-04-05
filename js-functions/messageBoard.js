@@ -113,10 +113,6 @@ export function initMessageBoard() {
                 padding: 2rem;
             `;
             messageList.appendChild(emptyTip);
-            // 深色模式同步提示文本色
-            if (localStorage.getItem('dark_mode') === 'true') {
-                emptyTip.style.color = 'var(--meta-color)';
-            }
             return;
         }
 
@@ -130,12 +126,6 @@ export function initMessageBoard() {
                 border: 1px solid #e9ecef;
                 position: relative;
             `;
-
-            // 深色模式适配（同步主题）
-            if (localStorage.getItem('dark_mode') === 'true') {
-                messageItem.style.backgroundColor = 'var(--card-bg)';
-                messageItem.style.borderColor = 'var(--border-color)';
-            }
 
             // 留言昵称
             const msgName = document.createElement('h4');
@@ -157,10 +147,6 @@ export function initMessageBoard() {
                 font-size: 0.8rem;
                 color: #6c757d;
             `;
-            // 深色模式同步时间文本色
-            if (localStorage.getItem('dark_mode') === 'true') {
-                msgTime.style.color = 'var(--meta-color)';
-            }
 
             // 留言内容
             const msgContent = document.createElement('p');
@@ -170,10 +156,6 @@ export function initMessageBoard() {
                 margin: 0 0 0.5rem 0;
                 line-height: 1.6;
             `;
-            // 深色模式同步内容文本色
-            if (localStorage.getItem('dark_mode') === 'true') {
-                msgContent.style.color = 'var(--text-light)';
-            }
 
             // 删除按钮
             const deleteBtn = document.createElement('button');
@@ -265,36 +247,7 @@ export function initMessageBoard() {
         alert('留言提交成功！');
     });
 
-    // 10. 深色模式切换时，同步更新留言板样式（优化实时同步）
-    window.addEventListener('click', (e) => {
-        if (e.target.innerText === '浅色模式' || e.target.innerText === '深色模式') {
-            const isDark = localStorage.getItem('dark_mode') === 'true';
-            const messageItems = document.querySelectorAll('.message-list > div');
-            const emptyTip = document.querySelector('.emptyTip');
-            const msgTimes = document.querySelectorAll('.msgTime');
-            const msgContents = document.querySelectorAll('.msgContent');
-
-            // 留言卡片样式同步
-            messageItems.forEach(item => {
-                item.style.backgroundColor = isDark ? 'var(--card-bg)' : 'white';
-                item.style.borderColor = isDark ? 'var(--border-color)' : '#e9ecef';
-            });
-            // 无留言提示文本色同步
-            if (emptyTip) {
-                emptyTip.style.color = isDark ? 'var(--meta-color)' : '#6c757d';
-            }
-            // 留言时间文本色同步
-            msgTimes.forEach(time => {
-                time.style.color = isDark ? 'var(--meta-color)' : '#6c757d';
-            });
-            // 留言内容文本色同步
-            msgContents.forEach(content => {
-                content.style.color = isDark ? 'var(--text-light)' : '#333';
-            });
-        }
-    });
-
-    // 11. 将留言板添加到主页"我的博客"板块下方（小游戏按钮之后）
+    // 10. 将留言板添加到主页"我的博客"板块下方（小游戏按钮之后）
     const blogSection = document.querySelector('.blog-entry');
     if (blogSection) {
         const gameEntry = document.querySelector('.blog-entry + div');
@@ -305,6 +258,6 @@ export function initMessageBoard() {
         }
     }
 
-    // 12. 初始化渲染留言列表
+    // 11. 初始化渲染留言列表
     renderMessages();
 }
