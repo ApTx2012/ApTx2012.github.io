@@ -1,139 +1,53 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>我的个人网站</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>我的个人主页</title>
   <link rel="stylesheet" href="style.css">
 </head>
-<!-- 酷炫视觉增强 -->
-<style>
-/* 全局顺滑滚动 */
-html {
-  scroll-behavior: smooth;
-}
-
-/* 页面渐入动画 */
-body {
-  opacity: 0;
-  animation: pageFade 1s ease-in-out forwards;
-}
-@keyframes pageFade {
-  to { opacity: 1; }
-}
-
-/* 卡片悬浮动效 */
-.suzhou-weather,
-.bilibili-player,
-.message-board,
-.blog-entry {
-  transition: all 0.3s ease;
-}
-.suzhou-weather:hover,
-.bilibili-player:hover,
-.message-board:hover,
-.blog-entry:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 119, 255, 0.15);
-}
-
-/* 按钮流光效果 */
-button {
-  position: relative;
-  overflow: hidden;
-}
-button::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-  transition: left 0.6s;
-}
-button:hover::after {
-  left: 100%;
-}
-</style>
-
-<!-- 鼠标跟随粒子 -->
-<script>
-const canvas = document.createElement('canvas');
-canvas.style.cssText = 'position:fixed;top:0;left:0;pointer-events:none;z-index:999';
-document.body.appendChild(canvas);
-const ctx = canvas.getContext('2d');
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let particles = [];
-window.addEventListener('mousemove', e => {
-  particles.push({
-    x: e.x, y: e.y,
-    size: Math.random() * 2 + 1,
-    opacity: 1,
-    speedX: (Math.random() - 0.5) * 2,
-    speedY: (Math.random() - 0.5) * 2
-  });
-});
-
-function animate() {
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  particles = particles.filter(p => p.opacity > 0);
-  particles.forEach(p => {
-    p.x += p.speedX;
-    p.y += p.speedY;
-    p.opacity -= 0.02;
-    ctx.fillStyle = `rgba(0, 119, 255, ${p.opacity})`;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-    ctx.fill();
-  });
-  requestAnimationFrame(animate);
-}
-animate();
-</script>
 <body>
+  <canvas id="particleCanvas"></canvas>
+
+  <!-- 顶部导航栏 -->
   <nav class="navbar">
-    <div class="container navbar-container">
-      <a href="index.html" class="logo">我的主页</a>
-      <div class="nav-links">
-        <a href="index.html">首页</a>
-        <a href="blog.html" class="active">博客</a>
-      </div>
-    </div>
+    <a href="#" class="logo">我的主页</a>
+    <ul class="nav-list">
+      <li><a href="#home">首页</a></li>
+      <li><a href="#blog">我的博客</a></li>
+      <li><a href="#weather">苏州天气</a></li>
+      <li><a href="#bilibili">B站播放</a></li>
+      <li><a href="#message">留言板</a></li>
+    </ul>
+    <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
   </nav>
 
-  <div class="container">
-    <header class="header">
-      <h1>你好，我是AxTps</h1>
-      <p class="subtitle">一名若只 | </p>
-    </header>
-
-    <section class="about">
-      <h2>关于我</h2>
-      <p>害怕智商令大家智熄</p>
-    </section>
-
-    <section class="links">
-      <h2>联系方式</h2>
-      <div class="link-buttons">
-        <a href="https://github.com/ApTx2012" target="_blank">GitHub</a>
-        <a href="mailto:3045929398@qq.com">Email</a>
-      </div>
-    </section>
-
-    <section class="blog-entry">
-      <h2>我的博客</h2>
-      <p>记录技术成长、生活感悟，点击查看全部博客 ↓</p>
-      <a href="blog.html" class="blog-btn">进入博客列表</a>
-    </section>
-
-    <footer>
-      <p>&copy; 2026 AxTps | Built with 💙</p>
-    </footer>
+  <!-- 首页头部 -->
+  <div class="hero" id="home">
+    <h1>欢迎来到我的主页</h1>
   </div>
 
+  <!-- 我的博客 -->
+  <div class="card" id="blog">
+    <div class="title">📝 我的博客</div>
+    <div class="blog-container" id="blogList"></div>
+  </div>
+
+  <!-- 苏州天气 -->
+  <div class="card text-center" id="weather"></div>
+
+  <!-- B站播放器 -->
+  <div class="card" id="bilibili"></div>
+
+  <!-- 留言板 -->
+  <div class="card" id="message"></div>
+
+  <!-- 底部版权 -->
+  <div class="footer">
+    <p>Copyright © 我的个人主页 | 访问次数：<span id="visitCount">0</span></p>
+  </div>
+
+  <!-- 引入所有JS功能 -->
   <script type="module" src="script.js"></script>
 </body>
 </html>
