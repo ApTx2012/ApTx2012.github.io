@@ -60,7 +60,7 @@ export function initCopyCode() {
     });
 }
 
-// 功能3：网站访问次数统计（本地存储，持久化记录）
+// 功能3：网站访问次数统计（本地存储，持久化记录，替代原有Rust功能）
 export function initVisitCount() {
     // 获取本地存储的访问次数，无则初始化为0
     let count = localStorage.getItem('visit_count') || 0;
@@ -73,4 +73,121 @@ export function initVisitCount() {
         const currentText = footerElem.innerText;
         footerElem.innerText = `${currentText} | 访问次数：${count}`;
     }
+}
+
+// 新增功能4：博客字数统计（参数：文本内容，返回：有效字数）
+export function countBlogWords(content) {
+    // 过滤空格、换行符，统计真实有效字数（适配中文）
+    return content.replace(/\s+/g, '').length;
+}
+
+// 新增功能5：深色模式切换（记忆用户偏好，贴合蓝色主题）
+export function initDarkMode() {
+    // 1. 定义深色模式样式变量，贴合原有蓝色主题
+    const darkModeStyle = `
+        :root {
+            --primary: #165DFF; /* 原有主色不变 */
+            --dark-blue: #0E42D2; /* 原有深色不变 */
+            --bg-light: #121212; /* 深色模式背景 */
+            --text-light: #ffffff; /* 深色模式文本 */
+            --card-bg: #1E1E1E; /* 深色模式卡片背景 */
+            --border-color: #333333; /* 深色模式边框 */
+        }
+        body.dark-mode {
+            background-color: var(--bg-light);
+            color: var(--text-light);
+        }
+        body.dark-mode .container {
+            background-color: var(--bg-light);
+        }
+        body.dark-mode .navbar {
+            background-color: #0A0A0A;
+            border-bottom: 1px solid var(--border-color);
+        }
+        body.dark-mode .blog-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+        }
+        body.dark-mode .blog-detail {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+        }
+        body.dark-mode pre {
+            background-color: #2D2D2D;
+            border: 1px solid var(--border-color);
+        }
+        body.dark-mode code {
+            color: #E0E0E0;
+        }
+        body.dark-mode button,
+        body.dark-mode .link-buttons a,
+        body.dark-mode .blog-btn,
+        body.dark-mode .read-more,
+        body.dark-mode .back-blog,
+        body.dark-mode .next-blog {
+            background-color: var(--primary);
+            color: white;
+            border: 1px solid var(--dark-blue);
+        }
+        body.dark-mode button:hover,
+        body.dark-mode .link-buttons a:hover,
+        body.dark-mode .blog-btn:hover,
+        body.dark-mode .read-more:hover,
+        body.dark-mode .back-blog:hover,
+        body.dark-mode .next-blog:hover {
+            background-color: var(--dark-blue);
+        }
+        body.dark-mode input,
+        body.dark-mode textarea {
+            background-color: #2D2D2D;
+            color: var(--text-light);
+            border: 1px solid var(--border-color);
+        }
+    `;
+
+    // 2. 注入深色模式样式到页面
+    const styleElem = document.createElement('style');
+    styleElem.innerText = darkModeStyle;
+    document.head.appendChild(styleElem);
+
+    // 3. 创建深色模式切换按钮（导航栏右侧）
+    const navLinks = document.querySelector('.nav-links');
+    const darkModeBtn = document.createElement('button');
+    darkModeBtn.innerText = '深色模式';
+    darkModeBtn.style.cssText = `
+        margin-left: 1rem;
+        padding: 0.4rem 0.8rem;
+        border-radius: 6px;
+        background: var(--primary);
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s;
+        font-size: 0.9rem;
+    `;
+
+    // 4. 读取本地存储的主题偏好，初始化主题
+    const isDarkMode = localStorage.getItem('dark_mode') === 'true';
+    if (isDarkMode) {
+        document.body.classList.add('dark-mode');
+        darkModeBtn.innerText = '浅色模式';
+    }
+
+    // 5. 切换主题逻辑
+    darkModeBtn.addEventListener('click', () => {
+        const isDark = document.body.classList.toggle('dark-mode');
+        localStorage.setItem('dark_mode', isDark);
+        darkModeBtn.innerText = isDark ? '浅色模式' : '深色模式';
+    });
+
+    // 6. 鼠标悬浮效果
+    darkModeBtn.addEventListener('mouseenter', () => {
+        darkModeBtn.style.background = 'var(--dark-blue)';
+    });
+    darkModeBtn.addEventListener('mouseleave', () => {
+        darkModeBtn.style.background = 'var(--primary)';
+    });
+
+    // 7. 将按钮添加到导航栏
+    navLinks.appendChild(darkModeBtn);
 }

@@ -50,8 +50,9 @@ window.addEventListener('scroll', () => {
 });
 // -------------------------- 新增JS功能与小游戏调用 --------------------------
 // 导入新增的JS功能和小游戏
-import { calculateReadingTime, initCopyCode, initVisitCount } from './js-functions/utils.js';
+import { calculateReadingTime, initCopyCode, initVisitCount, countBlogWords, initDarkMode } from './js-functions/utils.js';
 import { initGuessNumberGame } from './js-functions/mini-game.js';
+import { initMessageBoard } from './js-functions/messageBoard.js'; // 新增留言板导入
 
 // 页面加载完成后，初始化所有功能
 window.addEventListener('load', () => {
@@ -62,19 +63,27 @@ window.addEventListener('load', () => {
         // 2. 初始化代码块复制功能
         initCopyCode();
 
-        // 3. 初始化博客阅读时长计算（适配所有博客详情页）
+        // 3. 初始化深色模式切换（新增）
+        initDarkMode();
+
+        // 4. 初始化博客阅读时长+字数统计（适配所有博客详情页，新增字数统计）
         const blogContent = document.querySelector('.blog-detail-content');
         if (blogContent) {
             const contentText = blogContent.innerText;
             const readingTime = calculateReadingTime(contentText);
+            const wordCount = countBlogWords(contentText); // 新增字数统计
             const readingTimeElem = document.querySelector('.blog-detail-meta span:last-child');
             if (readingTimeElem) {
-                readingTimeElem.innerText = `阅读时长：${readingTime}分钟`;
+                // 显示阅读时长+字数，格式：阅读时长：X.X分钟 | 字数：XXX字
+                readingTimeElem.innerText = `阅读时长：${readingTime}分钟 | 字数：${wordCount}字`;
             }
         }
 
-        // 4. 初始化猜数字小游戏（主页显示入口）
+        // 5. 初始化猜数字小游戏（主页显示入口）
         initGuessNumberGame();
+
+        // 6. 初始化留言板功能（新增，主页显示）
+        initMessageBoard();
 
         console.log("✅ 所有JS功能与小游戏加载成功！");
     } catch (error) {
