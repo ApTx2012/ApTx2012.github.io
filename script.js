@@ -63,8 +63,69 @@ window.addEventListener('load', () => {
         // 2. 初始化代码块复制功能
         initCopyCode();
 
-        // 3. 初始化深色模式切换（新增）
+        // 3. 初始化深色模式切换（新增，已添加优化补丁）
         initDarkMode();
+        // 深色模式优化补丁：补充全局过渡动画，提升切换流畅度
+        const transitionStyle = document.createElement('style');
+        transitionStyle.innerText = `
+            * {
+                transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+            }
+            /* 补充文本选中样式适配，提升深色模式体验 */
+            body.dark-mode ::selection {
+                background-color: var(--primary);
+                color: white;
+            }
+            /* 补充列表符号适配，增强辨识度 */
+            body.dark-mode ul li::marker {
+                color: var(--primary);
+            }
+            /* 补充链接hover适配，贴合蓝色主题 */
+            body.dark-mode a:hover:not(.logo):not(.link-buttons a):not(.blog-btn):not(.read-more) {
+                color: #4080ff;
+                text-decoration: underline;
+            }
+        `;
+        document.head.appendChild(transitionStyle);
+
+        // 深色模式优化补丁：同步系统主题偏好，无需手动切换
+        const syncSystemDarkMode = () => {
+            const isSystemDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const storedMode = localStorage.getItem('dark_mode');
+            // 无本地存储时，同步系统主题
+            if (storedMode === null) {
+                const body = document.body;
+                const darkModeBtn = document.querySelector('.nav-links button');
+                if (isSystemDark) {
+                    body.classList.add('dark-mode');
+                    if (darkModeBtn) darkModeBtn.innerText = '浅色模式';
+                } else {
+                    body.classList.remove('dark-mode');
+                    if (darkModeBtn) darkModeBtn.innerText = '深色模式';
+                }
+                localStorage.setItem('dark_mode', isSystemDark);
+            }
+        };
+        // 初始化时同步系统主题
+        syncSystemDarkMode();
+        // 监听系统主题变化，实时同步
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', syncSystemDarkMode);
+
+        // 深色模式优化补丁：增强切换按钮交互反馈
+        const darkModeBtn = document.querySelector('.nav-links button');
+        if (darkModeBtn) {
+            darkModeBtn.addEventListener('mousedown', () => {
+                darkModeBtn.style.background = '#0A38B7';
+            });
+            darkModeBtn.addEventListener('mouseup', () => {
+                darkModeBtn.style.background = 'var(--dark-blue)';
+            });
+            // 切换时添加控制台提示，便于调试
+            darkModeBtn.addEventListener('click', () => {
+                const isDark = document.body.classList.contains('dark-mode');
+                console.log(`✅ 主题切换为：${isDark ? '深色模式' : '浅色模式'}，已保存偏好`);
+            });
+        }
 
         // 4. 初始化博客阅读时长+字数统计（适配所有博客详情页，新增字数统计）
         const blogContent = document.querySelector('.blog-detail-content');
@@ -85,7 +146,7 @@ window.addEventListener('load', () => {
         // 6. 初始化留言板功能（新增，主页显示）
         initMessageBoard();
 
-        console.log("✅ 所有JS功能与小游戏加载成功！");
+        console.log("✅ 所有JS功能与小游戏加载成功！深色模式优化补丁已生效");
     } catch (error) {
         console.error("❌ 功能加载失败：", error);
     }
