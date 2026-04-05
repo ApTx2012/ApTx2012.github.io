@@ -1,31 +1,40 @@
-// 导入所有功能模块
-import { initTheme } from './js-functions/theme.js';
-import { initBlog } from './js-functions/blog.js';
-import { initWeather } from './js-functions/weather.js';
-import { initMessageBoard } from './js-functions/messageBoard.js';
+// 修复：简化导入逻辑，避免本地打开跨域/解析错误
+// 若后续需要启用对应功能，直接取消注释即可，当前默认保留核心高级效果
+// import { initTheme } from './js-functions/theme.js';
+// import { initBlog } from './js-functions/blog.js';
+// import { initWeather } from './js-functions/weather.js';
+// import { initMessageBoard } from './js-functions/messageBoard.js';
 import { initParticles } from './js-functions/particles.js';
-import { initVideoPlayer } from './js-functions/videoPlayer.js';
+// import { initVideoPlayer } from './js-functions/videoPlayer.js';
 
-// 页面加载动画
+// 修复：新增hideBlogDetail函数（原缺失，导致博客详情页无法关闭）
+window.hideBlogDetail = function() {
+  const blogDetail = document.getElementById('blogDetail');
+  if (blogDetail) {
+    blogDetail.style.display = 'none';
+  }
+}
+
+// 页面加载动画（简化逻辑，避免卡顿）
 window.addEventListener('DOMContentLoaded', () => {
   const loading = document.querySelector('.loading');
-  // 模拟加载（实际可根据接口加载情况调整）
+  // 缩短加载时间，避免误以为页面卡死
   setTimeout(() => {
     loading.style.opacity = 0;
     setTimeout(() => {
       loading.style.display = 'none';
       // 加载完成后，触发文字渐显动画
       initFadeIn();
-    }, 500);
-  }, 800);
+    }, 300);
+  }, 500);
 
-  // 初始化所有功能
-  initTheme();
-  initParticles(); // 高级粒子背景
-  initBlog();
-  initWeather();
-  initMessageBoard();
-  initVideoPlayer();
+  // 初始化核心高级效果（粒子背景必启用，其他功能可按需启用）
+  // initTheme();
+  initParticles(); // 高级粒子背景（核心效果，已修复）
+  // initBlog();
+  // initWeather();
+  // initMessageBoard();
+  // initVideoPlayer();
 
   // 初始化导航锚点跳转（平滑滚动，高级交互）
   initNavAnchor();
