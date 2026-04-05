@@ -1,7 +1,7 @@
 // 页面加载完成提示
-console.log("✅ 蓝色个人网站加载成功！");
+console.log("✅ 蓝色个人网站（含博客）加载成功！");
 
-// 平滑滚动
+// 平滑滚动（原有，适配博客页面跳转）
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
     e.preventDefault();
@@ -9,4 +9,42 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
       behavior: 'smooth'
     });
   });
+});
+
+// 博客卡片 hover 动画增强（新增）
+const blogCards = document.querySelectorAll('.blog-card');
+blogCards.forEach(card => {
+  card.addEventListener('mouseenter', () => {
+    card.style.transform = 'translateY(-5px)';
+    card.style.boxShadow = '0 5px 15px rgba(22, 93, 255, 0.12)';
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = 'translateY(0)';
+    card.style.boxShadow = '0 2px 8px rgba(22, 93, 255, 0.08)';
+  });
+});
+
+// 页面加载淡入效果（新增，提升体验）
+window.addEventListener('load', () => {
+  document.body.style.opacity = '0';
+  let opacity = 0;
+  const fadeIn = setInterval(() => {
+    if (opacity >= 1) {
+      clearInterval(fadeIn);
+    }
+    document.body.style.opacity = opacity;
+    opacity += 0.1;
+  }, 50);
+});
+
+// 导航栏滚动效果（新增）
+window.addEventListener('scroll', () => {
+  const navbar = document.querySelector('.navbar');
+  if (window.scrollY > 50) {
+    navbar.style.boxShadow = '0 4px 12px rgba(22, 93, 255, 0.15)';
+    navbar.style.background = 'var(--white)';
+  } else {
+    navbar.style.boxShadow = '0 2px 10px rgba(22, 93, 255, 0.1)';
+    navbar.style.background = 'var(--white)';
+  }
 });
