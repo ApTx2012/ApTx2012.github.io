@@ -556,3 +556,24 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-light);
 }
+/* 时钟卡片（新增功能模块，适配高级风格） */
+.clock-card {
+    background: var(--bg-card);
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--border-main);
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: var(--shadow-main);
+    margin-bottom: 3rem;
+}
+#currentTime {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 0.5rem;
+}
+#currentDate {
+    color: var(--text-secondary);
+    font-size: 1.2rem;
+}

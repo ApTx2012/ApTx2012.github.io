@@ -66,3 +66,19 @@ function initNavAnchor() {
     });
   });
 }
+// 实时时钟功能
+function updateClock() {
+    const now = new Date();
+    // 时间
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+    const seconds = String(now.getSeconds()).padStart(2, '0');
+    document.getElementById('currentTime').innerText = `${hours}:${minutes}:${seconds}`;
+    // 日期
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    document.getElementById('currentDate').innerText = `${year}年${month}月${day}日`;
+}
+updateClock(); // 初始化
+setInterval(updateClock, 1000); // 每秒更新
