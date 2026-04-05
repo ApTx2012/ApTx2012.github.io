@@ -48,48 +48,52 @@ window.addEventListener('scroll', () => {
     navbar.style.background = 'var(--white)';
   }
 });
-// -------------------------- 新增JS功能与小游戏调用 --------------------------
-// 导入新增的JS功能和小游戏（确保所有导入路径正确，与文件实际位置一致）
-import { calculateReadingTime, initCopyCode, initVisitCount, countBlogWords } from './js-functions/utils.js';
-import { initGuessNumberGame } from './js-functions/mini-game.js';
-import { initMessageBoard } from './js-functions/messageBoard.js'; // 新增留言板导入
-
-// 页面加载完成后，初始化所有功能（包裹所有逻辑，避免全局作用域冲突）
-window.addEventListener('load', () => {
-    try {
-        // 1. 初始化访问次数统计
-        initVisitCount();
-
-        // 2. 初始化代码块复制功能
-        initCopyCode();
-
-        // 3. 初始化博客阅读时长+字数统计（适配所有博客详情页，新增字数统计）
-        const blogContent = document.querySelector('.blog-detail-content');
-        if (blogContent) {
-            const contentText = blogContent.innerText;
-            const readingTime = calculateReadingTime(contentText);
-            const wordCount = countBlogWords(contentText); // 新增字数统计
-            const readingTimeElem = document.querySelector('.blog-detail-meta span:last-child');
-            if (readingTimeElem) {
-                // 显示阅读时长+字数，格式：阅读时长：X.X分钟 | 字数：XXX字
-                readingTimeElem.innerText = `阅读时长：${readingTime}分钟 | 字数：${wordCount}字`;
-            }
-        }
-
-        // 4. 初始化猜数字小游戏（主页显示入口）
-        initGuessNumberGame();
-
-        // 5. 初始化留言板功能（新增，主页显示）
-        initMessageBoard();
-
-        console.log("✅ 所有JS功能与小游戏加载成功！");
-    } catch (error) {
-        console.error("❌ 功能加载失败：", error);
-    }
-});
-// -------------------------- JS功能与小游戏调用结束 --------------------------
-
-// 补充：防止部分浏览器不支持module类型，添加降级提示（可选，提升兼容性）
-if (typeof importScripts === 'function') {
-    console.warn("当前环境可能不支持ES6模块，建议使用现代浏览器（Chrome、Edge、Firefox等）访问");
+// -------------------------- 新增JS功能与小游戏调用 --------------------------​
+// 导入新增的JS功能和小游戏（确保所有导入路径正确，与文件实际位置一致）​
+import { calculateReadingTime, initCopyCode, initVisitCount, countBlogWords } from './js-functions/utils.js';​
+import { initGuessNumberGame } from './js-functions/mini-game.js';​
+import { initMessageBoard } from './js-functions/messageBoard.js'; // 新增留言板导入​
+import { initSuzhouWeather } from './js-functions/weather.js'; // 新增苏州天气导入​
+​
+// 页面加载完成后，初始化所有功能（包裹所有逻辑，避免全局作用域冲突）​
+window.addEventListener('load', () => {​
+    try {​
+        // 1. 初始化访问次数统计​
+        initVisitCount();​
+​
+        // 2. 初始化代码块复制功能​
+        initCopyCode();​
+​
+        // 3. 初始化博客阅读时长+字数统计（适配所有博客详情页，新增字数统计）​
+        const blogContent = document.querySelector('.blog-detail-content');​
+        if (blogContent) {​
+            const contentText = blogContent.innerText;​
+            const readingTime = calculateReadingTime(contentText);​
+            const wordCount = countBlogWords(contentText); // 新增字数统计​
+            const readingTimeElem = document.querySelector('.blog-detail-meta span:last-child');​
+            if (readingTimeElem) {​
+                // 显示阅读时长+字数，格式：阅读时长：X.X分钟 | 字数：XXX字​
+                readingTimeElem.innerText = `阅读时长：${readingTime}分钟 | 字数：${wordCount}字`;​
+            }​
+        }​
+​
+        // 4. 初始化猜数字小游戏（主页显示入口）​
+        initGuessNumberGame();​
+​
+        // 5. 初始化留言板功能（新增，主页显示）​
+        initMessageBoard();​
+​
+        // 6. 初始化苏州天气功能（新增，主页显示）​
+        initSuzhouWeather();​
+​
+        console.log("✅ 所有JS功能与小游戏加载成功！");​
+    } catch (error) {​
+        console.error("❌ 功能加载失败：", error);​
+    }​
+});​
+// -------------------------- JS功能与小游戏调用结束 --------------------------​
+​
+// 补充：防止部分浏览器不支持module类型，添加降级提示（可选，提升兼容性）​
+if (typeof importScripts === 'function') {​
+    console.warn("当前环境可能不支持ES6模块，建议使用现代浏览器（Chrome、Edge、Firefox等）访问");​
 }
