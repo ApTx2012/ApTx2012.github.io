@@ -1,53 +1,113 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>我的个人主页</title>
+  <!-- 引入图标库（保持原有） -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- 引入自定义高级样式 -->
   <link rel="stylesheet" href="style.css">
+  <!-- 引入字体（增强高级感） -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
+  <!-- 新增加载动画 -->
+  <div class="loading">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <!-- 高级粒子背景容器 -->
   <canvas id="particleCanvas"></canvas>
 
-  <!-- 顶部导航栏 -->
-  <nav class="navbar">
-    <a href="#" class="logo">我的主页</a>
+  <!-- 顶部导航栏（适配高级样式） -->
+  <nav class="nav">
+    <div class="nav-logo">My Homepage</div>
     <ul class="nav-list">
-      <li><a href="#home">首页</a></li>
-      <li><a href="#blog">我的博客</a></li>
-      <li><a href="#weather">苏州天气</a></li>
-      <li><a href="#bilibili">B站播放</a></li>
-      <li><a href="#message">留言板</a></li>
+      <li class="nav-item"><a href="#profile">个人介绍</a></li>
+      <li class="nav-item"><a href="#features">功能模块</a></li>
+      <li class="nav-item"><a href="#blog">我的博客</a></li>
+      <li class="nav-item"><a href="#message">留言板</a></li>
     </ul>
-    <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+    <button class="theme-btn" id="themeBtn"><i class="fas fa-moon"></i></button>
   </nav>
 
-  <!-- 首页头部 -->
-  <div class="hero" id="home">
-    <h1>欢迎来到我的主页</h1>
+  <!-- 主内容容器 -->
+  <div class="main-container">
+    <!-- 个人信息卡片（高级样式） -->
+    <section id="profile" class="profile-card">
+      <img src="avatar.jpg" alt="个人头像" class="profile-avatar">
+      <h1 class="profile-name">我的个人主页</h1>
+      <p class="profile-desc">前端爱好者 | 喜欢折腾各类酷炫效果 | 记录学习与成长，分享前端小技巧、个人项目和生活感悟，打造一个兼具美观与实用的个人小空间。</p>
+    </section>
+
+    <!-- 功能模块（高级卡片） -->
+    <section id="features" class="features-section">
+      <h2 class="section-title">功能模块</h2>
+      <div class="features-container">
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-cloud-sun-rain"></i></div>
+          <h3 class="feature-title">天气查询</h3>
+          <p class="feature-desc">实时查询各地天气，支持未来7天预报，显示温度、湿度、风力等详细信息，适配明暗模式。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-video"></i></div>
+          <h3 class="feature-title">视频播放</h3>
+          <p class="feature-desc">支持B站视频无登录播放，输入BV号即可快速嵌入，适配页面样式，支持全屏播放。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-comment-dots"></i></div>
+          <h3 class="feature-title">留言板</h3>
+          <p class="feature-desc">本地存储留言，刷新页面不丢失，支持提交昵称和留言内容，简单便捷的互动方式。</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon"><i class="fas fa-book"></i></div>
+          <h3 class="feature-title">我的博客</h3>
+          <p class="feature-desc">记录个人学习心得、项目搭建过程和前端技巧，点击即可查看完整内容，排版简洁美观。</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 博客列表（适配高级样式） -->
+    <section id="blog" class="blog-section">
+      <h2 class="section-title">我的博客</h2>
+      <div class="blog-list" id="blogList"&gt;
+        <!-- 博客列表由blog.js渲染 -->
+      </div>
+    </section>
+
+    <!-- 留言板（保持原有功能，适配高级样式） -->
+    <section id="message" class="message-section">
+      <h2 class="section-title">留言板</h2>
+      <div class="message-container">
+        <div class="message-form">
+          <input type="text" id="nickname" placeholder="请输入你的昵称">
+          <textarea id="messageContent" placeholder="请输入你的留言..."></textarea>
+          <button id="submitMessage">提交留言</button>
+        </div>
+        <div class="message-list" id="messageList"&gt;
+          <!-- 留言列表由messageBoard.js渲染 -->
+        </div>
+      </div>
+    </section>
   </div>
 
-  <!-- 我的博客 -->
-  <div class="card" id="blog">
-    <div class="title">📝 我的博客</div>
-    <div class="blog-container" id="blogList"></div>
+  <!-- 博客详情页（适配高级样式） -->
+  <div class="blog-detail" id="blogDetail">
+    <button class="back-btn" onclick="hideBlogDetail()"><i class="fas fa-arrow-left"></i></button>
+    <div class="blog-detail-content" id="blogDetailContent"&gt;
+      <!-- 博客详情由blog.js渲染 -->
+    </div>
   </div>
 
-  <!-- 苏州天气 -->
-  <div class="card text-center" id="weather"></div>
+  <!-- 底部（适配高级样式） -->
+  <footer class="footer">
+    <p>© 2026 我的个人主页 | 前端高级版 | 持续优化中</p>
+  </footer>
 
-  <!-- B站播放器 -->
-  <div class="card" id="bilibili"></div>
-
-  <!-- 留言板 -->
-  <div class="card" id="message"></div>
-
-  <!-- 底部版权 -->
-  <div class="footer">
-    <p>Copyright © 我的个人主页 | 访问次数：<span id="visitCount">0</span></p>
-  </div>
-
-  <!-- 引入所有JS功能 -->
+  <!-- 引入ES模块支持（保持原有） -->
   <script type="module" src="script.js"></script>
 </body>
 </html>
