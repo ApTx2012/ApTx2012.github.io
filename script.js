@@ -31,7 +31,7 @@ window.addEventListener('DOMContentLoaded', () => {
   // 初始化核心高级效果（粒子背景必启用，其他功能可按需启用）
   // initTheme();
   initParticles(); // 高级粒子背景（核心效果，已修复）
-  // initBlog();
+  initBlog();
   // initWeather();
   // initMessageBoard();
   // initVideoPlayer();
