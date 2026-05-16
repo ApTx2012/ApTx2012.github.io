@@ -1,0 +1,40 @@
+/* 3D旋转魔方 右下角摆放 */
+#magic-cube {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  right: 30px;
+  bottom: 30px;
+  z-index: 99;
+  transform-style: preserve-3d;
+  animation: rotateCube 8s linear infinite;
+  pointer-events: auto;
+}
+
+#magic-cube:hover {
+  animation-play-state: paused; /* 鼠标悬停暂停旋转 */
+}
+
+#magic-cube div {
+  position: absolute;
+  width: 60px;
+  height: 60px;
+  background: rgba(120, 180, 255, 0.2);
+  border: 1px solid rgba(120, 200, 255, 0.5);
+  backdrop-filter: blur(4px);
+  box-shadow: 0 0 10px rgba(120, 180, 255, 0.3);
+}
+
+/* 魔方六个面定位 */
+.front  { transform: rotateY(0deg) translateZ(30px); }
+.back   { transform: rotateY(180deg) translateZ(30px); }
+.left   { transform: rotateY(-90deg) translateZ(30px); }
+.right  { transform: rotateY(90deg) translateZ(30px); }
+.top    { transform: rotateX(90deg) translateZ(30px); }
+.bottom { transform: rotateX(-90deg) translateZ(30px); }
+
+/* 全局旋转动画 */
+@keyframes rotateCube {
+  0% { transform: rotateX(0) rotateY(0); }
+  100% { transform: rotateX(360deg) rotateY(720deg); }
+}
