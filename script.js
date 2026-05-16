@@ -1,11 +1,11 @@
 // 修复：简化导入逻辑，避免本地打开跨域/解析错误
 // 若后续需要启用对应功能，直接取消注释即可，当前默认保留核心高级效果
-// import { initTheme } from './js-functions/theme.js';
-// import { initBlog } from './js-functions/blog.js';
-// import { initWeather } from './js-functions/weather.js';
-// import { initMessageBoard } from './js-functions/messageBoard.js';
+import { initTheme } from './js-functions/theme.js';
+import { initBlog } from './js-functions/blog.js';
+import { initWeather } from './js-functions/weather.js';
+import { initMessageBoard } from './js-functions/messageBoard.js';
 import { initParticles } from './js-functions/particles.js';
-// import { initVideoPlayer } from './js-functions/videoPlayer.js';
+import { initVideoPlayer } from './js-functions/videoPlayer.js';
 
 // 修复：新增hideBlogDetail函数（原缺失，导致博客详情页无法关闭）
 window.hideBlogDetail = function() {
