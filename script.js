@@ -6,6 +6,34 @@ function logError(moduleName, msg = '未知异常') {
   console.log(`%c ❌ ${moduleName} 加载失败：${msg}`, 'color: #e74c3c; font-size: 14px; font-weight: bold;');
 }
 
+
+try{
+  const loadBox = document.getElementById('loadingBox');
+  window.addEventListener('load',()=>{
+    setTimeout(()=>loadBox.classList.add('hide'),500);
+  });
+  logSuccess('页面加载动画模块');
+}catch(e){
+  logError('页面加载动画模块',e.message);
+}
+
+try{
+  const backTop = document.getElementById('backTop');
+  window.addEventListener('scroll',()=>{
+    if(window.scrollY > 300){
+      backTop.classList.add('show');
+    }else{
+      backTop.classList.remove('show');
+    }
+  });
+  backTop.addEventListener('click',()=>{
+    window.scrollTo({top:0,behavior:'smooth'});
+  });
+  logSuccess('回到顶部模块');
+}catch(e){
+  logError('回到顶部模块',e.message);
+}
+
 // ====================== 1. 主题切换模块 ======================
 try {
   const themeBtn = document.getElementById('themeBtn');
