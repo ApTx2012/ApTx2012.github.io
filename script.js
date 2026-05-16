@@ -173,6 +173,24 @@ try {
   logError('背景飞行图片模块', e.message);
 }
 
+// 网站运行时长模块
+const siteLaunchDate = new Date('2024-05-27');
+
+function updateUptime() {
+  const now = new Date();
+  const diff = now - siteLaunchDate;
+
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+  document.getElementById('uptimeText').innerText = `已运行 ${days}天 ${hours}时 ${minutes}分`;
+}
+
+updateUptime();
+setInterval(updateUptime, 60000); // 每分钟更新
+logSuccess('网站运行时长模块');
+
 // ====================== 页面总入口 ======================
 window.onload = () => {
   loadWeather();
