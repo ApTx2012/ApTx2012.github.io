@@ -191,6 +191,38 @@ updateUptime();
 setInterval(updateUptime, 60000); // 每分钟更新
 logSuccess('网站运行时长模块');
 
+// ==================== 网易云歌单播放器 ====================
+try {
+  const musicIframe = document.getElementById('musicIframe');
+  const musicBox = document.getElementById('neteaseMusic');
+  const musicToggle = document.getElementById('musicToggle');
+
+  // ==================== 在这里填你的 歌单ID ====================
+  const PLAYLIST_ID = "9110196326"; // 把这里改成你的歌单ID
+
+  // 歌单模式链接（固定格式，不用改）
+  musicIframe.src = `https://music.163.com/outchain/player?type=0&id=${PLAYLIST_ID}&auto=1&height=430`;
+
+  // 收起 / 展开
+  let isOpen = true;
+  musicToggle.addEventListener('click', () => {
+    isOpen = !isOpen;
+    if (isOpen) {
+      musicBox.classList.remove('close');
+      musicToggle.innerText = '收起';
+    } else {
+      musicBox.classList.add('close');
+      musicToggle.innerText = '展开';
+    }
+  });
+
+  musicIframe.onload = () => logSuccess('网易云歌单播放器');
+  musicIframe.onerror = () => logError('网易云歌单播放器', '加载失败');
+
+} catch (err) {
+  logError('网易云歌单播放器', err.message);
+}
+
 // ====================== 页面总入口 ======================
 window.onload = () => {
   loadWeather();
