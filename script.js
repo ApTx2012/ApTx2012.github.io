@@ -61,7 +61,6 @@ class Particle {
     if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
   }
   draw() {
-    // 自动跟随主题变色
     let color = getComputedStyle(document.documentElement).getPropertyValue('--particle-color');
     ctx.fillStyle = color;
     ctx.beginPath();
@@ -90,7 +89,6 @@ function goSection(id) {
 async function loadWeather() {
   const card = document.getElementById('weatherCard');
   try {
-    // 苏州经纬度，自行修改
     let url = "https://api.open-meteo.com/v1/forecast?latitude=31.3&longitude=120.6&current_weather=true&hourly=temperature_2m,relativehumidity_2m&timezone=Asia/Shanghai";
     const res = await fetch(url);
     const data = await res.json();
