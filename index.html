@@ -9,14 +9,10 @@
 </head>
 <body>
 
-<!-- 🔥 自动轮播背景层（新加） -->
-<div class="bg-slideshow">
-  <div class="bg-item active"></div>
-  <div class="bg-item"></div>
-  <div class="bg-item"></div>
-</div>
+<!-- 乱飞图片层 -->
+<div id="flyingImages"></div>
 
-<!-- 粒子背景（保留） -->
+<!-- 粒子画布 -->
 <canvas id="particleCanvas"></canvas>
 
 <!-- 主题切换 -->
@@ -61,10 +57,9 @@
   </div>
 </div>
 
-<!-- 内容区 -->
+<!-- 内容 -->
 <div class="sections">
   <section id="blog"><h2>博客</h2><p>即将上线...</p></section>
-
   <section id="weather" class="weather-section">
     <h2>🌤 实时天气</h2>
     <div class="weather-card" id="weatherCard"><p>加载中...</p></div>

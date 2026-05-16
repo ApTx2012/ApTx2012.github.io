@@ -1,63 +1,39 @@
-// ========== 主题切换 ==========
+// 主题切换
 const themeBtn = document.getElementById('themeBtn');
 const htmlRoot = document.documentElement;
 
 function initTheme() {
-  let localTheme = localStorage.getItem('siteTheme') || 'dark';
-  htmlRoot.setAttribute('data-theme', localTheme);
-  updateThemeIcon(localTheme);
+  const t = localStorage.getItem('siteTheme') || 'dark';
+  htmlRoot.setAttribute('data-theme', t);
+  themeBtn.innerHTML = t === 'dark' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
 }
-
-function updateThemeIcon(theme) {
-  let icon = theme === 'dark' ? 'fa-moon' : 'fa-sun';
-  themeBtn.innerHTML = `<i class="fas ${icon}"></i>`;
-}
-
 themeBtn.addEventListener('click', () => {
-  let nowTheme = htmlRoot.getAttribute('data-theme');
-  let newTheme = nowTheme === 'dark' ? 'light' : 'dark';
-  htmlRoot.setAttribute('data-theme', newTheme);
-  localStorage.setItem('siteTheme', newTheme);
-  updateThemeIcon(newTheme);
+  const now = htmlRoot.getAttribute('data-theme');
+  const next = now === 'dark' ? 'light' : 'dark';
+  htmlRoot.setAttribute('data-theme', next);
+  localStorage.setItem('siteTheme', next);
+  initTheme();
 });
 
-// ========== 时钟 ==========
+// 时钟
 function updateClock() {
   const now = new Date();
-  const h = String(now.getHours()).padStart(2, '0');
-  const m = String(now.getMinutes()).padStart(2, '0');
-  const s = String(now.getSeconds()).padStart(2, '0');
+  const h = String(now.getHours()).padStart(2,0);
+  const m = String(now.getMinutes()).padStart(2,0);
+  const s = String(now.getSeconds()).padStart(2,0);
   document.getElementById('timeText').innerText = `${h}:${m}:${s}`;
-
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const day = String(now.getDate()).padStart(2, '0');
-  const week = ['日', '一', '二', '三', '四', '五', '六'][now.getDay()];
-  document.getElementById('dateText').innerText = `${year}-${month}-${day} 星期${week}`;
+  const w = ['日','一','二','三','四','五','六'][now.getDay()];
+  document.getElementById('dateText').innerText = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,0)}-${String(now.getDate()).padStart(2,0)} 星期${w}`;
 }
 updateClock();
 setInterval(updateClock, 1000);
 
-// ========== 🔥 背景图片轮播（新加） ==========
-let bgIndex = 0;
-const bgItems = document.querySelectorAll('.bg-item');
-
-function changeBackground() {
-  bgItems.forEach(i => i.classList.remove('active'));
-  bgIndex = (bgIndex + 1) % bgItems.length;
-  bgItems[bgIndex].classList.add('active');
-}
-
-// 每 6 秒切换一张
-setInterval(changeBackground, 6000);
-
-// ========== 粒子背景 ==========
+// 粒子
 const canvas = document.getElementById('particleCanvas');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-let particles = [];
 class Particle {
   constructor() {
     this.x = Math.random() * canvas.width;
@@ -73,60 +49,102 @@ class Particle {
     if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
   }
   draw() {
-    let color = getComputedStyle(document.documentElement).getPropertyValue('--particle-color');
-    ctx.fillStyle = color;
+    ctx.fillStyle = 'rgba(255,255,255,0.2)';
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     ctx.fill();
   }
 }
-
-function createParticles() {
-  for (let i = 0; i < 60; i++) particles.push(new Particle());
+const particles = Array.from({length:60},()=>new Particle());
+function animParticle() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles.forEach(p=>{p.update();p.draw();});
+  requestAnimationFrame(animParticle);
 }
-function animateParticles() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles.forEach(p => { p.update(); p.draw(); });
-  requestAnimationFrame(animateParticles);
-}
-createParticles();
-animateParticles();
+animParticle();
 
-// ========== 滚动 ==========
+// 滚动
 function goSection(id) {
-  document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
+  document.querySelector(id).scrollIntoView({ behavior:'smooth' });
 }
 
-// ========== 天气 ==========
+// 天气
 async function loadWeather() {
-  const card = document.getElementById('weatherCard');
   try {
-    let url = "https://api.open-meteo.com/v1/forecast?latitude=31.3&longitude=120.6&current_weather=true&hourly=temperature_2m,relativehumidity_2m&timezone=Asia/Shanghai";
-    const res = await fetch(url);
-    const data = await res.json();
-    const w = data.current_weather;
-
-    const weatherIcon = {
-      0:'☀️',1:'🌤',2:'⛅',3:'☁️',45:'🌫',48:'🌫',
-      51:'🌧',61:'🌦',63:'🌧',71:'❄️',80:'🌦'
-    };
-    let icon = weatherIcon[w.weathercode] || '🌤';
-
-    card.innerHTML = `
+    const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=31.3&longitude=120.6&current_weather=true&hourly=temperature_2m,relativehumidity_2m&timezone=Asia/Shanghai');
+    const d = await r.json();
+    const w = d.current_weather;
+    const icon = {0:'☀️',1:'🌤',2:'⛅',3:'☁️',45:'🌫',61:'🌦'}[w.weathercode]||'🌤';
+    document.getElementById('weatherCard').innerHTML = `
       <div class="weather-icon">${icon}</div>
       <div>
-        <p>实时温度：${w.temperature} °C</p>
-        <p>风速：${w.windspeed} km/h</p>
-        <p>空气湿度：${data.hourly.relativehumidity_2m[0]} %</p>
+        <p>温度：${w.temperature}°C</p>
+        <p>湿度：${d.hourly.relativehumidity_2m[0]}%</p>
       </div>
     `;
-  } catch (e) {
-    card.innerHTML = `<p>天气数据加载失败，请稍后重试</p>`;
-  }
+  } catch(e){}
 }
 
-// 初始化
-window.onload = function(){
+// ==============================================
+// 🔥 真正能飞、能旋转、绝对可见的背景图片
+// ==============================================
+const flyingContainer = document.getElementById('flyingImages');
+
+// 本地图片
+const images = [
+  'img/bg1.jpg',
+  'img/bg2.jpg',
+  'img/bg3.jpg',
+  'img/bg4.jpg',
+  'img/bg5.jpg'
+];
+
+const flyingItems = [];
+
+// 创建图片
+images.forEach(src => {
+  const img = document.createElement('img');
+  img.src = src;
+  img.className = 'flying-img';
+  img.style.width = '180px';
+  
+  const item = {
+    el: img,
+    x: Math.random() * window.innerWidth,
+    y: Math.random() * window.innerHeight,
+    speedX: (Math.random() - 0.5) * 1.2,
+    speedY: (Math.random() - 0.5) * 1.2,
+    rotate: Math.random() * 360,
+    rotateSpeed: (Math.random() - 0.5) * 0.8
+  };
+  
+  flyingContainer.appendChild(img);
+  flyingItems.push(item);
+});
+
+// 动画循环
+function flyAnimate() {
+  flyingItems.forEach(item => {
+    item.x += item.speedX;
+    item.y += item.speedY;
+    item.rotate += item.rotateSpeed;
+
+    // 出界重置
+    if (item.x < -200) item.x = window.innerWidth + 100;
+    if (item.x > window.innerWidth + 200) item.x = -100;
+    if (item.y < -200) item.y = window.innerHeight + 100;
+    if (item.y > window.innerHeight + 200) item.y = -100;
+
+    item.el.style.left = item.x + 'px';
+    item.el.style.top = item.y + 'px';
+    item.el.style.transform = `rotate(${item.rotate}deg)`;
+  });
+  requestAnimationFrame(flyAnimate);
+}
+flyAnimate();
+
+// 启动
+window.onload = () => {
   initTheme();
   loadWeather();
-}
+};
