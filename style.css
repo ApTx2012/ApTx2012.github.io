@@ -3,19 +3,38 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
 
+/* 深色主题默认 */
 :root {
-  --primary: #8ab4f8;
-  --glass: rgba(255,255,255,0.05);
-  --border: rgba(255,255,255,0.1);
-  --text: #fff;
-  --subtext: #b0b0b0;
+  --bg-main: #121212;
+  --glass-bg: rgba(255,255,255,0.05);
+  --glass-border: rgba(255,255,255,0.1);
+  --text-color: #ffffff;
+  --text-sub: #b0b0b0;
+  --primary-color: #8ab4f8;
+  --btn-bg: #8ab4f8;
+  --btn-text: #121212;
+  --particle-color: rgba(255,255,255,0.2);
+}
+
+/* 浅色主题 */
+html[data-theme="light"] {
+  --bg-main: #f5f7fa;
+  --glass-bg: rgba(0,0,0,0.04);
+  --glass-border: rgba(0,0,0,0.1);
+  --text-color: #1a1a1a;
+  --text-sub: #666666;
+  --primary-color: #3671c9;
+  --btn-bg: #3671c9;
+  --btn-text: #ffffff;
+  --particle-color: rgba(0,0,0,0.15);
 }
 
 body {
-  background: #121212;
-  color: var(--text);
+  background: var(--bg-main);
+  color: var(--text-color);
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -29,13 +48,37 @@ body {
   z-index: -1;
 }
 
+/* 主题切换按钮 */
+.theme-switch {
+  position: fixed;
+  top: 25px;
+  left: 25px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--text-color);
+  cursor: pointer;
+  z-index: 999;
+}
+.theme-switch:hover {
+  background: var(--primary-color);
+  color: #fff;
+}
+
 /* 时钟 */
 .clock-card {
   position: fixed;
   top: 30px;
   right: 30px;
-  background: var(--glass);
-  border: 1px solid var(--border);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   padding: 15px 25px;
   border-radius: 16px;
   backdrop-filter: blur(10px);
@@ -48,7 +91,7 @@ body {
 }
 #dateText {
   font-size: 14px;
-  color: var(--subtext);
+  color: var(--text-sub);
   margin-top: 4px;
 }
 
@@ -62,14 +105,14 @@ body {
   height: 120px;
   margin: 0 auto 20px;
   border-radius: 50%;
-  background: linear-gradient(45deg, #8ab4f8, #c58af9);
+  background: linear-gradient(45deg, var(--primary-color), #c58af9);
 }
 .name {
   font-size: 36px;
   margin-bottom: 12px;
 }
 .motto {
-  color: var(--subtext);
+  color: var(--text-sub);
   font-size: 16px;
   max-width: 600px;
   margin: 0 auto 20px;
@@ -81,12 +124,12 @@ body {
   gap: 10px;
 }
 .tags span {
-  background: var(--glass);
-  border: 1px solid var(--border);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   padding: 6px 14px;
   border-radius: 30px;
   font-size: 14px;
-  color: var(--subtext);
+  color: var(--text-sub);
 }
 
 /* 卡片导航 */
@@ -99,8 +142,8 @@ body {
   gap: 20px;
 }
 .nav-card {
-  background: var(--glass);
-  border: 1px solid var(--border);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   border-radius: 20px;
   padding: 30px 20px;
   text-align: center;
@@ -109,25 +152,32 @@ body {
 }
 .nav-card:hover {
   transform: translateY(-5px);
-  background: rgba(255,255,255,0.08);
+  background: var(--primary-color);
+  color: #fff;
+}
+.nav-card:hover p{
+  color: #eee;
 }
 .card-icon {
   font-size: 36px;
-  color: var(--primary);
+  color: var(--primary-color);
   margin-bottom: 15px;
+}
+.nav-card:hover .card-icon{
+  color: #fff;
 }
 .nav-card h3 {
   font-size: 20px;
   margin-bottom: 8px;
 }
 .nav-card p {
-  color: var(--subtext);
+  color: var(--text-sub);
   font-size: 14px;
   margin-bottom: 18px;
 }
 .nav-card button {
-  background: var(--primary);
-  color: #121212;
+  background: var(--btn-bg);
+  color: var(--btn-text);
   border: none;
   padding: 8px 18px;
   border-radius: 12px;
@@ -142,8 +192,8 @@ body {
   padding: 20px;
 }
 section {
-  background: var(--glass);
-  border: 1px solid var(--border);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   border-radius: 20px;
   padding: 30px;
   margin-bottom: 20px;
@@ -152,13 +202,8 @@ section h2 {
   font-size: 24px;
   margin-bottom: 15px;
 }
-.weather-section {
-  background: var(--glass);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  padding: 30px;
-  margin-bottom: 20px;
-}
+
+/* 天气模块样式 */
 .weather-card {
   display: flex;
   align-items: center;
@@ -168,5 +213,5 @@ section h2 {
 }
 .weather-icon {
   font-size: 48px;
-  color: var(--primary);
+  color: var(--primary-color);
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="zh-CN" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +11,11 @@
 
 <!-- 粒子背景 -->
 <canvas id="particleCanvas"></canvas>
+
+<!-- 主题切换按钮 -->
+<div class="theme-switch" id="themeBtn">
+  <i class="fas fa-moon"></i>
+</div>
 
 <!-- 右侧时钟 -->
 <div class="clock-card">
@@ -66,14 +71,16 @@
 <!-- 内容区域 -->
 <div class="sections">
   <section id="blog"><h2>博客</h2><p>即将上线...</p></section>
+
   <section id="weather" class="weather-section">
-  <h2>🌤 实时天气</h2>
-  <div class="weather-card" id="weatherCard">
-    <p>加载中...</p>
-  </div>
-</section>
-  <section id="message"><h2>留言板</h2><p>留言板功能加载中...</p></section>
-  <section id="video"><h2>视频播放</h2><p>视频模块加载中...</p></section>
+    <h2>🌤 实时天气</h2>
+    <div class="weather-card" id="weatherCard">
+      <p>天气加载中...</p>
+    </div>
+  </section>
+
+  <section id="message"><h2>留言板</h2><p>留言功能开发中...</p></section>
+  <section id="video"><h2>视频播放</h2><p>视频功能开发中...</p></section>
 </div>
 
 <script src="script.js"></script>

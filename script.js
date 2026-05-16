@@ -1,4 +1,28 @@
-// 时钟
+// ========== 1. 深浅色主题切换 ==========
+const themeBtn = document.getElementById('themeBtn');
+const htmlRoot = document.documentElement;
+
+// 读取本地存储主题
+function initTheme() {
+  let localTheme = localStorage.getItem('siteTheme') || 'dark';
+  htmlRoot.setAttribute('data-theme', localTheme);
+  updateThemeIcon(localTheme);
+}
+
+function updateThemeIcon(theme) {
+  let icon = theme === 'dark' ? 'fa-moon' : 'fa-sun';
+  themeBtn.innerHTML = `<i class="fas ${icon}"></i>`;
+}
+
+themeBtn.addEventListener('click', () => {
+  let nowTheme = htmlRoot.getAttribute('data-theme');
+  let newTheme = nowTheme === 'dark' ? 'light' : 'dark';
+  htmlRoot.setAttribute('data-theme', newTheme);
+  localStorage.setItem('siteTheme', newTheme);
+  updateThemeIcon(newTheme);
+});
+
+// ========== 2. 实时时钟 ==========
 function updateClock() {
   const now = new Date();
   const h = String(now.getHours()).padStart(2, '0');
@@ -15,7 +39,7 @@ function updateClock() {
 updateClock();
 setInterval(updateClock, 1000);
 
-// 粒子背景
+// ========== 3. 粒子背景（自动适配深浅色） ==========
 const canvas = document.getElementById('particleCanvas');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
@@ -37,7 +61,9 @@ class Particle {
     if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
   }
   draw() {
-    ctx.fillStyle = 'rgba(255,255,255,0.2)';
+    // 自动跟随主题变色
+    let color = getComputedStyle(document.documentElement).getPropertyValue('--particle-color');
+    ctx.fillStyle = color;
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     ctx.fill();
@@ -55,36 +81,42 @@ function animateParticles() {
 createParticles();
 animateParticles();
 
-// 跳转
+// ========== 4. 平滑滚动跳转 ==========
 function goSection(id) {
   document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
 }
-// 天气 - Open-Meteo
+
+// ========== 5. 免费天气API 无需密钥 ==========
 async function loadWeather() {
   const card = document.getElementById('weatherCard');
   try {
-    // 苏州经纬度
-    const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=31.3&longitude=120.6&current_weather=true&hourly=temperature_2m,relativehumidity_2m&timezone=Asia/Shanghai');
+    // 苏州经纬度，自行修改
+    let url = "https://api.open-meteo.com/v1/forecast?latitude=31.3&longitude=120.6&current_weather=true&hourly=temperature_2m,relativehumidity_2m&timezone=Asia/Shanghai";
+    const res = await fetch(url);
     const data = await res.json();
     const w = data.current_weather;
 
-    // 简单天气代码映射
-    const codeMap = {
-      0: '☀️', 1: '⛅', 2: '☁️', 3: '☁️',
-      45: '🌫', 61: '🌦', 63: '🌧', 80: '🌦'
+    const weatherIcon = {
+      0:'☀️',1:'🌤',2:'⛅',3:'☁️',45:'🌫',48:'🌫',
+      51:'🌧',61:'🌦',63:'🌧',71:'❄️',80:'🌦'
     };
-    const icon = codeMap[w.weathercode] || '🌤';
+    let icon = weatherIcon[w.weathercode] || '🌤';
 
     card.innerHTML = `
       <div class="weather-icon">${icon}</div>
       <div>
-        <p>温度：${w.temperature}°C</p>
+        <p>实时温度：${w.temperature} °C</p>
         <p>风速：${w.windspeed} km/h</p>
-        <p>湿度：${data.hourly.relativehumidity_2m[0]}%</p>
+        <p>空气湿度：${data.hourly.relativehumidity_2m[0]} %</p>
       </div>
     `;
   } catch (e) {
-    card.innerHTML = '<p>天气加载失败</p>';
+    card.innerHTML = `<p>天气数据加载失败，请稍后重试</p>`;
   }
 }
-loadWeather();
+
+// 初始化全部
+window.onload = function(){
+  initTheme();
+  loadWeather();
+}
