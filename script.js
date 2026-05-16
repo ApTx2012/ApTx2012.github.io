@@ -59,3 +59,32 @@ animateParticles();
 function goSection(id) {
   document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
 }
+// 天气 - Open-Meteo
+async function loadWeather() {
+  const card = document.getElementById('weatherCard');
+  try {
+    // 苏州经纬度
+    const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=31.3&longitude=120.6&current_weather=true&hourly=temperature_2m,relativehumidity_2m&timezone=Asia/Shanghai');
+    const data = await res.json();
+    const w = data.current_weather;
+
+    // 简单天气代码映射
+    const codeMap = {
+      0: '☀️', 1: '⛅', 2: '☁️', 3: '☁️',
+      45: '🌫', 61: '🌦', 63: '🌧', 80: '🌦'
+    };
+    const icon = codeMap[w.weathercode] || '🌤';
+
+    card.innerHTML = `
+      <div class="weather-icon">${icon}</div>
+      <div>
+        <p>温度：${w.temperature}°C</p>
+        <p>风速：${w.windspeed} km/h</p>
+        <p>湿度：${data.hourly.relativehumidity_2m[0]}%</p>
+      </div>
+    `;
+  } catch (e) {
+    card.innerHTML = '<p>天气加载失败</p>';
+  }
+}
+loadWeather();
