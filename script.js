@@ -1,8 +1,7 @@
-// ========== 1. 深浅色主题切换 ==========
+// ========== 主题切换 ==========
 const themeBtn = document.getElementById('themeBtn');
 const htmlRoot = document.documentElement;
 
-// 读取本地存储主题
 function initTheme() {
   let localTheme = localStorage.getItem('siteTheme') || 'dark';
   htmlRoot.setAttribute('data-theme', localTheme);
@@ -22,7 +21,7 @@ themeBtn.addEventListener('click', () => {
   updateThemeIcon(newTheme);
 });
 
-// ========== 2. 实时时钟 ==========
+// ========== 时钟 ==========
 function updateClock() {
   const now = new Date();
   const h = String(now.getHours()).padStart(2, '0');
@@ -39,7 +38,20 @@ function updateClock() {
 updateClock();
 setInterval(updateClock, 1000);
 
-// ========== 3. 粒子背景（自动适配深浅色） ==========
+// ========== 🔥 背景图片轮播（新加） ==========
+let bgIndex = 0;
+const bgItems = document.querySelectorAll('.bg-item');
+
+function changeBackground() {
+  bgItems.forEach(i => i.classList.remove('active'));
+  bgIndex = (bgIndex + 1) % bgItems.length;
+  bgItems[bgIndex].classList.add('active');
+}
+
+// 每 6 秒切换一张
+setInterval(changeBackground, 6000);
+
+// ========== 粒子背景 ==========
 const canvas = document.getElementById('particleCanvas');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
@@ -80,12 +92,12 @@ function animateParticles() {
 createParticles();
 animateParticles();
 
-// ========== 4. 平滑滚动跳转 ==========
+// ========== 滚动 ==========
 function goSection(id) {
   document.querySelector(id).scrollIntoView({ behavior: 'smooth' });
 }
 
-// ========== 5. 免费天气API 无需密钥 ==========
+// ========== 天气 ==========
 async function loadWeather() {
   const card = document.getElementById('weatherCard');
   try {
@@ -113,7 +125,7 @@ async function loadWeather() {
   }
 }
 
-// 初始化全部
+// 初始化
 window.onload = function(){
   initTheme();
   loadWeather();

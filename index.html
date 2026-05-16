@@ -9,21 +9,28 @@
 </head>
 <body>
 
-<!-- 粒子背景 -->
+<!-- 🔥 自动轮播背景层（新加） -->
+<div class="bg-slideshow">
+  <div class="bg-item active"></div>
+  <div class="bg-item"></div>
+  <div class="bg-item"></div>
+</div>
+
+<!-- 粒子背景（保留） -->
 <canvas id="particleCanvas"></canvas>
 
-<!-- 主题切换按钮 -->
+<!-- 主题切换 -->
 <div class="theme-switch" id="themeBtn">
   <i class="fas fa-moon"></i>
 </div>
 
-<!-- 右侧时钟 -->
+<!-- 时钟 -->
 <div class="clock-card">
   <div id="timeText">00:00:00</div>
   <div id="dateText">加载日期中...</div>
 </div>
 
-<!-- 顶部个人信息 -->
+<!-- 个人信息 -->
 <div class="profile-container">
   <div class="avatar"></div>
   <h1 class="name">HI, I'M AxTps</h1>
@@ -37,32 +44,30 @@
   </div>
 </div>
 
-<!-- 功能卡片导航 -->
+<!-- 功能卡片 -->
 <div class="card-grid">
   <div class="nav-card">
     <div class="card-icon"><i class="fas fa-book"></i></div>
     <h3>博客</h3>
-    <p>写不了一点</p>
+    <p>即将上线</p>
     <button onclick="goSection('#blog')">前往</button>
   </div>
 
   <div class="nav-card">
     <div class="card-icon"><i class="fas fa-cloud"></i></div>
     <h3>天气</h3>
-    <p>实时天气查询</p>
+    <p>实时查询</p>
     <button onclick="goSection('#weather')">前往</button>
   </div>
 </div>
 
-<!-- 内容区域 -->
+<!-- 内容区 -->
 <div class="sections">
   <section id="blog"><h2>博客</h2><p>即将上线...</p></section>
 
   <section id="weather" class="weather-section">
     <h2>🌤 实时天气</h2>
-    <div class="weather-card" id="weatherCard">
-      <p>天气加载中...</p>
-    </div>
+    <div class="weather-card" id="weatherCard"><p>加载中...</p></div>
   </section>
 </div>
 
