@@ -6,6 +6,55 @@ function logError(moduleName, msg = '未知异常') {
   console.log(`%c ❌ ${moduleName} 加载失败：${msg}`, 'color: #e74c3c; font-size: 14px; font-weight: bold;');
 }
 
+function getPerformanceMode() {
+  const saved = localStorage.getItem('sitePerformanceMode');
+  if (saved === 'low' || saved === 'medium' || saved === 'high') {
+    return saved;
+  }
+  if (window.sitePerformanceMode === 'low' || window.sitePerformanceMode === 'medium' || window.sitePerformanceMode === 'high') {
+    return window.sitePerformanceMode;
+  }
+
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const connection = navigator.connection || {};
+  const saveData = connection.saveData;
+  const effectiveType = connection.effectiveType || '';
+  const memory = navigator.deviceMemory || 4;
+  const cores = navigator.hardwareConcurrency || 4;
+
+  if (reducedMotion || saveData || ['slow-2g', '2g'].includes(effectiveType) || memory < 2 || cores < 2) {
+    return 'low';
+  }
+  if (memory >= 8 && cores >= 4 && !['slow-2g', '2g'].includes(effectiveType)) {
+    return 'high';
+  }
+  return 'medium';
+}
+
+function getPerformanceLabel(mode) {
+  return mode === 'high' ? '高' : mode === 'medium' ? '中' : '低';
+}
+
+function getNextPerformanceMode(mode) {
+  return mode === 'low' ? 'medium' : mode === 'medium' ? 'high' : 'low';
+}
+
+let sitePerformanceMode = getPerformanceMode();
+console.log(`%c 🔧 性能模式：${sitePerformanceMode}`, 'color:#3498db; font-size: 13px;');
+
+function updatePerformanceButton() {
+  const perfBtn = document.getElementById('perfBtn');
+  if (perfBtn) {
+    perfBtn.innerText = `性能：${getPerformanceLabel(sitePerformanceMode)}`;
+  }
+}
+
+function setPerformanceMode(mode) {
+  sitePerformanceMode = mode;
+  localStorage.setItem('sitePerformanceMode', mode);
+  updatePerformanceButton();
+  window.location.reload();
+}
 
 try{
   const loadBox = document.getElementById('loadingBox');
@@ -16,6 +65,14 @@ try{
 }catch(e){
   logError('页面加载动画模块',e.message);
 }
+
+(function() {
+  const perfBtn = document.getElementById('perfBtn');
+  if (perfBtn) {
+    updatePerformanceButton();
+    perfBtn.addEventListener('click', () => setPerformanceMode(getNextPerformanceMode(sitePerformanceMode)));
+  }
+})();
 
 try{
   const backTop = document.getElementById('backTop');
@@ -78,103 +135,109 @@ try {
 // ====================== 3. WebGL 装饰背景模块 ======================
 try {
   const webglCanvas = document.getElementById('webglCanvas');
-  const gl = webglCanvas.getContext('webgl');
 
-  if (gl) {
-    function resizeWebgl() {
-      webglCanvas.width = webglCanvas.clientWidth;
-      webglCanvas.height = webglCanvas.clientHeight;
-      gl.viewport(0, 0, webglCanvas.width, webglCanvas.height);
-    }
-    resizeWebgl();
-    window.addEventListener('resize', resizeWebgl);
-
-    const vertexShaderSource = `
-      attribute vec2 a_position;
-      void main() {
-        gl_Position = vec4(a_position, 0.0, 1.0);
-      }
-    `;
-
-    const fragmentShaderSource = `
-      precision mediump float;
-      uniform float u_time;
-      uniform vec2 u_resolution;
-      void main() {
-        vec2 uv = gl_FragCoord.xy / u_resolution - 0.5;
-        uv.x *= u_resolution.x / u_resolution.y;
-        float r = length(uv);
-        float angle = atan(uv.y, uv.x) + u_time * 0.4;
-        float wave = 0.5 + 0.5 * cos(angle * 3.0 - u_time * 2.0);
-        float glow = 0.05 / (r + 0.02);
-        vec3 color = mix(vec3(0.03,0.08,0.18), vec3(0.15,0.35,0.82), wave);
-        gl_FragColor = vec4(color + glow * vec3(0.4,0.7,1.0), 1.0);
-      }
-    `;
-
-    function createShader(type, source) {
-      const shader = gl.createShader(type);
-      gl.shaderSource(shader, source);
-      gl.compileShader(shader);
-      if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-        console.error(gl.getShaderInfoLog(shader));
-        gl.deleteShader(shader);
-        return null;
-      }
-      return shader;
-    }
-
-    function createProgram(vs, fs) {
-      const program = gl.createProgram();
-      gl.attachShader(program, vs);
-      gl.attachShader(program, fs);
-      gl.linkProgram(program);
-      if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
-        console.error(gl.getProgramInfoLog(program));
-        gl.deleteProgram(program);
-        return null;
-      }
-      return program;
-    }
-
-    const vertexShader = createShader(gl.VERTEX_SHADER, vertexShaderSource);
-    const fragmentShader = createShader(gl.FRAGMENT_SHADER, fragmentShaderSource);
-    const program = createProgram(vertexShader, fragmentShader);
-
-    const positionBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
-      -1, -1,
-      1, -1,
-      -1, 1,
-      -1, 1,
-      1, -1,
-      1, 1
-    ]), gl.STATIC_DRAW);
-
-    const aPosition = gl.getAttribLocation(program, 'a_position');
-    const uTime = gl.getUniformLocation(program, 'u_time');
-    const uResolution = gl.getUniformLocation(program, 'u_resolution');
-
-    gl.useProgram(program);
-    gl.enableVertexAttribArray(aPosition);
-    gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
-
-    let startTime = performance.now();
-
-    function renderWebgl() {
-      const time = (performance.now() - startTime) * 0.001;
-      gl.clearColor(0, 0, 0, 0);
-      gl.clear(gl.COLOR_BUFFER_BIT);
-      gl.uniform1f(uTime, time);
-      gl.uniform2f(uResolution, webglCanvas.width, webglCanvas.height);
-      gl.drawArrays(gl.TRIANGLES, 0, 6);
-      requestAnimationFrame(renderWebgl);
-    }
-    renderWebgl();
-    logSuccess('WebGL 装饰背景模块');
+  if (sitePerformanceMode === 'low') {
+    webglCanvas.style.display = 'none';
+    logSuccess('WebGL 装饰背景模块（低配跳过）');
   } else {
-    logError('WebGL 装饰背景模块', '浏览器不支持 WebGL');
+    const gl = webglCanvas.getContext('webgl');
+
+    if (gl) {
+      function resizeWebgl() {
+        webglCanvas.width = webglCanvas.clientWidth;
+        webglCanvas.height = webglCanvas.clientHeight;
+        gl.viewport(0, 0, webglCanvas.width, webglCanvas.height);
+      }
+      resizeWebgl();
+      window.addEventListener('resize', resizeWebgl);
+
+      const vertexShaderSource = `
+        attribute vec2 a_position;
+        void main() {
+          gl_Position = vec4(a_position, 0.0, 1.0);
+        }
+      `;
+
+      const fragmentShaderSource = `
+        precision mediump float;
+        uniform float u_time;
+        uniform vec2 u_resolution;
+        void main() {
+          vec2 uv = gl_FragCoord.xy / u_resolution - 0.5;
+          uv.x *= u_resolution.x / u_resolution.y;
+          float r = length(uv);
+          float angle = atan(uv.y, uv.x) + u_time * 0.4;
+          float wave = 0.5 + 0.5 * cos(angle * 3.0 - u_time * 2.0);
+          float glow = 0.05 / (r + 0.02);
+          vec3 color = mix(vec3(0.03,0.08,0.18), vec3(0.15,0.35,0.82), wave);
+          gl_FragColor = vec4(color + glow * vec3(0.4,0.7,1.0), 1.0);
+        }
+      `;
+
+      function createShader(type, source) {
+        const shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+          console.error(gl.getShaderInfoLog(shader));
+          gl.deleteShader(shader);
+          return null;
+        }
+        return shader;
+      }
+
+      function createProgram(vs, fs) {
+        const program = gl.createProgram();
+        gl.attachShader(program, vs);
+        gl.attachShader(program, fs);
+        gl.linkProgram(program);
+        if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+          console.error(gl.getProgramInfoLog(program));
+          gl.deleteProgram(program);
+          return null;
+        }
+        return program;
+      }
+
+      const vertexShader = createShader(gl.VERTEX_SHADER, vertexShaderSource);
+      const fragmentShader = createShader(gl.FRAGMENT_SHADER, fragmentShaderSource);
+      const program = createProgram(vertexShader, fragmentShader);
+
+      const positionBuffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+        -1, -1,
+        1, -1,
+        -1, 1,
+        -1, 1,
+        1, -1,
+        1, 1
+      ]), gl.STATIC_DRAW);
+
+      const aPosition = gl.getAttribLocation(program, 'a_position');
+      const uTime = gl.getUniformLocation(program, 'u_time');
+      const uResolution = gl.getUniformLocation(program, 'u_resolution');
+
+      gl.useProgram(program);
+      gl.enableVertexAttribArray(aPosition);
+      gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
+
+      let startTime = performance.now();
+
+      function renderWebgl() {
+        const time = (performance.now() - startTime) * 0.001;
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.uniform1f(uTime, time);
+        gl.uniform2f(uResolution, webglCanvas.width, webglCanvas.height);
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+        requestAnimationFrame(renderWebgl);
+      }
+      renderWebgl();
+      logSuccess('WebGL 装饰背景模块');
+    } else {
+      logError('WebGL 装饰背景模块', '浏览器不支持 WebGL');
+    }
   }
 } catch (e) {
   logError('WebGL 装饰背景模块', e.message);
@@ -217,54 +280,62 @@ async function loadWeather() {
 // ====================== 6. 背景飞行旋转图片模块 ======================
 try {
   const flyingContainer = document.getElementById('flyingImages');
-  const images = ['img/bg1.jpg','img/bg2.jpg','img/bg3.jpg','img/bg4.jpg','img/bg5.jpg'];
+  const allImages = ['img/bg1.jpg','img/bg2.jpg','img/bg3.jpg','img/bg4.jpg','img/bg5.jpg'];
   const flyingItems = [];
   let loadErrCount = 0;
+  const imageCount = sitePerformanceMode === 'high' ? 5 : sitePerformanceMode === 'medium' ? 3 : 0;
 
-  images.forEach(src => {
-    const img = document.createElement('img');
-    img.src = src;
-    img.className = 'flying-img';
-    img.style.width = '180px';
+  if (imageCount === 0) {
+    flyingContainer.style.display = 'none';
+    logSuccess('背景飞行图片模块（低配跳过）');
+  } else {
+    const selectedImages = allImages.slice(0, imageCount);
+    const speedFactor = sitePerformanceMode === 'high' ? 1.2 : 0.7;
 
-    // 单张图片加载失败监听
-    img.onerror = () => {
-      loadErrCount++;
-      logError('背景图片资源', `${src} 加载失败`);
-    };
-    
-    const item = {
-      el: img,
-      x: Math.random() * window.innerWidth,
-      y: Math.random() * window.innerHeight,
-      speedX: (Math.random() - 0.5) * 1.2,
-      speedY: (Math.random() - 0.5) * 1.2,
-      rotate: Math.random() * 360,
-      rotateSpeed: (Math.random() - 0.5) * 0.8
-    };
-    flyingContainer.appendChild(img);
-    flyingItems.push(item);
-  });
+    selectedImages.forEach(src => {
+      const img = document.createElement('img');
+      img.src = src;
+      img.className = 'flying-img';
+      img.style.width = '180px';
 
-  function flyAnimate() {
-    flyingItems.forEach(item => {
-      item.x += item.speedX;
-      item.y += item.speedY;
-      item.rotate += item.rotateSpeed;
-      if (item.x < -200) item.x = window.innerWidth + 100;
-      if (item.x > window.innerWidth + 200) item.x = -100;
-      if (item.y < -200) item.y = window.innerHeight + 100;
-      if (item.y > window.innerHeight + 200) item.y = -100;
-      item.el.style.left = item.x + 'px';
-      item.el.style.top = item.y + 'px';
-      item.el.style.transform = `rotate(${item.rotate}deg)`;
+      img.onerror = () => {
+        loadErrCount++;
+        logError('背景图片资源', `${src} 加载失败`);
+      };
+      
+      const item = {
+        el: img,
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        speedX: (Math.random() - 0.5) * speedFactor,
+        speedY: (Math.random() - 0.5) * speedFactor,
+        rotate: Math.random() * 360,
+        rotateSpeed: (Math.random() - 0.5) * 0.8
+      };
+      flyingContainer.appendChild(img);
+      flyingItems.push(item);
     });
-    requestAnimationFrame(flyAnimate);
-  }
-  flyAnimate();
 
-  if(loadErrCount === 0) logSuccess('背景飞行图片模块');
-  else logError('背景飞行图片模块', `${loadErrCount}张图片缺失/加载失败`);
+    function flyAnimate() {
+      flyingItems.forEach(item => {
+        item.x += item.speedX;
+        item.y += item.speedY;
+        item.rotate += item.rotateSpeed;
+        if (item.x < -200) item.x = window.innerWidth + 100;
+        if (item.x > window.innerWidth + 200) item.x = -100;
+        if (item.y < -200) item.y = window.innerHeight + 100;
+        if (item.y > window.innerHeight + 200) item.y = -100;
+        item.el.style.left = item.x + 'px';
+        item.el.style.top = item.y + 'px';
+        item.el.style.transform = `rotate(${item.rotate}deg)`;
+      });
+      requestAnimationFrame(flyAnimate);
+    }
+    flyAnimate();
+
+    if(loadErrCount === 0) logSuccess('背景飞行图片模块');
+    else logError('背景飞行图片模块', `${loadErrCount}张图片缺失/加载失败`);
+  }
 } catch (e) {
   logError('背景飞行图片模块', e.message);
 }

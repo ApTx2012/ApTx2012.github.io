@@ -11,6 +11,30 @@
   <link rel="stylesheet" href="css/ripple.css">
   <link rel="stylesheet" href="css/text-light.css">
   <link rel="stylesheet" href="css/rain.css">
+  <script>
+    (function() {
+      const saved = localStorage.getItem('sitePerformanceMode');
+      let mode = saved === 'low' || saved === 'medium' || saved === 'high' ? saved : null;
+      if (!mode) {
+        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const connection = navigator.connection || {};
+        const saveData = connection.saveData;
+        const effectiveType = connection.effectiveType || '';
+        const memory = navigator.deviceMemory || 4;
+        const cores = navigator.hardwareConcurrency || 4;
+        if (reducedMotion || saveData || ['slow-2g', '2g'].includes(effectiveType) || memory < 2 || cores < 2) {
+          mode = 'low';
+        } else if (memory >= 8 && cores >= 4 && !['slow-2g', '2g'].includes(effectiveType)) {
+          mode = 'high';
+        } else {
+          mode = 'medium';
+        }
+      }
+      window.sitePerformanceMode = mode;
+      document.documentElement.dataset.perfMode = mode;
+      document.documentElement.classList.add(`perf-${mode}`);
+    })();
+  </script>
 </head>
 <body>
 
@@ -33,6 +57,7 @@
 <div class="theme-switch" id="themeBtn">
   <i class="fas fa-moon"></i>
 </div>
+<div class="perf-switch" id="perfBtn">性能：自动</div>
 
 <!-- 时钟 -->
 <div class="clock-card">
