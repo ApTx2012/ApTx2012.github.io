@@ -51,6 +51,39 @@
     <div id="game2048-root" class="game-root">游戏加载中...</div>
   </div>
 
+  <!-- 网易云音乐播放器 -->
+  <div class="netease-music-box" id="neteaseMusic">
+    <iframe id="musicIframe" frameborder="no" border="0" marginwidth="0" marginheight="0" width="278" height="430" allow="autoplay"></iframe>
+    <div class="music-toggle" id="musicToggle">收起</div>
+  </div>
+
+  <script>
+    // 歌单播放器
+    (function() {
+      const PLAYLIST_ID = "9110196326";
+      const musicIframe = document.getElementById('musicIframe');
+      const musicBox = document.getElementById('neteaseMusic');
+      const musicToggle = document.getElementById('musicToggle');
+
+      if (musicIframe) {
+        musicIframe.src = 'https://music.163.com/outchain/player?type=0&id=' + PLAYLIST_ID + '&auto=1&height=430';
+      }
+
+      if (musicToggle && musicBox) {
+        let isOpen = true;
+        musicToggle.addEventListener('click', () => {
+          isOpen = !isOpen;
+          if (isOpen) {
+            musicBox.classList.remove('close');
+            musicToggle.innerText = '收起';
+          } else {
+            musicBox.classList.add('close');
+            musicToggle.innerText = '展开';
+          }
+        });
+      }
+    })();
+  </script>
   <script type="module" src="js/2048.js"></script>
 </body>
 </html>
