@@ -30,6 +30,102 @@ let scoreEl;
 let statusEl;
 let tileEls = [];
 
+// ===== 秘技代码检测 =====
+const KONAMI = ["up", "up", "down", "down", "left", "left", "right", "right", "a", "b", "a", "b"];
+let konamiIndex = 0;
+let konamiTriggered = false;
+let confettiInterval = null;
+
+function triggerKonamiCelebration() {
+  if (konamiTriggered) return;
+  konamiTriggered = true;
+
+  // 创建彩色方块庆祝动画
+  const colors = ["#d678ff", "#82d9ff", "#ffd8f8", "#ff6b6b", "#4ecdc4", "#ffe66d"];
+  const container = document.createElement("div");
+  container.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:99999;overflow:hidden;";
+  document.body.appendChild(container);
+
+  for (let i = 0; i < 80; i++) {
+    const confetti = document.createElement("div");
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    const size = Math.random() * 12 + 6;
+    const x = Math.random() * window.innerWidth;
+    const delay = Math.random() * 2;
+    confetti.style.cssText = `
+      position:absolute;
+      left:${x}px;
+      top:-20px;
+      width:${size}px;
+      height:${size}px;
+      background:${color};
+      border-radius:${Math.random() > 0.5 ? "50%" : "2px"};
+      animation: confettiFall ${2 + Math.random() * 2}s ease-out ${delay}s forwards;
+    `;
+    container.appendChild(confetti);
+  }
+
+  // 添加动画关键帧
+  if (!document.getElementById("konami-style")) {
+    const style = document.createElement("style");
+    style.id = "konami-style";
+    style.textContent = `
+      @keyframes confettiFall {
+        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
+  }
+
+  // 显示提示文字
+  const msg = document.createElement("div");
+  msg.style.cssText = `
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-size:48px;
+    font-weight:bold;
+    color:#d678ff;
+    text-shadow:0 0 20px #d678ff, 0 0 40px #82d9ff;
+    z-index:100000;
+    animation: konamiPulse 0.5s ease-in-out infinite alternate;
+    font-family:sans-serif;
+  `;
+  msg.textContent = "🎮 秘技成功！🎮";
+  document.body.appendChild(msg);
+
+  // 同时触发游戏重置并弹出高分（演示用）
+  if (game) {
+    // 尝试多次移动制造高分假象
+    for (let i = 0; i < 20; i++) {
+      game.move_dir(["up", "down", "left", "right"][i % 4]);
+    }
+    renderBoard();
+  }
+
+  // 3秒后移除庆祝效果
+  setTimeout(() => {
+    container.remove();
+    msg.remove();
+    konamiTriggered = false;
+  }, 5000);
+}
+
+function checkKonami(dir) {
+  if (konamiTriggered) return;
+  if (KONAMI[konamiIndex] === dir) {
+    konamiIndex++;
+    if (konamiIndex === KONAMI.length) {
+      konamiIndex = 0;
+      triggerKonamiCelebration();
+    }
+  } else {
+    konamiIndex = (dir === KONAMI[0]) ? 1 : 0;
+  }
+}
+
 function renderBoard() {
   const board = game.board();
   for (let i = 0; i < 16; i++) {
@@ -148,6 +244,10 @@ async function start2048() {
     window.addEventListener("keydown", (event) => {
       const dir = keyMap[event.key];
       if (!dir || !game) return;
+
+      // 检查秘技代码
+      checkKonami(dir);
+
       event.preventDefault();
       const moved = game.move_dir(dir);
       if (moved) {
