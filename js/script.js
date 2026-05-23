@@ -117,9 +117,12 @@ try {
 
 // ====================== 4. 页面滚动模块 ======================
 try {
-  function goSection(id) {
-    document.querySelector(id).scrollIntoView({ behavior:'smooth' });
-  }
+  window.goSection = function(id) {
+    const target = document.querySelector(id);
+    if (target) {
+      target.scrollIntoView({ behavior:'smooth' });
+    }
+  };
   logSuccess('页面滚动模块');
 } catch (e) {
   logError('页面滚动模块', e.message);
