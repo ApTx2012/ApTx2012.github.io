@@ -165,13 +165,6 @@ body::after {
   pointer-events: none;
 }
 
-#particleCanvas {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  z-index: -2;
-}
-
 .hero-banner {
   max-width: 1000px;
   margin: 0 auto;
@@ -313,8 +306,9 @@ body::after {
 }
 
 html.perf-low #webglCanvas,
+html.perf-medium #webglCanvas,
 html.perf-low #flyingImages,
-html.perf-low #particleCanvas {
+html.perf-medium #flyingImages {
   display: none !important;
 }
 
