@@ -103,6 +103,13 @@
   </div>
 
   <div class="nav-card">
+    <div class="card-icon"><i class="fas fa-gamepad"></i></div>
+    <h3>2048</h3>
+    <p>Rust / WASM 游戏</p>
+    <button onclick="goSection('#game2048')">前往</button>
+  </div>
+
+  <div class="nav-card">
     <div class="card-icon"><i class="fas fa-layer-group"></i></div>
     <h3>资源站</h3>
     <p>图床 / 资源收藏</p>
@@ -116,6 +123,10 @@
   <section id="weather" class="weather-section">
     <h2 class="section-title">🌤 实时天气</h2>
     <div class="weather-card" id="weatherCard"><p>加载中...</p></div>
+  </section>
+  <section id="game2048" class="game-section">
+    <h2 class="section-title">🎮 2048 - Rust / WASM</h2>
+    <div id="game2048-root" class="game-root">游戏加载中...</div>
   </section>
   <section id="resources" class="resources-section">
     <h2 class="section-title">资源站 / 图床</h2>
@@ -147,6 +158,7 @@
 </div>
 
 <script src="js/script.js"></script>
+<script type="module" src="js/2048.js"></script>
 <script src="js/cube.js"></script>
 <script src="js/star.js"></script>
 <script src="js/ripple.js"></script>

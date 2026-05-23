@@ -8,6 +8,11 @@
 
 :root {
   --bg-main: #100f22;
+  --bg-radial-1: rgba(214,132,255,0.16);
+  --bg-radial-2: rgba(130,217,255,0.14);
+  --bg-radial-3: rgba(255,152,214,0.12);
+  --bg-flow: linear-gradient(180deg, rgba(255,255,255,0.06), transparent 25%);
+  --bg-bubble: rgba(255,186,248,0.08);
   --glass-bg: rgba(255,255,255,0.12);
   --glass-border: rgba(255,255,255,0.18);
   --text-color: #f4eef7;
@@ -15,18 +20,37 @@
   --primary-color: #d678ff;
   --secondary-color: #82d9ff;
   --accent-color: #ffd8f8;
-  --bg-mask: rgba(10,13,34,0.78);
+  --hero-badge-bg: rgba(214, 136, 255, 0.18);
+  --card-bg: rgba(255,255,255,0.08);
+  --card-border: rgba(255,255,255,0.14);
+  --card-shadow: 0 18px 45px rgba(0,0,0,0.06);
+  --section-shadow: 0 20px 50px rgba(0,0,0,0.08);
+  --avatar-shadow: rgba(214,142,255,0.26);
+  --resource-bg: rgba(138,180,248,0.14);
+  --navcard-hover-bg: rgba(255,255,255,0.14);
 }
 html[data-theme="light"] {
   --bg-main: #f7f4ff;
-  --glass-bg: rgba(255,255,255,0.85);
+  --bg-radial-1: rgba(151,80,255,0.10);
+  --bg-radial-2: rgba(74,174,255,0.10);
+  --bg-radial-3: rgba(255,171,237,0.08);
+  --bg-flow: linear-gradient(180deg, rgba(255,255,255,0.92), transparent 25%);
+  --bg-bubble: rgba(255,221,244,0.16);
+  --glass-bg: rgba(255,255,255,0.92);
   --glass-border: rgba(0,0,0,0.08);
   --text-color: #111;
   --text-sub: #666;
   --primary-color: #9750ff;
   --secondary-color: #4aaeff;
   --accent-color: #ffe1ff;
-  --bg-mask: rgba(255,255,255,0.75);
+  --hero-badge-bg: rgba(151, 80, 255, 0.14);
+  --card-bg: rgba(255,255,255,0.92);
+  --card-border: rgba(0,0,0,0.08);
+  --card-shadow: 0 18px 45px rgba(0,0,0,0.08);
+  --section-shadow: 0 20px 50px rgba(0,0,0,0.08);
+  --avatar-shadow: rgba(150,125,255,0.16);
+  --resource-bg: rgba(151,80,255,0.12);
+  --navcard-hover-bg: rgba(151,80,255,0.18);
 }
 
 .loading-box{
@@ -100,9 +124,9 @@ html[data-theme="light"] {
 }
 
 body {
-  background: radial-gradient(circle at 10% 15%, rgba(214, 132, 255, 0.16), transparent 18%),
-              radial-gradient(circle at 90% 10%, rgba(130, 217, 255, 0.14), transparent 15%),
-              radial-gradient(circle at 60% 90%, rgba(255, 152, 214, 0.12), transparent 22%),
+  background: radial-gradient(circle at 10% 15%, var(--bg-radial-1), transparent 18%),
+              radial-gradient(circle at 90% 10%, var(--bg-radial-2), transparent 15%),
+              radial-gradient(circle at 60% 90%, var(--bg-radial-3), transparent 22%),
               var(--bg-main);
   color: var(--text-color);
   min-height: 100vh;
@@ -115,7 +139,7 @@ body::before {
   position: fixed;
   top: 0; left: 0;
   width: 100vw; height: 100vh;
-  background: linear-gradient(180deg, rgba(255,255,255,0.06), transparent 25%);
+  background: var(--bg-flow);
   pointer-events: none;
   z-index: -3;
 }
@@ -127,7 +151,7 @@ body::after {
   top: 40%;
   width: 280px;
   height: 280px;
-  background: rgba(255, 186, 248, 0.08);
+  background: var(--bg-bubble);
   filter: blur(68px);
   pointer-events: none;
   z-index: -3;
@@ -215,6 +239,77 @@ body::after {
   transform: translateY(-2px);
   background: var(--primary-color);
   color: #fff;
+}
+
+.game-root {
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  gap: 12px;
+}
+
+.game-score {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-color);
+}
+
+.game-reset {
+  border: none;
+  border-radius: 18px;
+  padding: 10px 18px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 12px 24px rgba(214, 142, 255, 0.22);
+}
+
+.game-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  padding: 16px;
+  border-radius: 24px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.16);
+}
+
+.tile {
+  width: 70px;
+  height: 70px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  font-weight: 700;
+  font-size: 20px;
+  color: var(--text-color);
+  background: rgba(255,255,255,0.08);
+}
+
+.tile-empty {
+  background: rgba(255,255,255,0.04);
+}
+
+.tile-2 { background: rgba(255, 255, 255, 0.12); color: #111; }
+.tile-4 { background: rgba(255, 229, 180, 0.35); color: #111; }
+.tile-8 { background: rgba(255, 203, 160, 0.45); }
+.tile-16 { background: rgba(255, 172, 169, 0.55); }
+.tile-32 { background: rgba(236, 133, 255, 0.55); }
+.tile-64 { background: rgba(219, 109, 255, 0.7); }
+.tile-128 { background: rgba(132, 217, 255, 0.72); }
+.tile-256 { background: rgba(198, 255, 206, 0.7); color: #111; }
+.tile-512 { background: rgba(255, 138, 228, 0.72); }
+
+.game-help {
+  margin-top: 14px;
+  color: var(--text-sub);
+  text-align: center;
 }
 
 html.perf-low #webglCanvas,
