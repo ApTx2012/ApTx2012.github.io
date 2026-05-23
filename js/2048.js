@@ -78,18 +78,29 @@ function setupGame() {
   renderBoard();
 }
 
+const wasmUrl = new URL("../wasm-2048/pkg/wasm_2048_bg.wasm", import.meta.url);
+
 async function start2048() {
-  await init("../wasm-2048/pkg/wasm_2048_bg.wasm");
-  setupGame();
-  window.addEventListener("keydown", (event) => {
-    const dir = keyMap[event.key];
-    if (!dir) return;
-    event.preventDefault();
-    const moved = game.move_dir(dir);
-    if (moved) {
-      renderBoard();
+  const root = document.getElementById("game2048-root");
+  try {
+    await init(wasmUrl);
+    setupGame();
+    window.addEventListener("keydown", (event) => {
+      const dir = keyMap[event.key];
+      if (!dir || !game) return;
+      event.preventDefault();
+      const moved = game.move_dir(dir);
+      if (moved) {
+        renderBoard();
+      }
+    });
+  } catch (err) {
+    console.error("WASM 2048 加载失败：", err);
+    if (root) {
+      root.innerHTML = "游戏加载失败。请确保通过 HTTP 服务访问，并检查浏览器控制台错误。";
+      root.classList.add("game-error");
     }
-  });
+  }
 }
 
 start2048();
