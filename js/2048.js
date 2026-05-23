@@ -89,22 +89,37 @@ const wasmUrl = new URL("../wasm-2048/pkg/wasm_2048_bg.wasm", import.meta.url);
 
 async function start2048() {
   const root = document.getElementById("game2048-root");
+
+  // file:// 协议检测
   if (window.location.protocol === "file:") {
-    console.warn("WASM 2048 requires HTTP/HTTPS protocol. file:// is blocked by browser CORS.");
-    if (root) {
-      root.innerHTML = `
-        <div class="game-error">
-          当前页面通过 <strong>file://</strong> 协议打开，浏览器不允许直接加载 WASM 模块。<br>
-          请使用本地 HTTP 服务访问，例如：<code>python -m http.server</code> 或 <code>npx http-server</code>。
-        </div>
-      `;
-      root.classList.add("game-error");
-    }
+    root.innerHTML = `
+      <div class="game-error">
+        当前页面通过 <strong>file://</strong> 协议打开，浏览器不允许直接加载 WASM 模块。<br>
+        请使用本地 HTTP 服务访问：<br>
+        <code>cd d:\\Project\\ApTx2012.github.io</code><br>
+        <code>python -m http.server 8080</code><br>
+        然后访问 <code>http://localhost:8080/game2048.html</code>
+      </div>
+    `;
+    root.classList.add("game-error");
+    console.error("2048: WASM 无法通过 file:// 协议加载");
     return;
   }
 
+  // WASM 加载超时保护
+  const timeout = setTimeout(() => {
+    if (!game) {
+      root.innerHTML = `<div class="game-error">WASM 加载超时，请检查网络或刷新重试。</div>`;
+      root.classList.add("game-error");
+      console.error("2048: WASM 加载超时");
+    }
+  }, 10000);
+
   try {
+    console.log("2048: 开始加载 WASM 模块...");
     await init({ module_or_path: wasmUrl });
+    console.log("2048: WASM 模块加载成功");
+    clearTimeout(timeout);
     setupGame();
     window.addEventListener("keydown", (event) => {
       const dir = keyMap[event.key];
@@ -116,11 +131,15 @@ async function start2048() {
       }
     });
   } catch (err) {
+    clearTimeout(timeout);
     console.error("WASM 2048 加载失败：", err);
-    if (root) {
-      root.innerHTML = "游戏加载失败。请确保通过 HTTP 服务访问，并检查浏览器控制台错误。";
-      root.classList.add("game-error");
-    }
+    root.innerHTML = `
+      <div class="game-error">
+        游戏加载失败：${err.message || err}<br>
+        请确保通过 HTTP 服务访问，并检查浏览器控制台错误。
+      </div>
+    `;
+    root.classList.add("game-error");
   }
 }
 

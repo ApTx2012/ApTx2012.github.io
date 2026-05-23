@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2048 - Rust / WASM 游戏</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/text-light.css">
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .game-page {
+      padding: 40px 20px;
+      text-align: center;
+      width: 100%;
+      max-width: 500px;
+    }
+    .back-home {
+      display: inline-block;
+      margin-bottom: 24px;
+      padding: 10px 20px;
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: 999px;
+      color: var(--text-color);
+      text-decoration: none;
+      transition: background 0.3s, color 0.3s;
+    }
+    .back-home:hover {
+      background: var(--primary-color);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="game-page">
+    <a href="index.html" class="back-home">
+      <i class="fas fa-home"></i> 返回主页
+    </a>
+    <h2 class="section-title">2048 - Rust / WASM</h2>
+    <div id="game2048-root" class="game-root">游戏加载中...</div>
+  </div>
+
+  <script type="module" src="js/2048.js"></script>
+</body>
+</html>
