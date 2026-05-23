@@ -225,7 +225,8 @@ try {
 
       if (!vertexShader || !fragmentShader || !program) {
         logError('WebGL 装饰背景模块', 'WebGL shader/program 初始化失败');
-        return;
+        webglCanvas.style.display = 'none';
+        throw new Error('WebGL init failed');
       }
 
       const positionBuffer = gl.createBuffer();
