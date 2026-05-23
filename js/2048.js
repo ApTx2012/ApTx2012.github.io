@@ -31,7 +31,7 @@ let statusEl;
 let tileEls = [];
 
 // ===== 秘技代码检测 =====
-const KONAMI = ["up", "up", "down", "down", "left", "left", "right", "right", "a", "b", "a", "b"];
+const KONAMI = ["up", "up", "down", "down", "left", "left", "right", "right", "b", "a", "b", "a"];
 let konamiIndex = 0;
 let konamiTriggered = false;
 let confettiInterval = null;
