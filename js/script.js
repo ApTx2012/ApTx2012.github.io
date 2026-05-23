@@ -58,9 +58,11 @@ function setPerformanceMode(mode) {
 
 try{
   const loadBox = document.getElementById('loadingBox');
-  window.addEventListener('load',()=>{
-    setTimeout(()=>loadBox.classList.add('hide'),500);
-  });
+  if (loadBox) {
+    window.addEventListener('load',()=>{
+      setTimeout(()=>loadBox.classList.add('hide'),500);
+    });
+  }
   logSuccess('页面加载动画模块');
 }catch(e){
   logError('页面加载动画模块',e.message);
@@ -76,16 +78,26 @@ try{
 
 try{
   const backTop = document.getElementById('backTop');
-  window.addEventListener('scroll',()=>{
-    if(window.scrollY > 300){
-      backTop.classList.add('show');
-    }else{
-      backTop.classList.remove('show');
+  if (backTop) {
+    let scrollRAF = null;
+    function handleScroll() {
+      if (window.scrollY > 300) {
+        backTop.classList.add('show');
+      } else {
+        backTop.classList.remove('show');
+      }
     }
-  });
-  backTop.addEventListener('click',()=>{
-    window.scrollTo({top:0,behavior:'smooth'});
-  });
+    window.addEventListener('scroll', () => {
+      if (scrollRAF) return;
+      scrollRAF = requestAnimationFrame(() => {
+        handleScroll();
+        scrollRAF = null;
+      });
+    }, { passive: true });
+    backTop.addEventListener('click',()=>{
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+  }
   logSuccess('回到顶部模块');
 }catch(e){
   logError('回到顶部模块',e.message);
@@ -99,16 +111,20 @@ try {
   function initTheme() {
     const t = localStorage.getItem('siteTheme') || 'dark';
     htmlRoot.setAttribute('data-theme', t);
-    themeBtn.innerHTML = t === 'dark' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+    if (themeBtn) {
+      themeBtn.innerHTML = t === 'dark' ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+    }
   }
   initTheme();
-  themeBtn.addEventListener('click', () => {
-    const now = htmlRoot.getAttribute('data-theme');
-    const next = now === 'dark' ? 'light' : 'dark';
-    htmlRoot.setAttribute('data-theme', next);
-    localStorage.setItem('siteTheme', next);
-    initTheme();
-  });
+  if (themeBtn) {
+    themeBtn.addEventListener('click', () => {
+      const now = htmlRoot.getAttribute('data-theme');
+      const next = now === 'dark' ? 'light' : 'dark';
+      htmlRoot.setAttribute('data-theme', next);
+      localStorage.setItem('siteTheme', next);
+      initTheme();
+    });
+  }
   logSuccess('主题切换模块');
 } catch (e) {
   logError('主题切换模块', e.message);
@@ -116,14 +132,16 @@ try {
 
 // ====================== 2. 实时时钟模块 ======================
 try {
+  const timeText = document.getElementById('timeText');
+  const dateText = document.getElementById('dateText');
   function updateClock() {
     const now = new Date();
     const h = String(now.getHours()).padStart(2,0);
     const m = String(now.getMinutes()).padStart(2,0);
     const s = String(now.getSeconds()).padStart(2,0);
-    document.getElementById('timeText').innerText = `${h}:${m}:${s}`;
+    if (timeText) timeText.innerText = `${h}:${m}:${s}`;
     const w = ['日','一','二','三','四','五','六'][now.getDay()];
-    document.getElementById('dateText').innerText = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,0)}-${String(now.getDate()).padStart(2,0)} 星期${w}`;
+    if (dateText) dateText.innerText = `${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,0)}-${String(now.getDate()).padStart(2,0)} 星期${w}`;
   }
   updateClock();
   setInterval(updateClock, 1000);
@@ -136,9 +154,11 @@ try {
 try {
   const webglCanvas = document.getElementById('webglCanvas');
 
-  if (sitePerformanceMode === 'low') {
+  if (!webglCanvas) {
+    logError('WebGL 装饰背景模块', '未找到 webglCanvas 元素');
+  } else if (sitePerformanceMode !== 'high') {
     webglCanvas.style.display = 'none';
-    logSuccess('WebGL 装饰背景模块（低配跳过）');
+    logSuccess('WebGL 装饰背景模块（非高配跳过）');
   } else {
     const gl = webglCanvas.getContext('webgl');
 
@@ -203,6 +223,11 @@ try {
       const fragmentShader = createShader(gl.FRAGMENT_SHADER, fragmentShaderSource);
       const program = createProgram(vertexShader, fragmentShader);
 
+      if (!vertexShader || !fragmentShader || !program) {
+        logError('WebGL 装饰背景模块', 'WebGL shader/program 初始化失败');
+        return;
+      }
+
       const positionBuffer = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
       gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
@@ -223,15 +248,32 @@ try {
       gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 0, 0);
 
       let startTime = performance.now();
+      let webglRAFId = null;
+      let webglVisible = true;
+
+      // 页面可见性检测：不可见时暂停渲染
+      document.addEventListener('visibilitychange', () => {
+        webglVisible = !document.hidden;
+        if (webglVisible && webglRAFId === null) {
+          webglStartTime = performance.now();
+          renderWebgl();
+        }
+      });
+
+      let webglStartTime = startTime;
 
       function renderWebgl() {
-        const time = (performance.now() - startTime) * 0.001;
+        if (!webglVisible) {
+          webglRAFId = null;
+          return;
+        }
+        const time = (performance.now() - webglStartTime) * 0.001;
         gl.clearColor(0, 0, 0, 0);
         gl.clear(gl.COLOR_BUFFER_BIT);
         gl.uniform1f(uTime, time);
         gl.uniform2f(uResolution, webglCanvas.width, webglCanvas.height);
         gl.drawArrays(gl.TRIANGLES, 0, 6);
-        requestAnimationFrame(renderWebgl);
+        webglRAFId = requestAnimationFrame(renderWebgl);
       }
       renderWebgl();
       logSuccess('WebGL 装饰背景模块');
@@ -259,18 +301,21 @@ try {
 // ====================== 5. 天气数据模块 ======================
 async function loadWeather() {
   try {
+    const weatherCard = document.getElementById('weatherCard');
     const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=31.3&longitude=120.6&current_weather=true&hourly=temperature_2m,relativehumidity_2m&timezone=Asia/Shanghai');
     if(!r.ok) throw new Error('接口请求异常');
     const d = await r.json();
     const w = d.current_weather;
     const icon = {0:'☀️',1:'🌤',2:'⛅',3:'☁️',45:'🌫',61:'🌦'}[w.weathercode]||'🌤';
-    document.getElementById('weatherCard').innerHTML = `
-      <div class="weather-icon">${icon}</div>
-      <div>
-        <p>温度：${w.temperature}°C</p>
-        <p>湿度：${d.hourly.relativehumidity_2m[0]}%</p>
-      </div>
-    `;
+    if (weatherCard) {
+      weatherCard.innerHTML = `
+        <div class="weather-icon">${icon}</div>
+        <div>
+          <p>温度：${w.temperature}°C</p>
+          <p>湿度：${d.hourly.relativehumidity_2m[0]}%</p>
+        </div>
+      `;
+    }
     logSuccess('天气数据模块');
   } catch (e) {
     logError('天气数据模块', e.message);
@@ -281,11 +326,13 @@ async function loadWeather() {
 try {
   const flyingContainer = document.getElementById('flyingImages');
   const allImages = ['img/bg1.jpg','img/bg2.jpg','img/bg3.jpg','img/bg4.jpg','img/bg5.jpg'];
-  const flyingItems = [];
+  let flyingItems = [];
   let loadErrCount = 0;
-  const imageCount = sitePerformanceMode === 'high' ? 5 : sitePerformanceMode === 'medium' ? 3 : 0;
+  const imageCount = sitePerformanceMode === 'high' ? 5 : 0;
 
-  if (imageCount === 0) {
+  if (!flyingContainer) {
+    logError('背景飞行图片模块', '未找到 flyingImages 元素');
+  } else if (imageCount === 0) {
     flyingContainer.style.display = 'none';
     logSuccess('背景飞行图片模块（低配跳过）');
   } else {
@@ -302,7 +349,7 @@ try {
         loadErrCount++;
         logError('背景图片资源', `${src} 加载失败`);
       };
-      
+
       const item = {
         el: img,
         x: Math.random() * window.innerWidth,
@@ -316,7 +363,21 @@ try {
       flyingItems.push(item);
     });
 
+    let flyRAF = null;
+    let flyVisible = true;
+
+    document.addEventListener('visibilitychange', () => {
+      flyVisible = !document.hidden;
+      if (flyVisible && flyRAF === null) {
+        flyAnimate();
+      }
+    });
+
     function flyAnimate() {
+      if (!flyVisible) {
+        flyRAF = null;
+        return;
+      }
       flyingItems.forEach(item => {
         item.x += item.speedX;
         item.y += item.speedY;
@@ -329,7 +390,7 @@ try {
         item.el.style.top = item.y + 'px';
         item.el.style.transform = `rotate(${item.rotate}deg)`;
       });
-      requestAnimationFrame(flyAnimate);
+      flyRAF = requestAnimationFrame(flyAnimate);
     }
     flyAnimate();
 
@@ -343,6 +404,7 @@ try {
 // 网站运行时长模块
 const siteLaunchDate = new Date('2024-05-27');
 
+const uptimeText = document.getElementById('uptimeText');
 function updateUptime() {
   const now = new Date();
   const diff = now - siteLaunchDate;
@@ -351,7 +413,9 @@ function updateUptime() {
   const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
   const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
 
-  document.getElementById('uptimeText').innerText = `已运行 ${days}天 ${hours}时 ${minutes}分`;
+  if (uptimeText) {
+    uptimeText.innerText = `已运行 ${days}天 ${hours}时 ${minutes}分`;
+  }
 }
 
 updateUptime();
@@ -367,33 +431,34 @@ try {
   // ==================== 在这里填你的 歌单ID ====================
   const PLAYLIST_ID = "9110196326"; // 把这里改成你的歌单ID
 
-  // 歌单模式链接（固定格式，不用改）
-  musicIframe.src = `https://music.163.com/outchain/player?type=0&id=${PLAYLIST_ID}&auto=1&height=430`;
+  if (musicIframe) {
+    musicIframe.src = `https://music.163.com/outchain/player?type=0&id=${PLAYLIST_ID}&auto=1&height=430`;
+    musicIframe.onload = () => logSuccess('网易云歌单播放器');
+    musicIframe.onerror = () => logError('网易云歌单播放器', '加载失败');
+  }
 
-  // 收起 / 展开
-  let isOpen = true;
-  musicToggle.addEventListener('click', () => {
-    isOpen = !isOpen;
-    if (isOpen) {
-      musicBox.classList.remove('close');
-      musicToggle.innerText = '收起';
-    } else {
-      musicBox.classList.add('close');
-      musicToggle.innerText = '展开';
-    }
-  });
-
-  musicIframe.onload = () => logSuccess('网易云歌单播放器');
-  musicIframe.onerror = () => logError('网易云歌单播放器', '加载失败');
+  if (musicToggle && musicBox) {
+    let isOpen = true;
+    musicToggle.addEventListener('click', () => {
+      isOpen = !isOpen;
+      if (isOpen) {
+        musicBox.classList.remove('close');
+        musicToggle.innerText = '收起';
+      } else {
+        musicBox.classList.add('close');
+        musicToggle.innerText = '展开';
+      }
+    });
+  }
 
 } catch (err) {
   logError('网易云歌单播放器', err.message);
 }
 
 // ====================== 页面总入口 ======================
-window.onload = () => {
+window.addEventListener('load', () => {
   loadWeather();
   setTimeout(()=>{
     console.log('%c ============== 页面初始化完成 ==============', 'color:#9b59b6;font-weight:bold;');
   },300);
-};
+});

@@ -28,16 +28,16 @@ let game;
 let boardEl;
 let scoreEl;
 let statusEl;
+let tileEls = [];
 
 function renderBoard() {
-  const board = Array.from(game.board(), (x) => Number(x));
-  boardEl.innerHTML = "";
-  board.forEach((value) => {
-    const tile = document.createElement("div");
-    tile.className = `tile ${tileClass(value)}`;
-    tile.textContent = value === 0 ? "" : value;
-    boardEl.appendChild(tile);
-  });
+  const board = game.board();
+  for (let i = 0; i < 16; i++) {
+    const value = Number(board[i]);
+    const el = tileEls[i];
+    el.textContent = value === 0 ? "" : value;
+    el.className = `tile ${tileClass(value)}`;
+  }
   scoreEl.textContent = `得分：${game.score()}`;
   statusEl.textContent = game.is_over() ? "游戏结束，按重置继续。" : "使用方向键 / WASD 控制。";
 }
@@ -68,6 +68,13 @@ function setupGame() {
 
   boardEl = document.createElement("div");
   boardEl.className = "game-board";
+  tileEls = [];
+  for (let i = 0; i < 16; i++) {
+    const tile = document.createElement("div");
+    tile.className = "tile tile-empty";
+    tileEls.push(tile);
+    boardEl.appendChild(tile);
+  }
   root.appendChild(boardEl);
 
   const help = document.createElement("div");
@@ -82,6 +89,20 @@ const wasmUrl = new URL("../wasm-2048/pkg/wasm_2048_bg.wasm", import.meta.url);
 
 async function start2048() {
   const root = document.getElementById("game2048-root");
+  if (window.location.protocol === "file:") {
+    console.warn("WASM 2048 requires HTTP/HTTPS protocol. file:// is blocked by browser CORS.");
+    if (root) {
+      root.innerHTML = `
+        <div class="game-error">
+          当前页面通过 <strong>file://</strong> 协议打开，浏览器不允许直接加载 WASM 模块。<br>
+          请使用本地 HTTP 服务访问，例如：<code>python -m http.server</code> 或 <code>npx http-server</code>。
+        </div>
+      `;
+      root.classList.add("game-error");
+    }
+    return;
+  }
+
   try {
     await init({ module_or_path: wasmUrl });
     setupGame();
