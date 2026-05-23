@@ -237,6 +237,7 @@ body::after {
 .game-root {
   max-width: 420px;
   margin: 0 auto;
+  padding: 0 16px;
 }
 
 .game-header {
@@ -245,6 +246,7 @@ body::after {
   align-items: center;
   margin-bottom: 18px;
   gap: 12px;
+  flex-wrap: wrap;
 }
 
 .game-score {
@@ -271,6 +273,8 @@ body::after {
   border-radius: 24px;
   background: rgba(255,255,255,0.08);
   border: 1px solid rgba(255,255,255,0.16);
+  max-width: 340px;
+  margin: 0 auto;
 }
 
 .tile {
@@ -469,4 +473,101 @@ section {
 }
 #musicIframe {
   display: block;
+}
+
+/* ==================== 移动端适配 ==================== */
+@media (max-width: 600px) {
+  /* 游戏棋盘响应式 */
+  .game-board {
+    gap: 8px;
+    padding: 12px;
+    max-width: 280px;
+  }
+  .tile {
+    width: 56px;
+    height: 56px;
+    font-size: 18px;
+    border-radius: 14px;
+  }
+  .game-header {
+    justify-content: center;
+  }
+  .game-score {
+    width: 100%;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+  .game-reset {
+    flex: 1;
+  }
+
+  /* 时钟卡片缩小 */
+  .clock-card {
+    padding: 10px 16px;
+    top: 15px;
+    right: 15px;
+  }
+  #timeText { font-size: 20px; }
+  #dateText { font-size: 12px; }
+
+  /* 主题/性能按钮 */
+  .theme-switch, .perf-switch {
+    top: 15px;
+  }
+  .theme-switch { left: 15px; width: 36px; height: 36px; }
+  .perf-switch { left: 60px; height: 36px; font-size: 12px; }
+
+  /* 返回顶部 */
+  .back-top { bottom: 20px; right: 20px; width: 40px; height: 40px; }
+
+  /* 个人信息 */
+  .hero-title { font-size: 26px; }
+  .name { font-size: 28px; }
+  .profile-container { padding: 30px 16px 20px; }
+  .avatar { width: 100px; height: 100px; }
+
+  /* 卡片网格 */
+  .card-grid {
+    padding: 16px;
+    gap: 14px;
+  }
+  .nav-card { padding: 20px; }
+
+  /* sections */
+  .sections { padding: 16px; }
+  section { padding: 24px; }
+
+  /* 网易云音乐 */
+  .netease-music-box {
+    bottom: 20px;
+    left: 20px;
+  }
+  .netease-music-box.close {
+    height: 38px;
+    width: 90px;
+  }
+
+  /* 天气卡片 */
+  .weather-card {
+    flex-direction: column;
+    text-align: center;
+    gap: 12px;
+  }
+}
+
+/* 小屏手机 */
+@media (max-width: 380px) {
+  .tile {
+    width: 48px;
+    height: 48px;
+    font-size: 16px;
+    border-radius: 12px;
+  }
+  .game-board {
+    gap: 6px;
+    padding: 10px;
+    max-width: 240px;
+  }
+  .hero-title { font-size: 22px; }
+  .name { font-size: 24px; }
 }
