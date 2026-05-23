@@ -7,6 +7,7 @@ export const game_restart: (a: number) => void;
 export const game_board: (a: number) => any;
 export const game_score: (a: number) => number;
 export const game_is_over: (a: number) => number;
+export const game_win_game: (a: number) => void;
 export const game_move_dir: (a: number, b: number, c: number) => number;
 export const __wbindgen_externrefs: WebAssembly.Table;
 export const __wbindgen_malloc: (a: number, b: number) => number;

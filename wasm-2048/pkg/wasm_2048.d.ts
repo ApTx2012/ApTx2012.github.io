@@ -10,6 +10,10 @@ export class Game {
     constructor();
     restart(): void;
     score(): number;
+    /**
+     * 秘技：让所有格子变成 2048
+     */
+    win_game(): void;
 }
 
 export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembly.Module;
@@ -22,6 +26,7 @@ export interface InitOutput {
     readonly game_board: (a: number) => any;
     readonly game_score: (a: number) => number;
     readonly game_is_over: (a: number) => number;
+    readonly game_win_game: (a: number) => void;
     readonly game_move_dir: (a: number, b: number, c: number) => number;
     readonly __wbindgen_externrefs: WebAssembly.Table;
     readonly __wbindgen_malloc: (a: number, b: number) => number;

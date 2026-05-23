@@ -51,6 +51,12 @@ export class Game {
         const ret = wasm.game_score(this.__wbg_ptr);
         return ret >>> 0;
     }
+    /**
+     * 秘技：让所有格子变成 2048
+     */
+    win_game() {
+        wasm.game_win_game(this.__wbg_ptr);
+    }
 }
 if (Symbol.dispose) Game.prototype[Symbol.dispose] = Game.prototype.free;
 function __wbg_get_imports() {

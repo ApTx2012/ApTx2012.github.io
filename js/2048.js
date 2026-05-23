@@ -31,7 +31,7 @@ let statusEl;
 let tileEls = [];
 
 // ===== 秘技代码检测 =====
-const KONAMI = ["up", "up", "down", "down", "left", "left", "right", "right", "b", "a", "b", "a"];
+const KONAMI = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowLeft", "ArrowRight", "ArrowRight", "b", "a", "b", "a"];
 let konamiIndex = 0;
 let konamiTriggered = false;
 let confettiInterval = null;
@@ -96,12 +96,9 @@ function triggerKonamiCelebration() {
   msg.textContent = "🎮 秘技成功！🎮";
   document.body.appendChild(msg);
 
-  // 同时触发游戏重置并弹出高分（演示用）
+  // 触发胜利
   if (game) {
-    // 尝试多次移动制造高分假象
-    for (let i = 0; i < 20; i++) {
-      game.move_dir(["up", "down", "left", "right"][i % 4]);
-    }
+    game.win_game();
     renderBoard();
   }
 
@@ -113,16 +110,16 @@ function triggerKonamiCelebration() {
   }, 5000);
 }
 
-function checkKonami(dir) {
+function checkKonami(key) {
   if (konamiTriggered) return;
-  if (KONAMI[konamiIndex] === dir) {
+  if (KONAMI[konamiIndex] === key) {
     konamiIndex++;
     if (konamiIndex === KONAMI.length) {
       konamiIndex = 0;
       triggerKonamiCelebration();
     }
   } else {
-    konamiIndex = (dir === KONAMI[0]) ? 1 : 0;
+    konamiIndex = (key === KONAMI[0]) ? 1 : 0;
   }
 }
 
@@ -242,11 +239,11 @@ async function start2048() {
     clearTimeout(timeout);
     setupGame();
     window.addEventListener("keydown", (event) => {
+      // 检查秘技代码（使用原始按键码，与 WASD 方向操作分离）
+      checkKonami(event.key);
+
       const dir = keyMap[event.key];
       if (!dir || !game) return;
-
-      // 检查秘技代码
-      checkKonami(dir);
 
       event.preventDefault();
       const moved = game.move_dir(dir);

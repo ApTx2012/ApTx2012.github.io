@@ -46,6 +46,15 @@ impl Game {
         self.over
     }
 
+    /// 秘技：让所有格子变成 2048
+    pub fn win_game(&mut self) {
+        for cell in self.board.iter_mut() {
+            *cell = 2048;
+        }
+        self.score = 2048 * 16;
+        self.over = true;
+    }
+
     pub fn move_dir(&mut self, direction: &str) -> bool {
         if self.over {
             return false;

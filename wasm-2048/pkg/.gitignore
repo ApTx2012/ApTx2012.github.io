@@ -1,5 +1,1 @@
-# Keep wasm package files tracked when committing the built output
-!wasm_2048.js
-!wasm_2048_bg.wasm
-!wasm_2048.d.ts
-!wasm_2048_bg.wasm.d.ts
+*
