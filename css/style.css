@@ -275,6 +275,9 @@ body::after {
   border: 1px solid rgba(255,255,255,0.16);
   max-width: 340px;
   margin: 0 auto;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
 }
 
 .tile {

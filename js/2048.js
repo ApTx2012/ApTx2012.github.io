@@ -79,8 +79,32 @@ function setupGame() {
 
   const help = document.createElement("div");
   help.className = "game-help";
-  help.textContent = "按方向键或 WASD 进行操作。";
+  help.innerHTML = "按方向键或 WASD 进行操作。<br><span style='font-size:12px;opacity:0.7'>手机可滑动屏幕</span>";
   root.appendChild(help);
+
+  // 添加触摸滑动支持
+  let touchStartX = 0;
+  let touchStartY = 0;
+  boardEl.addEventListener("touchstart", (e) => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+
+  boardEl.addEventListener("touchend", (e) => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    const absDx = Math.abs(dx);
+    const absDy = Math.abs(dy);
+
+    if (Math.max(absDx, absDy) < 30) return; // 移动距离太短，忽略
+
+    if (absDx > absDy) {
+      game.move_dir(dx > 0 ? "right" : "left");
+    } else {
+      game.move_dir(dy > 0 ? "down" : "up");
+    }
+    renderBoard();
+  }, { passive: true });
 
   renderBoard();
 }
