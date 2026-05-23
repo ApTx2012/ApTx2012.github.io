@@ -43,7 +43,7 @@ function renderBoard() {
 }
 
 function setupGame() {
-  game = Game.new();
+  game = new Game();
   const root = document.getElementById("game2048-root");
   root.innerHTML = "";
 
@@ -83,7 +83,7 @@ const wasmUrl = new URL("../wasm-2048/pkg/wasm_2048_bg.wasm", import.meta.url);
 async function start2048() {
   const root = document.getElementById("game2048-root");
   try {
-    await init(wasmUrl);
+    await init({ module_or_path: wasmUrl });
     setupGame();
     window.addEventListener("keydown", (event) => {
       const dir = keyMap[event.key];
