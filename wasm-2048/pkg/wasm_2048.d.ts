@@ -32,11 +32,8 @@ export interface InitOutput {
     readonly memory: WebAssembly.Memory;
     readonly __wbg_ai_free: (a: number, b: number) => void;
     readonly __wbg_game_free: (a: number, b: number) => void;
-<<<<<<< HEAD
-=======
     readonly ai_get_best_move: (a: number, b: number, c: number) => [number, number];
     readonly ai_new: () => number;
->>>>>>> 4b734cdc321df46e6b863128fc14ce2026a98d3d
     readonly game_board: (a: number) => any;
     readonly game_is_over: (a: number) => number;
     readonly game_move_dir: (a: number, b: number, c: number) => number;
