@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/text-light.css">
+  <link rel="stylesheet" href="src/i18n/styles.css">
   <script>
     (function() {
       const saved = localStorage.getItem('sitePerformanceMode');
@@ -61,21 +62,21 @@
 
 <!-- 个人信息 -->
 <div class="hero-banner">
-  <div class="hero-badge">欢迎来到 AxTps 小屋</div>
-  <h1 class="hero-title">这里是喜欢代码、音乐与光影的温柔小宇宙</h1>
-  <p class="hero-subtitle">一个既有博客小屋，又有天气与音乐氛围的个人空间。</p>
+  <div class="hero-badge" data-i18n="home.welcome">欢迎来到 AxTps 小屋</div>
+  <h1 class="hero-title" data-i18n="home.title">这里是喜欢代码、音乐与光影的温柔小宇宙</h1>
+  <p class="hero-subtitle" data-i18n="home.subtitle">一个既有博客小屋，又有天气与音乐氛围的个人空间。</p>
 </div>
 
 <div class="profile-container">
   <div class="avatar"></div>
   <h1 class="name light-text">HI, I'M AxTps</h1>
-  <p class="motto">欢迎来到我的小屋，今天你想听歌、看天气，还是聊点故事？</p>
+  <p class="motto" data-i18n="home.greeting">欢迎来到我的小屋，今天你想听歌、看天气，还是聊点故事？</p>
   <div class="tags">
-    <span>乐观开朗</span>
-    <span>温柔体贴</span>
-    <span>随和亲切</span>
-    <span>才思敏捷</span>
-    <span>风趣幽默</span>
+    <span data-i18n="tags.optimistic">乐观开朗</span>
+    <span data-i18n="tags.gentle">温柔体贴</span>
+    <span data-i18n="tags.easygoing">随和亲切</span>
+    <span data-i18n="tags.quickWitted">才思敏捷</span>
+    <span data-i18n="tags.humorous">风趣幽默</span>
   </div>
 </div>
 
@@ -83,39 +84,30 @@
 <div class="card-grid">
   <div class="nav-card">
     <div class="card-icon"><i class="fas fa-book"></i></div>
-    <h3>博客</h3>
-    <p>即将上线</p>
-    <button onclick="goSection('#blog')">前往</button>
+    <h3 data-i18n="cards.blog.title">博客</h3>
+    <p data-i18n="cards.blog.desc">即将上线</p>
+    <button onclick="goSection('#blog')" data-i18n="buttons.go">前往</button>
   </div>
 
   <div class="nav-card">
     <div class="card-icon"><i class="fas fa-cloud-sun"></i></div>
-    <h3>天气</h3>
-    <p>实时查询</p>
-    <button onclick="goSection('#weather')">前往</button>
+    <h3 data-i18n="cards.weather.title">天气</h3>
+    <p data-i18n="cards.weather.desc">实时查询</p>
+    <button onclick="goSection('#weather')" data-i18n="buttons.go">前往</button>
   </div>
 
   <div class="nav-card">
     <div class="card-icon"><i class="fas fa-gamepad"></i></div>
-    <h3>2048</h3>
-    <p>游戏</p>
-    <button onclick="window.location.href='game2048.html'">前往</button>
+    <h3 data-i18n="cards.game2048.title">2048</h3>
+    <p data-i18n="cards.game2048.desc">游戏</p>
+    <button onclick="window.location.href='game2048.html'" data-i18n="buttons.go">前往</button>
   </div>
-
-  <!-- 化学实验室入口暂时隐藏
-  <div class="nav-card">
-    <div class="card-icon"><i class="fas fa-flask"></i></div>
-    <h3>化学实验室</h3>
-    <p>仿真实验</p>
-    <button onclick="window.location.href='chem-lab.html'">前往</button>
-  </div>
-  -->
 
   <div class="nav-card">
     <div class="card-icon"><i class="fas fa-layer-group"></i></div>
-    <h3>资源站</h3>
-    <p>图床 / 资源收藏</p>
-    <button onclick="goSection('#resources')">前往</button>
+    <h3 data-i18n="cards.resources.title">资源站</h3>
+    <p data-i18n="cards.resources.desc">图床 / 资源收藏</p>
+    <button onclick="goSection('#resources')" data-i18n="buttons.go">前往</button>
   </div>
 </div>
 
@@ -158,6 +150,11 @@
   <div class="music-toggle" id="musicToggle">收起</div>
 </div>
 
+<script type="module">
+  import { i18n } from './src/i18n/index.js';
+  // 初始化多语言
+  i18n.initPageTranslation();
+</script>
 <script src="js/script.js"></script>
 <script type="module" src="js/2048.js"></script>
 </body>
