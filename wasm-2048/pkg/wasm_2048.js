@@ -1,5 +1,44 @@
 /* @ts-self-types="./wasm_2048.d.ts" */
 
+export class AI {
+    __destroy_into_raw() {
+        const ptr = this.__wbg_ptr;
+        this.__wbg_ptr = 0;
+        AIFinalization.unregister(this);
+        return ptr;
+    }
+    free() {
+        const ptr = this.__destroy_into_raw();
+        wasm.__wbg_ai_free(ptr, 0);
+    }
+    /**
+     * 获取最佳移动方向
+     * @param {Uint32Array} board
+     * @returns {string}
+     */
+    get_best_move(board) {
+        let deferred2_0;
+        let deferred2_1;
+        try {
+            const ptr0 = passArray32ToWasm0(board, wasm.__wbindgen_malloc);
+            const len0 = WASM_VECTOR_LEN;
+            const ret = wasm.ai_get_best_move(this.__wbg_ptr, ptr0, len0);
+            deferred2_0 = ret[0];
+            deferred2_1 = ret[1];
+            return getStringFromWasm0(ret[0], ret[1]);
+        } finally {
+            wasm.__wbindgen_free(deferred2_0, deferred2_1, 1);
+        }
+    }
+    constructor() {
+        const ret = wasm.ai_new();
+        this.__wbg_ptr = ret;
+        AIFinalization.register(this, this.__wbg_ptr, this);
+        return this;
+    }
+}
+if (Symbol.dispose) AI.prototype[Symbol.dispose] = AI.prototype.free;
+
 export class Game {
     __destroy_into_raw() {
         const ptr = this.__wbg_ptr;
@@ -98,6 +137,9 @@ function __wbg_get_imports() {
     };
 }
 
+const AIFinalization = (typeof FinalizationRegistry === 'undefined')
+    ? { register: () => {}, unregister: () => {} }
+    : new FinalizationRegistry(ptr => wasm.__wbg_ai_free(ptr, 1));
 const GameFinalization = (typeof FinalizationRegistry === 'undefined')
     ? { register: () => {}, unregister: () => {} }
     : new FinalizationRegistry(ptr => wasm.__wbg_game_free(ptr, 1));
@@ -106,12 +148,27 @@ function getStringFromWasm0(ptr, len) {
     return decodeText(ptr >>> 0, len);
 }
 
+let cachedUint32ArrayMemory0 = null;
+function getUint32ArrayMemory0() {
+    if (cachedUint32ArrayMemory0 === null || cachedUint32ArrayMemory0.byteLength === 0) {
+        cachedUint32ArrayMemory0 = new Uint32Array(wasm.memory.buffer);
+    }
+    return cachedUint32ArrayMemory0;
+}
+
 let cachedUint8ArrayMemory0 = null;
 function getUint8ArrayMemory0() {
     if (cachedUint8ArrayMemory0 === null || cachedUint8ArrayMemory0.byteLength === 0) {
         cachedUint8ArrayMemory0 = new Uint8Array(wasm.memory.buffer);
     }
     return cachedUint8ArrayMemory0;
+}
+
+function passArray32ToWasm0(arg, malloc) {
+    const ptr = malloc(arg.length * 4, 4) >>> 0;
+    getUint32ArrayMemory0().set(arg, ptr / 4);
+    WASM_VECTOR_LEN = arg.length;
+    return ptr;
 }
 
 function passStringToWasm0(arg, malloc, realloc) {
@@ -185,6 +242,7 @@ function __wbg_finalize_init(instance, module) {
     wasmInstance = instance;
     wasm = instance.exports;
     wasmModule = module;
+    cachedUint32ArrayMemory0 = null;
     cachedUint8ArrayMemory0 = null;
     wasm.__wbindgen_start();
     return wasm;

@@ -1,4 +1,4 @@
-import init, { Game } from "../wasm-2048/pkg/wasm_2048.js";
+import init, { Game, AI } from "../wasm-2048/pkg/wasm_2048.js";
 
 const tileClass = (value) => {
   if (value === 0) return "tile-empty";
@@ -25,10 +25,12 @@ const keyMap = {
 };
 
 let game;
+let ai;
 let boardEl;
 let scoreEl;
 let statusEl;
 let tileEls = [];
+let autoPlayInterval = null;
 
 // ===== 秘技代码检测 =====
 const KONAMI = ["ArrowUp", "ArrowUp", "ArrowDown", "ArrowDown", "ArrowLeft", "ArrowLeft", "ArrowRight", "ArrowRight", "b", "a", "b", "a"];
@@ -151,12 +153,31 @@ function setupGame() {
   button.className = "game-reset";
   button.textContent = "重置游戏";
   button.addEventListener("click", () => {
+    stopAutoPlay();
     game.restart();
     renderBoard();
   });
 
+  // AI 自动玩按钮
+  const aiButton = document.createElement("button");
+  aiButton.className = "game-reset";
+  aiButton.style.marginLeft = "10px";
+  aiButton.textContent = "AI 自动玩";
+  aiButton.addEventListener("click", () => {
+    if (autoPlayInterval) {
+      stopAutoPlay();
+      aiButton.textContent = "AI 自动玩";
+      statusEl.textContent = "已停止自动玩。";
+    } else {
+      startAutoPlay();
+      aiButton.textContent = "停止 AI";
+      statusEl.textContent = "AI 正在游戏中...";
+    }
+  });
+
   header.appendChild(scoreEl);
   header.appendChild(button);
+  header.appendChild(aiButton);
   root.appendChild(header);
 
   boardEl = document.createElement("div");
@@ -261,6 +282,41 @@ async function start2048() {
       </div>
     `;
     root.classList.add("game-error");
+  }
+}
+
+// AI 自动玩功能
+function startAutoPlay() {
+  if (!ai) {
+    ai = new AI();
+  }
+  
+  autoPlayInterval = setInterval(() => {
+    if (game.is_over()) {
+      stopAutoPlay();
+      statusEl.textContent = "AI 游戏结束！得分：" + game.score();
+      return;
+    }
+    
+    const board = game.board();
+    const boardArray = [];
+    for (let i = 0; i < 16; i++) {
+      boardArray.push(Number(board[i]));
+    }
+    
+    const bestMove = ai.get_best_move(boardArray);
+    const moved = game.move_dir(bestMove);
+    
+    if (moved) {
+      renderBoard();
+    }
+  }, 200); // 每 200ms 走一步
+}
+
+function stopAutoPlay() {
+  if (autoPlayInterval) {
+    clearInterval(autoPlayInterval);
+    autoPlayInterval = null;
   }
 }
 

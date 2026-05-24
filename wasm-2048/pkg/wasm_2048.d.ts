@@ -1,6 +1,16 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export class AI {
+    free(): void;
+    [Symbol.dispose](): void;
+    /**
+     * 获取最佳移动方向
+     */
+    get_best_move(board: Uint32Array): string;
+    constructor();
+}
+
 export class Game {
     free(): void;
     [Symbol.dispose](): void;
@@ -28,8 +38,12 @@ export interface InitOutput {
     readonly game_is_over: (a: number) => number;
     readonly game_win_game: (a: number) => void;
     readonly game_move_dir: (a: number, b: number, c: number) => number;
+    readonly __wbg_ai_free: (a: number, b: number) => void;
+    readonly ai_new: () => number;
+    readonly ai_get_best_move: (a: number, b: number, c: number) => [number, number];
     readonly __wbindgen_externrefs: WebAssembly.Table;
     readonly __wbindgen_malloc: (a: number, b: number) => number;
+    readonly __wbindgen_free: (a: number, b: number, c: number) => void;
     readonly __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;
     readonly __wbindgen_start: () => void;
 }
