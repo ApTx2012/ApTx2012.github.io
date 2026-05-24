@@ -21,13 +21,13 @@ export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembl
 export interface InitOutput {
     readonly memory: WebAssembly.Memory;
     readonly __wbg_game_free: (a: number, b: number) => void;
+    readonly game_board: (a: number) => any;
+    readonly game_is_over: (a: number) => number;
+    readonly game_move_dir: (a: number, b: number, c: number) => number;
     readonly game_new: () => number;
     readonly game_restart: (a: number) => void;
-    readonly game_board: (a: number) => any;
     readonly game_score: (a: number) => number;
-    readonly game_is_over: (a: number) => number;
     readonly game_win_game: (a: number) => void;
-    readonly game_move_dir: (a: number, b: number, c: number) => number;
     readonly __wbindgen_externrefs: WebAssembly.Table;
     readonly __wbindgen_malloc: (a: number, b: number) => number;
     readonly __wbindgen_realloc: (a: number, b: number, c: number, d: number) => number;
