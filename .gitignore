@@ -13,8 +13,7 @@ Desktop.ini
 
 # Rust/Cargo build artifacts
 /wasm-2048/target/
-/**/*.rlib
-/**/*.rmeta
+/wasm-chem/target/
 
 # Wasm build artifacts
 *.wasm.map

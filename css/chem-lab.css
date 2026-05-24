@@ -1,0 +1,405 @@
+/* 化学实验室专用样式 */
+
+body {
+  display: block;
+  min-height: 100vh;
+  padding: 20px;
+  background: var(--bg-main);
+}
+
+.lab-header {
+  text-align: center;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.lab-header h1 {
+  color: var(--primary-color);
+  font-size: 32px;
+  margin: 10px 0;
+}
+
+.lab-subtitle {
+  color: var(--text-sub);
+}
+
+.back-home {
+  display: inline-block;
+  padding: 10px 20px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  color: var(--text-color);
+  text-decoration: none;
+  transition: background 0.3s;
+}
+.back-home:hover {
+  background: var(--primary-color);
+  color: #fff;
+}
+
+/* 主容器布局 */
+.lab-container {
+  display: grid;
+  grid-template-columns: 220px 1fr 200px;
+  gap: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* 侧边栏 */
+.lab-sidebar, .lab-materials {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 16px;
+  backdrop-filter: blur(10px);
+}
+
+.sidebar-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--primary-color);
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--glass-border);
+  margin-bottom: 12px;
+}
+
+.exp-category {
+  margin-bottom: 16px;
+}
+
+.category-title {
+  font-size: 12px;
+  color: var(--text-sub);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.exp-btn {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 6px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  color: var(--text-color);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 13px;
+}
+.exp-btn:hover {
+  background: var(--navcard-hover-bg);
+}
+.exp-btn.active {
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  border-color: transparent;
+  color: #fff;
+}
+
+/* 实验台 */
+.lab-main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.experiment-stage {
+  position: relative;
+  background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.08) 100%);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#labCanvas {
+  border-radius: 12px;
+  background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.3);
+}
+
+.stage-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+}
+
+.ctrl-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  color: var(--text-color);
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.ctrl-btn:hover {
+  background: var(--primary-color);
+  color: #fff;
+}
+.ctrl-btn.running {
+  background: #e74c3c;
+  color: #fff;
+}
+
+/* 信息面板 */
+.info-panel {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.info-section {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 14px;
+  backdrop-filter: blur(10px);
+}
+
+.info-section h3 {
+  font-size: 13px;
+  color: var(--secondary-color);
+  margin-bottom: 8px;
+}
+
+.info-section h3 i {
+  margin-right: 6px;
+}
+
+.info-section p {
+  font-size: 12px;
+  color: var(--text-sub);
+  line-height: 1.6;
+  white-space: pre-line;
+}
+
+/* 操作面板 */
+.action-panel {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  padding: 16px;
+  backdrop-filter: blur(10px);
+}
+
+.action-panel h3 {
+  font-size: 14px;
+  color: var(--primary-color);
+  margin-bottom: 12px;
+}
+
+.action-steps {
+  min-height: 80px;
+  padding: 12px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 10px;
+  margin-bottom: 12px;
+}
+
+.step-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--text-color);
+}
+.step-item.completed {
+  background: rgba(46, 204, 113, 0.2);
+  border-left: 3px solid #2ecc71;
+}
+.step-item.current {
+  background: rgba(214, 136, 255, 0.2);
+  border-left: 3px solid var(--primary-color);
+  animation: pulse 1s infinite;
+}
+.step-item.pending {
+  opacity: 0.5;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+.hint-text {
+  color: var(--text-sub);
+  font-size: 13px;
+  text-align: center;
+}
+
+.gas-display {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  color: var(--text-color);
+}
+
+#gasCount {
+  font-weight: bold;
+  color: var(--secondary-color);
+  font-size: 18px;
+}
+
+/* 器材库 */
+.materials-grid, .reagents-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+
+.material-item, .reagent-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 6px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  cursor: grab;
+  transition: all 0.3s;
+  font-size: 11px;
+  color: var(--text-sub);
+}
+
+.material-item:hover, .reagent-item:hover {
+  background: var(--navcard-hover-bg);
+  transform: translateY(-2px);
+}
+
+.material-item i, .reagent-item i {
+  font-size: 20px;
+  margin-bottom: 4px;
+  color: var(--primary-color);
+}
+
+.reagent-item.selected {
+  background: var(--primary-color);
+  color: #fff;
+}
+.reagent-item.selected i {
+  color: #fff;
+}
+
+/* 结果弹窗 */
+.result-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.7);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+
+.result-modal.show {
+  display: flex;
+}
+
+.modal-content {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 500px;
+  width: 90%;
+  backdrop-filter: blur(20px);
+  text-align: center;
+}
+
+.modal-content h2 {
+  color: var(--primary-color);
+  margin-bottom: 20px;
+}
+
+.modal-content p {
+  color: var(--text-sub);
+  margin-bottom: 10px;
+  line-height: 1.8;
+}
+
+.modal-close {
+  margin-top: 20px;
+  padding: 12px 40px;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  border: none;
+  border-radius: 999px;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+.modal-close:hover {
+  opacity: 0.9;
+}
+
+/* 加载提示 */
+.lab-loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-main);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 99999;
+}
+
+.lab-loading.hidden {
+  display: none;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 3px solid var(--glass-border);
+  border-top-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 移动端适配 */
+@media (max-width: 1100px) {
+  .lab-container {
+    grid-template-columns: 1fr;
+  }
+  .lab-sidebar, .lab-materials {
+    display: none;
+  }
+  .info-panel {
+    grid-template-columns: 1fr;
+  }
+  #labCanvas {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .lab-header h1 {
+    font-size: 24px;
+  }
+}
