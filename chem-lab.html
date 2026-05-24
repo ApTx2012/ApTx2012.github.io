@@ -70,7 +70,10 @@
             <i class="fas fa-play"></i>
           </button>
           <button class="ctrl-btn" id="resetExp" title="重置">
-            <i class="fas fa-redo"></i>
+            <i class="fas fa-arrow-rotate-left"></i>
+          </button>
+          <button class="ctrl-btn" id="rotateItem" title="旋转选中的集气瓶">
+            <i class="fas fa-arrows-up-down"></i>
           </button>
           <button class="ctrl-btn" id="speedExp" title="加速">
             <i class="fas fa-forward"></i>
@@ -98,7 +101,7 @@
       <div class="action-panel">
         <h3><i class="fas fa-hand-pointer"></i> 实验操作</h3>
         <div class="action-steps" id="actionSteps">
-          <p class="hint-text">点击"开始实验"按钮开始操作</p>
+          <p class="hint-text">选择实验后器材将自动摆放，请按下方步骤手动操作</p>
         </div>
         <div class="gas-display">
           <span>产气量：</span>
@@ -112,29 +115,37 @@
     <aside class="lab-materials">
       <div class="sidebar-title">器材库</div>
       <div class="materials-grid">
-        <div class="material-item" draggable="true" data-type="beaker">
+        <div class="material-item" data-type="beaker">
           <i class="fas fa-burn"></i>
           <span>烧杯</span>
         </div>
-        <div class="material-item" draggable="true" data-type="testtube">
+        <div class="material-item" data-type="testtube">
           <i class="fas fa-vial"></i>
           <span>试管</span>
         </div>
-        <div class="material-item" draggable="true" data-type="flask">
+        <div class="material-item" data-type="flask">
           <i class="fas fa-flask"></i>
           <span>锥形瓶</span>
         </div>
-        <div class="material-item" draggable="true" data-type="burner">
+        <div class="material-item" data-type="burner">
           <i class="fas fa-fire-alt"></i>
           <span>酒精灯</span>
         </div>
-        <div class="material-item" draggable="true" data-type="tube">
+        <div class="material-item" data-type="tube">
           <i class="fas fa-arrow-down"></i>
           <span>导管</span>
         </div>
-        <div class="material-item" draggable="true" data-type="gastank">
+        <div class="material-item" data-type="gastank">
           <i class="fas fa-wind"></i>
           <span>集气瓶</span>
+        </div>
+        <div class="material-item" data-type="trough">
+          <i class="fas fa-water"></i>
+          <span>水槽</span>
+        </div>
+        <div class="material-item" data-type="splint">
+          <i class="fas fa-fire"></i>
+          <span>带火星木条</span>
         </div>
       </div>
       <div class="sidebar-title" style="margin-top:20px">试剂库</div>
@@ -159,6 +170,6 @@
     <p>化学计算模块加载中...</p>
   </div>
 
-  <script src="js/chem-lab.js"></script>
+  <script type="module" src="js/chem-lab.js"></script>
 </body>
 </html>

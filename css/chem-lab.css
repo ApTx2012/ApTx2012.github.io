@@ -121,6 +121,9 @@ body {
   border-radius: 12px;
   background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
   box-shadow: inset 0 0 30px rgba(0,0,0,0.3);
+  max-width: 100%;
+  cursor: default;
+  touch-action: none;
 }
 
 .stage-controls {
@@ -278,6 +281,15 @@ body {
 .material-item:hover, .reagent-item:hover {
   background: var(--navcard-hover-bg);
   transform: translateY(-2px);
+}
+
+.material-item.selected {
+  background: var(--primary-color);
+  color: #fff;
+  box-shadow: 0 0 15px rgba(214, 120, 255, 0.5);
+}
+.material-item.selected i {
+  color: #fff;
 }
 
 .material-item i, .reagent-item i {
