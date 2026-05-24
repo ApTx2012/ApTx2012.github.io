@@ -326,10 +326,10 @@ async function loadWeather() {
 // ====================== 6. 背景飞行旋转图片模块 ======================
 try {
   const flyingContainer = document.getElementById('flyingImages');
-  const allImages = ['img/bg1.jpg','img/bg2.jpg','img/bg3.jpg','img/bg4.jpg','img/bg5.jpg'];
+  const allImages = ['img/bg1.jpg','img/bg2.jpg','img/bg3.jpg','img/bg4.jpg','img/bg5.jpg','img/bg6.jpg','img/bg7.jpg','img/bg8.jpg','img/bg9.jpg',];
   let flyingItems = [];
   let loadErrCount = 0;
-  const imageCount = sitePerformanceMode === 'high' ? 5 : 0;
+  const imageCount = sitePerformanceMode === 'high' ? 9 : 0;
 
   if (!flyingContainer) {
     logError('背景飞行图片模块', '未找到 flyingImages 元素');
