@@ -290,8 +290,11 @@ async function init() {
 
   // 尝试加载 WASM 模块
   try {
-    const { ChemCalculator, ExperimentSimulator } = await import("../wasm-chem/pkg/wasm_chem.js");
-    await ChemCalculator.default();
+    const wasmModule = await import("../wasm-chem/pkg/wasm_chem.js");
+    const initWasm = wasmModule.default;
+    const wasmUrl = new URL("../wasm-chem/pkg/wasm_chem_bg.wasm", import.meta.url);
+    await initWasm({ module_or_path: wasmUrl });
+    const { ChemCalculator, ExperimentSimulator } = wasmModule;
     chemCalc = new ChemCalculator();
     expSim = new ExperimentSimulator();
     console.log("化学计算模块加载成功");
