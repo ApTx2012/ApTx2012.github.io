@@ -1,19 +1,19 @@
 [
   {
     "name": "Rust",
-    "bytes": 7988076,
+    "bytes": 7987066,
     "percent": 44.44,
     "color": "#dea584"
   },
   {
     "name": "Vue",
     "bytes": 4584304,
-    "percent": 25.5,
+    "percent": 25.51,
     "color": "#41b883"
   },
   {
     "name": "TypeScript",
-    "bytes": 3115429,
+    "bytes": 3114386,
     "percent": 17.33,
     "color": "#3178c6"
   },
@@ -25,7 +25,7 @@
   },
   {
     "name": "HTML",
-    "bytes": 647478,
+    "bytes": 647440,
     "percent": 3.6,
     "color": "#e34c26"
   },
@@ -61,7 +61,7 @@
   },
   {
     "name": "CSS",
-    "bytes": 10455,
+    "bytes": 10474,
     "percent": 0.06,
     "color": "#663399"
   },

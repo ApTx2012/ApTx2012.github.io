@@ -3,17 +3,17 @@
     "login": "ApTx2012",
     "name": "Ap_Tx",
     "avatarUrl": "https://avatars.githubusercontent.com/u/110907771?u=32644e98c0f377bed8ac3190aaee4cd46b890067&v=4",
-    "bio": "",
+    "bio": "Ax_Tps / ApTx2012 / Minecraft / Like a vegetable / Idiot",
     "followers": 1,
     "following": 3,
     "publicRepos": 9,
     "totalStars": 5,
     "totalForks": 0,
-    "totalCommits": 45,
+    "totalCommits": 47,
     "totalPRs": 3,
     "totalIssues": 1,
     "contributedTo": 7,
-    "generatedAt": "2026-10-07T02:08:06.387Z"
+    "generatedAt": "2026-10-07T13:56:48.365Z"
   },
   "repos": [
     {
@@ -24,7 +24,7 @@
       "forks": 0,
       "language": "Rust",
       "languageColor": "#dea584",
-      "updatedAt": "2026-10-04T07:06:29Z",
+      "updatedAt": "2026-10-07T13:54:35Z",
       "isFork": false
     },
     {
@@ -35,7 +35,7 @@
       "forks": 0,
       "language": "TypeScript",
       "languageColor": "#3178c6",
-      "updatedAt": "2026-10-07T02:07:56Z",
+      "updatedAt": "2026-10-07T10:52:46Z",
       "isFork": false
     },
     {
@@ -90,7 +90,7 @@
       "forks": 0,
       "language": null,
       "languageColor": null,
-      "updatedAt": "2026-10-06T22:32:28Z",
+      "updatedAt": "2026-10-07T05:12:27Z",
       "isFork": false
     },
     {
@@ -119,19 +119,19 @@
   "languages": [
     {
       "name": "Rust",
-      "bytes": 7988076,
+      "bytes": 7987066,
       "percent": 44.44,
       "color": "#dea584"
     },
     {
       "name": "Vue",
       "bytes": 4584304,
-      "percent": 25.5,
+      "percent": 25.51,
       "color": "#41b883"
     },
     {
       "name": "TypeScript",
-      "bytes": 3115429,
+      "bytes": 3114386,
       "percent": 17.33,
       "color": "#3178c6"
     },
@@ -143,7 +143,7 @@
     },
     {
       "name": "HTML",
-      "bytes": 647478,
+      "bytes": 647440,
       "percent": 3.6,
       "color": "#e34c26"
     },
@@ -179,7 +179,7 @@
     },
     {
       "name": "CSS",
-      "bytes": 10455,
+      "bytes": 10474,
       "percent": 0.06,
       "color": "#663399"
     },
@@ -191,7 +191,7 @@
     }
   ],
   "contributions": {
-    "total": 69,
+    "total": 71,
     "weeks": [
       [
         {
@@ -2125,8 +2125,8 @@
         },
         {
           "date": "2026-10-07",
-          "count": 1,
-          "level": 1
+          "count": 3,
+          "level": 2
         }
       ]
     ]
@@ -2135,26 +2135,26 @@
     {
       "id": "mock-0",
       "type": "commit",
-      "repo": "ApTx2012.github.io",
-      "title": "ApTx2012.github.io",
-      "url": "https://github.com/ApTx2012/ApTx2012.github.io",
-      "createdAt": "2026-10-07T02:07:56Z"
+      "repo": "Starlight_Lancher",
+      "title": "基于Axolotl启动器的Starlight专用启动器",
+      "url": "https://github.com/ApTx2012/Starlight_Lancher",
+      "createdAt": "2026-10-07T13:54:35Z"
     },
     {
       "id": "mock-1",
       "type": "commit",
-      "repo": "ApTx2012",
-      "title": "ApTx2012",
-      "url": "https://github.com/ApTx2012/ApTx2012",
-      "createdAt": "2026-10-06T22:32:28Z"
+      "repo": "ApTx2012.github.io",
+      "title": "ApTx2012.github.io",
+      "url": "https://github.com/ApTx2012/ApTx2012.github.io",
+      "createdAt": "2026-10-07T10:52:46Z"
     },
     {
       "id": "mock-2",
       "type": "commit",
-      "repo": "Starlight_Lancher",
-      "title": "基于Axolotl启动器的Starlight专用启动器",
-      "url": "https://github.com/ApTx2012/Starlight_Lancher",
-      "createdAt": "2026-10-04T07:06:29Z"
+      "repo": "ApTx2012",
+      "title": "ApTx2012",
+      "url": "https://github.com/ApTx2012/ApTx2012",
+      "createdAt": "2026-10-07T05:12:27Z"
     },
     {
       "id": "mock-3",
