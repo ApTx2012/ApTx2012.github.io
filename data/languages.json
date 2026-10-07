@@ -1,26 +1,74 @@
 [
   {
     "name": "Rust",
-    "bytes": 300000,
-    "percent": 45.45,
+    "bytes": 7988076,
+    "percent": 44.44,
     "color": "#dea584"
   },
   {
+    "name": "Vue",
+    "bytes": 4584304,
+    "percent": 25.5,
+    "color": "#41b883"
+  },
+  {
     "name": "TypeScript",
-    "bytes": 180000,
-    "percent": 27.27,
+    "bytes": 3115429,
+    "percent": 17.33,
     "color": "#3178c6"
   },
   {
+    "name": "JavaScript",
+    "bytes": 767379,
+    "percent": 4.27,
+    "color": "#f1e05a"
+  },
+  {
+    "name": "HTML",
+    "bytes": 647478,
+    "percent": 3.6,
+    "color": "#e34c26"
+  },
+  {
+    "name": "Python",
+    "bytes": 625565,
+    "percent": 3.48,
+    "color": "#3572A5"
+  },
+  {
+    "name": "SCSS",
+    "bytes": 79311,
+    "percent": 0.44,
+    "color": "#c6538c"
+  },
+  {
     "name": "Java",
-    "bytes": 120000,
-    "percent": 18.18,
+    "bytes": 69944,
+    "percent": 0.39,
     "color": "#b07219"
   },
   {
+    "name": "NSIS",
+    "bytes": 56474,
+    "percent": 0.31,
+    "color": "#888"
+  },
+  {
+    "name": "C",
+    "bytes": 30154,
+    "percent": 0.17,
+    "color": "#555555"
+  },
+  {
     "name": "CSS",
-    "bytes": 60000,
-    "percent": 9.09,
-    "color": "#563d7c"
+    "bytes": 10455,
+    "percent": 0.06,
+    "color": "#663399"
+  },
+  {
+    "name": "Kotlin",
+    "bytes": 1020,
+    "percent": 0.01,
+    "color": "#A97BFF"
   }
 ]
