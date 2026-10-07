@@ -1,0 +1,26 @@
+[
+  {
+    "name": "Rust",
+    "bytes": 300000,
+    "percent": 45.45,
+    "color": "#dea584"
+  },
+  {
+    "name": "TypeScript",
+    "bytes": 180000,
+    "percent": 27.27,
+    "color": "#3178c6"
+  },
+  {
+    "name": "Java",
+    "bytes": 120000,
+    "percent": 18.18,
+    "color": "#b07219"
+  },
+  {
+    "name": "CSS",
+    "bytes": 60000,
+    "percent": 9.09,
+    "color": "#563d7c"
+  }
+]

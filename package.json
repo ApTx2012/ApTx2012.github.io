@@ -1,0 +1,25 @@
+{
+  "name": "aptx2012-github-dashboard",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Cyberpunk + 3D galaxy GitHub data dashboard",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "fetch": "node scripts/fetch-github.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/three": "^0.171.0",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.5"
+  },
+  "dependencies": {
+    "echarts": "^5.5.1",
+    "gsap": "^3.12.5",
+    "three": "^0.171.0"
+  }
+}

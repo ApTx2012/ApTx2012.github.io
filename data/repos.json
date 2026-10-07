@@ -1,0 +1,68 @@
+[
+  {
+    "name": "Starlight_Lancher",
+    "description": "Minecraft 启动器",
+    "url": "https://github.com/ApTx2012/Starlight_Lancher",
+    "stars": 42,
+    "forks": 8,
+    "language": "Rust",
+    "languageColor": "#dea584",
+    "updatedAt": "2026-09-20T21:35:06.513Z",
+    "isFork": false
+  },
+  {
+    "name": "cargo-target-doctor",
+    "description": "Cargo target 体检工具",
+    "url": "https://github.com/ApTx2012/cargo-target-doctor",
+    "stars": 18,
+    "forks": 3,
+    "language": "Rust",
+    "languageColor": "#dea584",
+    "updatedAt": "2026-09-22T16:04:43.519Z",
+    "isFork": false
+  },
+  {
+    "name": "ApTx2012.github.io",
+    "description": "GitHub 数据可视化主页",
+    "url": "https://github.com/ApTx2012/ApTx2012.github.io",
+    "stars": 12,
+    "forks": 2,
+    "language": "TypeScript",
+    "languageColor": "#3178c6",
+    "updatedAt": "2026-08-11T19:59:55.670Z",
+    "isFork": false
+  },
+  {
+    "name": "CarpetSLSAddition",
+    "description": "Carpet 扩展 mod",
+    "url": "https://github.com/ApTx2012/CarpetSLSAddition",
+    "stars": 9,
+    "forks": 1,
+    "language": "Java",
+    "languageColor": "#b07219",
+    "updatedAt": "2026-08-16T22:50:19.210Z",
+    "isFork": false
+  },
+  {
+    "name": "Minecraft-place-mod",
+    "description": "/place 结构生成修复",
+    "url": "https://github.com/ApTx2012/Minecraft-place-mod",
+    "stars": 6,
+    "forks": 0,
+    "language": "Java",
+    "languageColor": "#b07219",
+    "updatedAt": "2026-09-07T10:35:34.230Z",
+    "isFork": false
+  },
+  {
+    "name": "activity-tracker",
+    "description": "Windows 活动追踪",
+    "url": "https://github.com/ApTx2012/activity-tracker",
+    "stars": 4,
+    "forks": 0,
+    "language": "Rust",
+    "languageColor": "#dea584",
+    "updatedAt": "2026-08-04T17:37:41.973Z",
+    "isFork": false
+  }
+]

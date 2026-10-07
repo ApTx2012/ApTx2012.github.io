@@ -1,0 +1,45 @@
+name: Fetch GitHub Data
+
+on:
+  schedule:
+    # 每天 UTC 02:00 拉一次（北京时间 10:00）
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/fetch-github.mjs'
+      - '.github/workflows/fetch-github-data.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Fetch GitHub data
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_DASHBOARD_TOKEN }}
+          GITHUB_USERNAME: ApTx2012
+        run: node scripts/fetch-github.mjs --live
+
+      - name: Commit updated data
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add data/
+          if git diff --staged --quiet; then
+            echo "数据无变化，跳过提交"
+          else
+            git commit -m "chore(data): 自动更新 GitHub 数据 $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push
+          fi

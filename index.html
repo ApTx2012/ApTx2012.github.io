@@ -1,161 +1,110 @@
-<!DOCTYPE html>
-<html lang="zh-CN" data-theme="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AxTps 小屋</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/text-light.css">
-  <link rel="stylesheet" href="src/i18n/styles.css">
-  <script>
-    (function() {
-      const saved = localStorage.getItem('sitePerformanceMode');
-      let mode = saved === 'low' || saved === 'medium' || saved === 'high' ? saved : null;
-      if (!mode) {
-        const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const connection = navigator.connection || {};
-        const saveData = connection.saveData;
-        const effectiveType = connection.effectiveType || '';
-        const memory = navigator.deviceMemory || 4;
-        const cores = navigator.hardwareConcurrency || 4;
-        if (reducedMotion || saveData || ['slow-2g', '2g'].includes(effectiveType) || memory < 2 || cores < 2) {
-          mode = 'low';
-        } else if (memory >= 8 && cores >= 4 && !['slow-2g', '2g'].includes(effectiveType)) {
-          mode = 'high';
-        } else {
-          mode = 'medium';
-        }
-      }
-      window.sitePerformanceMode = mode;
-      document.documentElement.dataset.perfMode = mode;
-      document.documentElement.classList.add(`perf-${mode}`);
-    })();
-  </script>
-</head>
-<body>
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+    <meta name="theme-color" content="#05060f" />
+    <meta name="description" content="ApTx2012 的 GitHub 数据可视化驾驶舱" />
+    <title>ApTx2012 · GitHub Observatory</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛰️</text></svg>" />
+  </head>
+  <body>
+    <!-- 3D 星系背景层 -->
+    <canvas id="galaxy"></canvas>
 
-<div class="loading-box" id="loadingBox">
-  <div class="loading-text">页面加载中...</div>
-</div>
-
-<div class="back-top" id="backTop">↑</div>
-
-<!-- 乱飞图片层 -->
-<div id="flyingImages"></div>
-
-<!-- WebGL 装饰画布 -->
-<canvas id="webglCanvas"></canvas>
-
-<!-- 主题切换 -->
-<div class="theme-switch" id="themeBtn">
-  <i class="fas fa-moon"></i>
-</div>
-<div class="perf-switch" id="perfBtn">性能：自动</div>
-
-<!-- 时钟 -->
-<div class="clock-card">
-  <div id="timeText">00:00:00</div>
-  <div id="dateText">加载日期中...</div>
-  <div id="uptimeText"></div>
-</div>
-
-<!-- 个人信息 -->
-<div class="hero-banner">
-  <div class="hero-badge" data-i18n="home.welcome">欢迎来到 AxTps 小屋</div>
-  <h1 class="hero-title" data-i18n="home.title">这里是喜欢代码、音乐与光影的温柔小宇宙</h1>
-  <p class="hero-subtitle" data-i18n="home.subtitle">一个既有博客小屋，又有天气与音乐氛围的个人空间。</p>
-</div>
-
-<div class="profile-container">
-  <div class="avatar"></div>
-  <h1 class="name light-text">HI, I'M AxTps</h1>
-  <p class="motto" data-i18n="home.greeting">欢迎来到我的小屋，今天你想听歌、看天气，还是聊点故事？</p>
-  <div class="tags">
-    <span data-i18n="tags.optimistic">乐观开朗</span>
-    <span data-i18n="tags.gentle">温柔体贴</span>
-    <span data-i18n="tags.easygoing">随和亲切</span>
-    <span data-i18n="tags.quickWitted">才思敏捷</span>
-    <span data-i18n="tags.humorous">风趣幽默</span>
-  </div>
-</div>
-
-<!-- 功能卡片 -->
-<div class="card-grid">
-  <div class="nav-card">
-    <div class="card-icon"><i class="fas fa-book"></i></div>
-    <h3 data-i18n="cards.blog.title">博客</h3>
-    <p data-i18n="cards.blog.desc">即将上线</p>
-    <button onclick="goSection('#blog')" data-i18n="buttons.go">前往</button>
-  </div>
-
-  <div class="nav-card">
-    <div class="card-icon"><i class="fas fa-cloud-sun"></i></div>
-    <h3 data-i18n="cards.weather.title">天气</h3>
-    <p data-i18n="cards.weather.desc">实时查询</p>
-    <button onclick="goSection('#weather')" data-i18n="buttons.go">前往</button>
-  </div>
-
-  <div class="nav-card">
-    <div class="card-icon"><i class="fas fa-gamepad"></i></div>
-    <h3 data-i18n="cards.game2048.title">2048</h3>
-    <p data-i18n="cards.game2048.desc">游戏</p>
-    <button onclick="window.location.href='game2048.html'" data-i18n="buttons.go">前往</button>
-  </div>
-
-  <div class="nav-card">
-    <div class="card-icon"><i class="fas fa-layer-group"></i></div>
-    <h3 data-i18n="cards.resources.title">资源站</h3>
-    <p data-i18n="cards.resources.desc">图床 / 资源收藏</p>
-    <button onclick="goSection('#resources')" data-i18n="buttons.go">前往</button>
-  </div>
-</div>
-
-<!-- 内容 -->
-<div class="sections">
-  <section id="blog"><h2 class="section-title">博客</h2><p>即将上线，准备好一起记录生活与创作。</p></section>
-  <section id="weather" class="weather-section">
-    <h2 class="section-title">🌤 实时天气</h2>
-    <div class="weather-card" id="weatherCard"><p>加载中...</p></div>
-  </section>
-  <section id="game2048" class="game-section">
-    <h2 class="section-title">🎮 2048</h2>
-    <div id="game2048-root" class="game-root">游戏加载中...</div>
-  </section>
-  <section id="resources" class="resources-section">
-    <h2 class="section-title">资源站 / 图床</h2>
-    <div class="resource-grid">
-      <a href="https://music.163.com" target="_blank">网易云音乐</a>
-      <a href="https://image.baidu.com" target="_blank">图床资源</a>
+    <!-- 赛博朋克叠加层：网格 + 扫描线 -->
+    <div class="cyber-overlay" aria-hidden="true">
+      <div class="cyber-grid"></div>
+      <div class="cyber-scanline"></div>
+      <div class="cyber-vignette"></div>
     </div>
-  </section>
-  <section id="about" class="about-section">
-    <h2 class="section-title">关于</h2>
-    <p>这是一个以温暖氛围为主的个人主页，既有简洁信息，也有轻松互动。愿你在这里找到一点好心情。</p>
-  </section>
-</div>
 
-<!-- 网易云音乐 歌单播放器 -->
-<div class="netease-music-box" id="neteaseMusic">
-  <iframe 
-    id="musicIframe" 
-    frameborder="no" 
-    border="0" 
-    marginwidth="0" 
-    marginheight="0" 
-    width="278" 
-    height="430"
-    allow="autoplay"
-  ></iframe>
-  <div class="music-toggle" id="musicToggle">收起</div>
-</div>
+    <!-- 主屏 -->
+    <header class="hero" id="hero">
+      <div class="hero__badge" id="heroBadge">
+        <span class="dot"></span>
+        <span>GITHUB OBSERVATORY · ONLINE</span>
+      </div>
 
-<script type="module">
-  import { i18n } from './src/i18n/index.js';
-  // 初始化多语言
-  i18n.initPageTranslation();
-</script>
-<script src="js/script.js"></script>
-<script type="module" src="js/2048.js"></script>
-</body>
+      <h1 class="hero__title" id="heroTitle">
+        <span class="glitch" data-text="ApTx2012">ApTx2012</span>
+      </h1>
+
+      <p class="hero__subtitle" id="heroSubtitle">初始化数据链路…</p>
+
+      <div class="hero__stats" id="heroStats">
+        <div class="stat-card" data-stat="stars">
+          <div class="stat-card__value" data-value="0">0</div>
+          <div class="stat-card__label">TOTAL STARS</div>
+        </div>
+        <div class="stat-card" data-stat="commits">
+          <div class="stat-card__value" data-value="0">0</div>
+          <div class="stat-card__label">COMMITS / YEAR</div>
+        </div>
+        <div class="stat-card" data-stat="repos">
+          <div class="stat-card__value" data-value="0">0</div>
+          <div class="stat-card__label">PUBLIC REPOS</div>
+        </div>
+        <div class="stat-card" data-stat="prs">
+          <div class="stat-card__value" data-value="0">0</div>
+          <div class="stat-card__label">PULL REQUESTS</div>
+        </div>
+      </div>
+
+      <div class="hero__scroll">
+        <span>SCROLL</span>
+        <div class="hero__scroll-line"></div>
+      </div>
+    </header>
+
+    <!-- 数据面板区 -->
+    <main class="panels" id="panels">
+      <section class="panel" data-panel="contributions">
+        <div class="panel__head">
+          <span class="panel__index">01</span>
+          <h2 class="panel__title">贡献热力</h2>
+          <span class="panel__meta" id="contribTotal"></span>
+        </div>
+        <div class="panel__body">
+          <div class="chart" id="chart-contributions"></div>
+        </div>
+      </section>
+
+      <section class="panel" data-panel="languages">
+        <div class="panel__head">
+          <span class="panel__index">02</span>
+          <h2 class="panel__title">语言构成</h2>
+        </div>
+        <div class="panel__body">
+          <div class="chart" id="chart-languages"></div>
+        </div>
+      </section>
+
+      <section class="panel" data-panel="repos">
+        <div class="panel__head">
+          <span class="panel__index">03</span>
+          <h2 class="panel__title">仓库星榜</h2>
+        </div>
+        <div class="panel__body">
+          <div class="chart" id="chart-repos"></div>
+        </div>
+      </section>
+
+      <section class="panel" data-panel="activity">
+        <div class="panel__head">
+          <span class="panel__index">04</span>
+          <h2 class="panel__title">活动流</h2>
+        </div>
+        <div class="panel__body">
+          <ul class="activity-list" id="activity-list"></ul>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <span id="footerInfo">—</span>
+    </footer>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
 </html>
