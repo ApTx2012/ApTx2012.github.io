@@ -1,6 +1,3 @@
-/**
- * 活动流渲染
- */
 import type { ActivityEntry } from '@/types/github';
 import { timeAgo } from '@/core/effects';
 

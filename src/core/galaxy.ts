@@ -23,24 +23,22 @@ export function initGalaxy(canvas: HTMLCanvasElement): GalaxyHandle {
   });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setClearColor(0x05060f, 1);
+  renderer.setClearColor(0x071019, 1);
 
   const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x05060f, 0.0016);
+  scene.fog = new THREE.FogExp2(0x071019, 0.0016);
 
   const camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 2000);
   camera.position.set(0, 0, 260);
 
-  // ---------- 主星系粒子 ----------
   const positions = new Float32Array(COUNT * 3);
   const colors = new Float32Array(COUNT * 3);
 
-  const cCyan = new THREE.Color(0x00f0ff);
-  const cMagenta = new THREE.Color(0xff2e97);
-  const cPurple = new THREE.Color(0xa06bff);
+  const cCyan = new THREE.Color(0x4dd0e1);
+  const cMagenta = new THREE.Color(0x7fd8c4);
+  const cPurple = new THREE.Color(0x80cbc4);
 
   for (let i = 0; i < COUNT; i++) {
-    // 螺旋星系分布
     const radius = Math.pow(Math.random(), 0.7) * 420;
     const armCount = 3;
     const arm = i % armCount;
@@ -57,7 +55,7 @@ export function initGalaxy(canvas: HTMLCanvasElement): GalaxyHandle {
     positions[i * 3 + 1] = y;
     positions[i * 3 + 2] = z;
 
-    // 内圈偏洋红，外圈偏青紫
+    // 内圈偏青绿，外圈偏冷青
     const t = radius / 420;
     const col = cMagenta.clone().lerp(cCyan, t).lerp(cPurple, Math.random() * 0.4);
     colors[i * 3] = col.r;
@@ -69,7 +67,6 @@ export function initGalaxy(canvas: HTMLCanvasElement): GalaxyHandle {
   geo.setAttribute('position', new THREE.BufferAttribute(positions, 3));
   geo.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
-  // 圆形软粒子纹理
   const spriteCanvas = document.createElement('canvas');
   spriteCanvas.width = spriteCanvas.height = 64;
   const ctx = spriteCanvas.getContext('2d')!;
@@ -95,22 +92,20 @@ export function initGalaxy(canvas: HTMLCanvasElement): GalaxyHandle {
   const points = new THREE.Points(geo, mat);
   scene.add(points);
 
-  // ---------- 核心光晕 ----------
   const coreGeo = new THREE.SphereGeometry(6, 32, 32);
-  const coreMat = new THREE.MeshBasicMaterial({ color: 0x00f0ff, transparent: true, opacity: 0.85 });
+  const coreMat = new THREE.MeshBasicMaterial({ color: 0x4dd0e1, transparent: true, opacity: 0.85 });
   const core = new THREE.Mesh(coreGeo, coreMat);
   scene.add(core);
 
   const haloGeo = new THREE.SphereGeometry(22, 32, 32);
   const haloMat = new THREE.MeshBasicMaterial({
-    color: 0x00f0ff,
+    color: 0x4dd0e1,
     transparent: true,
     opacity: 0.08,
     blending: THREE.AdditiveBlending,
   });
   scene.add(new THREE.Mesh(haloGeo, haloMat));
 
-  // ---------- 鼠标视差 ----------
   const target = { x: 0, y: 0 };
   const current = { x: 0, y: 0 };
 
@@ -120,7 +115,6 @@ export function initGalaxy(canvas: HTMLCanvasElement): GalaxyHandle {
   };
   window.addEventListener('pointermove', onPointerMove, { passive: true });
 
-  // ---------- 尺寸 ----------
   const onResize = () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
@@ -128,7 +122,6 @@ export function initGalaxy(canvas: HTMLCanvasElement): GalaxyHandle {
   };
   window.addEventListener('resize', onResize);
 
-  // ---------- 渲染循环 ----------
   let raf = 0;
   let running = true;
   const clock = new THREE.Clock();
@@ -142,14 +135,12 @@ export function initGalaxy(canvas: HTMLCanvasElement): GalaxyHandle {
       points.rotation.x = Math.sin(t * 0.12) * 0.08;
     }
 
-    // 平滑鼠标视差
     current.x += (target.x - current.x) * 0.04;
     current.y += (target.y - current.y) * 0.04;
     camera.position.x = current.x * 55;
     camera.position.y = -current.y * 35;
     camera.lookAt(0, 0, 0);
 
-    // 核心呼吸
     const pulse = 1 + Math.sin(t * 1.6) * 0.18;
     core.scale.setScalar(pulse);
     coreMat.opacity = 0.65 + Math.sin(t * 1.6) * 0.2;

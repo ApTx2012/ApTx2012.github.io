@@ -1,9 +1,5 @@
-/**
- * 数字滚动 & 面板进场观察器
- */
 import gsap from 'gsap';
 
-/** 数字从 0 滚到目标值 */
 export function animateNumber(el: HTMLElement, target: number, duration = 1.6): void {
   const obj = { v: 0 };
   gsap.to(obj, {
@@ -16,7 +12,6 @@ export function animateNumber(el: HTMLElement, target: number, duration = 1.6): 
   });
 }
 
-/** 面板滚动进场：IntersectionObserver + 渐显 */
 export function observePanels(onVisible: (el: HTMLElement) => void): () => void {
   const panels = document.querySelectorAll<HTMLElement>('.panel');
   const io = new IntersectionObserver(
@@ -35,7 +30,6 @@ export function observePanels(onVisible: (el: HTMLElement) => void): () => void 
   return () => io.disconnect();
 }
 
-/** 相对时间 */
 export function timeAgo(iso: string): string {
   const diff = Date.now() - new Date(iso).getTime();
   const min = Math.floor(diff / 60000);

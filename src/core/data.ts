@@ -46,7 +46,7 @@ function buildFallback(): GithubData {
       login: 'ApTx2012',
       name: 'AxTps',
       avatarUrl: 'https://github.com/ApTx2012.png',
-      bio: '数据加载失败，展示占位',
+      bio: '数据暂时没加载出来',
       followers: 0,
       following: 0,
       publicRepos: 0,

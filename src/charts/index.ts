@@ -1,6 +1,6 @@
 /**
  * ECharts 图表集
- * 统一赛博朋克主题
+ * 深海磷光配色
  */
 import * as echarts from 'echarts';
 import type { ContributionCalendar, LanguageEntry, RepoEntry } from '@/types/github';
@@ -8,24 +8,23 @@ import type { ContributionCalendar, LanguageEntry, RepoEntry } from '@/types/git
 type ECharts = echarts.ECharts;
 
 const NEON = {
-  cyan: '#00f0ff',
-  magenta: '#ff2e97',
-  purple: '#a06bff',
-  lime: '#b6ff3c',
-  text: '#8fa3c4',
-  textDim: '#4d5f7d',
-  line: 'rgba(0,240,255,0.18)',
+  cyan: '#4dd0e1',
+  magenta: '#7fd8c4',
+  purple: '#80cbc4',
+  lime: '#fff59d',
+  text: '#8fb3bf',
+  textDim: '#4d6b78',
+  line: 'rgba(77,208,225,0.18)',
 };
 
 const TOOLTIP_BASE = {
   backgroundColor: 'rgba(10,13,28,0.95)',
-  borderColor: 'rgba(0,240,255,0.35)',
+  borderColor: 'rgba(77,208,225,0.35)',
   borderWidth: 1,
   textStyle: { color: '#e8f4ff', fontSize: 12 },
   extraCssText: 'backdrop-filter: blur(8px); border-radius: 8px;',
 };
 
-/** 01 贡献热力图 */
 export function renderContributions(el: HTMLElement, cal: ContributionCalendar): ECharts {
   const chart = echarts.init(el, undefined, { renderer: 'canvas' });
 
@@ -85,10 +84,10 @@ export function renderContributions(el: HTMLElement, cal: ContributionCalendar):
       type: 'piecewise',
       show: false,
       pieces: [
-        { min: 0, max: 0, color: 'rgba(0,240,255,0.05)' },
-        { min: 1, max: Math.ceil(maxCount * 0.25), color: 'rgba(0,240,255,0.25)' },
-        { min: Math.ceil(maxCount * 0.25) + 1, max: Math.ceil(maxCount * 0.5), color: 'rgba(0,240,255,0.5)' },
-        { min: Math.ceil(maxCount * 0.5) + 1, max: Math.ceil(maxCount * 0.75), color: 'rgba(0,240,255,0.75)' },
+        { min: 0, max: 0, color: 'rgba(77,208,225,0.05)' },
+        { min: 1, max: Math.ceil(maxCount * 0.25), color: 'rgba(77,208,225,0.25)' },
+        { min: Math.ceil(maxCount * 0.25) + 1, max: Math.ceil(maxCount * 0.5), color: 'rgba(77,208,225,0.5)' },
+        { min: Math.ceil(maxCount * 0.5) + 1, max: Math.ceil(maxCount * 0.75), color: 'rgba(77,208,225,0.75)' },
         { min: Math.ceil(maxCount * 0.75) + 1, max: maxCount, color: NEON.cyan },
       ],
     },
@@ -116,7 +115,6 @@ export function renderContributions(el: HTMLElement, cal: ContributionCalendar):
   return chart;
 }
 
-/** 02 语言构成环形图 */
 export function renderLanguages(el: HTMLElement, langs: LanguageEntry[]): ECharts {
   const chart = echarts.init(el, undefined, { renderer: 'canvas' });
   const top = langs.slice(0, 8);
@@ -175,7 +173,6 @@ export function renderLanguages(el: HTMLElement, langs: LanguageEntry[]): EChart
   return chart;
 }
 
-/** 03 仓库星榜横向柱状 */
 export function renderRepos(el: HTMLElement, repos: RepoEntry[]): ECharts {
   const chart = echarts.init(el, undefined, { renderer: 'canvas' });
   const top = repos
@@ -201,7 +198,7 @@ export function renderRepos(el: HTMLElement, repos: RepoEntry[]): ECharts {
       axisLine: { show: false },
       axisTick: { show: false },
       axisLabel: { color: NEON.textDim, fontSize: 10 },
-      splitLine: { lineStyle: { color: 'rgba(0,240,255,0.06)' } },
+      splitLine: { lineStyle: { color: 'rgba(77,208,225,0.06)' } },
     },
     yAxis: {
       type: 'category',
@@ -223,7 +220,7 @@ export function renderRepos(el: HTMLElement, repos: RepoEntry[]): ECharts {
           value: r.stars,
           itemStyle: {
             color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
-              { offset: 0, color: 'rgba(0,240,255,0.15)' },
+              { offset: 0, color: 'rgba(77,208,225,0.15)' },
               { offset: 1, color: r.languageColor || NEON.cyan },
             ]),
             borderRadius: [0, 6, 6, 0],
@@ -248,7 +245,6 @@ export function renderRepos(el: HTMLElement, repos: RepoEntry[]): ECharts {
   return chart;
 }
 
-/** 统一 resize */
 export function attachResize(charts: ECharts[]): () => void {
   const handler = () => charts.forEach((c) => c.resize());
   window.addEventListener('resize', handler);

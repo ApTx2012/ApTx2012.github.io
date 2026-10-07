@@ -4,20 +4,20 @@
    ============================================================ */
 
 :root {
-  --bg-0: #05060f;
-  --bg-1: #0a0d1c;
-  --bg-2: #111528;
-  --neon-cyan: #00f0ff;
-  --neon-magenta: #ff2e97;
-  --neon-purple: #a06bff;
-  --neon-lime: #b6ff3c;
-  --text-0: #e8f4ff;
-  --text-1: #8fa3c4;
-  --text-2: #4d5f7d;
-  --line: rgba(0, 240, 255, 0.18);
-  --line-soft: rgba(0, 240, 255, 0.08);
-  --glow-cyan: 0 0 20px rgba(0, 240, 255, 0.5), 0 0 40px rgba(0, 240, 255, 0.2);
-  --glow-magenta: 0 0 20px rgba(255, 46, 151, 0.5), 0 0 40px rgba(255, 46, 151, 0.2);
+  --bg-0: #071019;
+  --bg-1: #0a1628;
+  --bg-2: #102a3d;
+  --neon-cyan: #4dd0e1;
+  --neon-magenta: #7fd8c4;
+  --neon-purple: #80cbc4;
+  --neon-lime: #fff59d;
+  --text-0: #e3f2f5;
+  --text-1: #8fb3bf;
+  --text-2: #4d6b78;
+  --line: rgba(77, 208, 225, 0.18);
+  --line-soft: rgba(77, 208, 225, 0.07);
+  --glow-cyan: 0 0 20px rgba(77, 208, 225, 0.45), 0 0 42px rgba(77, 208, 225, 0.16);
+  --glow-magenta: 0 0 20px rgba(127, 216, 196, 0.42), 0 0 42px rgba(127, 216, 196, 0.15);
   --font-mono: 'JetBrains Mono', 'SF Mono', 'Cascadia Code', Consolas, monospace;
   --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
 }
@@ -72,8 +72,8 @@ body {
     0deg,
     transparent 0px,
     transparent 2px,
-    rgba(0, 240, 255, 0.02) 2px,
-    rgba(0, 240, 255, 0.02) 3px
+    rgba(77, 208, 225, 0.02) 2px,
+    rgba(77, 208, 225, 0.02) 3px
   );
   opacity: 0.5;
   animation: scan-drift 8s linear infinite;
@@ -115,7 +115,7 @@ body {
   border: 1px solid var(--line);
   border-radius: 999px;
   padding: 0.5rem 1.1rem;
-  background: rgba(0, 240, 255, 0.04);
+  background: rgba(77, 208, 225, 0.04);
   backdrop-filter: blur(8px);
   opacity: 0;
   animation: fade-up 0.8s 0.2s ease forwards;
@@ -149,7 +149,7 @@ body {
   position: relative;
   display: inline-block;
   color: var(--text-0);
-  text-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
+  text-shadow: 0 0 30px rgba(77, 208, 225, 0.4);
 }
 
 .glitch::before,
@@ -203,7 +203,7 @@ body {
   padding: 1.4rem 1rem;
   border: 1px solid var(--line);
   border-radius: 14px;
-  background: linear-gradient(160deg, rgba(0, 240, 255, 0.06), rgba(160, 107, 255, 0.03));
+  background: linear-gradient(160deg, rgba(77, 208, 225, 0.06), rgba(128, 203, 196, 0.03));
   backdrop-filter: blur(14px);
   overflow: hidden;
   opacity: 0;
@@ -236,8 +236,8 @@ body {
 }
 
 .stat-card[data-stat='commits'] .stat-card__value { color: var(--neon-magenta); text-shadow: var(--glow-magenta); }
-.stat-card[data-stat='repos'] .stat-card__value { color: var(--neon-lime); text-shadow: 0 0 20px rgba(182, 255, 60, 0.4); }
-.stat-card[data-stat='prs'] .stat-card__value { color: var(--neon-purple); text-shadow: 0 0 20px rgba(160, 107, 255, 0.4); }
+.stat-card[data-stat='repos'] .stat-card__value { color: var(--neon-lime); text-shadow: 0 0 20px rgba(255, 245, 157, 0.4); }
+.stat-card[data-stat='prs'] .stat-card__value { color: var(--neon-purple); text-shadow: 0 0 20px rgba(128, 203, 196, 0.4); }
 
 .stat-card__label {
   margin-top: 0.5rem;
@@ -361,14 +361,14 @@ body {
   padding: 0.9rem 1rem;
   border: 1px solid var(--line-soft);
   border-radius: 10px;
-  background: rgba(0, 240, 255, 0.02);
+  background: rgba(77, 208, 225, 0.02);
   transition: background 0.25s, border-color 0.25s, transform 0.25s;
   text-decoration: none;
   color: inherit;
 }
 
 .activity-item:hover {
-  background: rgba(0, 240, 255, 0.07);
+  background: rgba(77, 208, 225, 0.07);
   border-color: var(--line);
   transform: translateX(6px);
 }
@@ -379,7 +379,7 @@ body {
   letter-spacing: 0.1em;
   padding: 0.25rem 0.55rem;
   border-radius: 5px;
-  background: rgba(0, 240, 255, 0.12);
+  background: rgba(77, 208, 225, 0.12);
   color: var(--neon-cyan);
   flex-shrink: 0;
   min-width: 62px;

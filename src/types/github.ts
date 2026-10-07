@@ -3,7 +3,6 @@
  * 与 scripts/fetch-github.mjs 产出的 JSON 结构严格一致
  */
 
-/** 核心统计卡片 */
 export interface GithubStats {
   login: string;
   name: string | null;
@@ -21,7 +20,6 @@ export interface GithubStats {
   generatedAt: string;
 }
 
-/** 仓库条目 */
 export interface RepoEntry {
   name: string;
   description: string | null;
@@ -34,7 +32,6 @@ export interface RepoEntry {
   isFork: boolean;
 }
 
-/** 语言构成 */
 export interface LanguageEntry {
   name: string;
   bytes: number;
@@ -42,7 +39,6 @@ export interface LanguageEntry {
   color: string;
 }
 
-/** 贡献日历：按周分列，每列 7 天 */
 export interface ContributionDay {
   date: string;
   count: number;
@@ -54,7 +50,6 @@ export interface ContributionCalendar {
   weeks: ContributionDay[][];
 }
 
-/** 活动流条目 */
 export interface ActivityEntry {
   id: string;
   type: 'commit' | 'pr' | 'issue' | 'release' | 'star' | 'other';
@@ -64,7 +59,6 @@ export interface ActivityEntry {
   createdAt: string;
 }
 
-/** 数据包总汇 */
 export interface GithubData {
   stats: GithubStats;
   repos: RepoEntry[];
@@ -73,5 +67,4 @@ export interface GithubData {
   activity: ActivityEntry[];
 }
 
-/** fetch 脚本运行模式 */
 export type FetchMode = 'live' | 'mock';
