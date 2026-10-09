@@ -1,20 +1,20 @@
 [
   {
     "name": "Rust",
-    "bytes": 7987066,
-    "percent": 44.44,
+    "bytes": 7996974,
+    "percent": 44.47,
     "color": "#dea584"
   },
   {
     "name": "Vue",
     "bytes": 4584304,
-    "percent": 25.51,
+    "percent": 25.49,
     "color": "#41b883"
   },
   {
     "name": "TypeScript",
-    "bytes": 3114386,
-    "percent": 17.33,
+    "bytes": 3115535,
+    "percent": 17.32,
     "color": "#3178c6"
   },
   {
