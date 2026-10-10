@@ -9,11 +9,11 @@
     "publicRepos": 9,
     "totalStars": 5,
     "totalForks": 0,
-    "totalCommits": 48,
-    "totalPRs": 3,
+    "totalCommits": 54,
+    "totalPRs": 4,
     "totalIssues": 1,
     "contributedTo": 7,
-    "generatedAt": "2026-10-09T08:37:29.867Z"
+    "generatedAt": "2026-10-10T08:12:58.190Z"
   },
   "repos": [
     {
@@ -24,7 +24,7 @@
       "forks": 0,
       "language": "Rust",
       "languageColor": "#dea584",
-      "updatedAt": "2026-10-08T13:27:48Z",
+      "updatedAt": "2026-10-09T14:20:58Z",
       "isFork": false
     },
     {
@@ -35,7 +35,7 @@
       "forks": 0,
       "language": "TypeScript",
       "languageColor": "#3178c6",
-      "updatedAt": "2026-10-08T08:33:15Z",
+      "updatedAt": "2026-10-09T08:37:35Z",
       "isFork": false
     },
     {
@@ -90,7 +90,7 @@
       "forks": 0,
       "language": null,
       "languageColor": null,
-      "updatedAt": "2026-10-09T05:25:57Z",
+      "updatedAt": "2026-10-10T05:09:45Z",
       "isFork": false
     },
     {
@@ -119,38 +119,38 @@
   "languages": [
     {
       "name": "Rust",
-      "bytes": 7996974,
-      "percent": 44.47,
+      "bytes": 7996970,
+      "percent": 44.31,
       "color": "#dea584"
     },
     {
       "name": "Vue",
-      "bytes": 4584304,
-      "percent": 25.49,
+      "bytes": 4608042,
+      "percent": 25.53,
       "color": "#41b883"
     },
     {
       "name": "TypeScript",
-      "bytes": 3115535,
-      "percent": 17.32,
+      "bytes": 3154492,
+      "percent": 17.48,
       "color": "#3178c6"
     },
     {
       "name": "JavaScript",
       "bytes": 767379,
-      "percent": 4.27,
+      "percent": 4.25,
       "color": "#f1e05a"
     },
     {
       "name": "HTML",
       "bytes": 647440,
-      "percent": 3.6,
+      "percent": 3.59,
       "color": "#e34c26"
     },
     {
       "name": "Python",
       "bytes": 625565,
-      "percent": 3.48,
+      "percent": 3.47,
       "color": "#3572A5"
     },
     {
@@ -191,14 +191,9 @@
     }
   ],
   "contributions": {
-    "total": 72,
+    "total": 79,
     "weeks": [
       [
-        {
-          "date": "2025-10-09",
-          "count": 0,
-          "level": 0
-        },
         {
           "date": "2025-10-10",
           "count": 0,
@@ -2115,7 +2110,7 @@
         },
         {
           "date": "2026-10-07",
-          "count": 3,
+          "count": 4,
           "level": 2
         },
         {
@@ -2125,6 +2120,11 @@
         },
         {
           "date": "2026-10-09",
+          "count": 6,
+          "level": 3
+        },
+        {
+          "date": "2026-10-10",
           "count": 0,
           "level": 0
         }
@@ -2138,7 +2138,7 @@
       "repo": "ApTx2012",
       "title": "ApTx2012",
       "url": "https://github.com/ApTx2012/ApTx2012",
-      "createdAt": "2026-10-09T05:25:57Z"
+      "createdAt": "2026-10-10T05:09:45Z"
     },
     {
       "id": "mock-1",
@@ -2146,7 +2146,7 @@
       "repo": "Starlight_Lancher",
       "title": "基于Axolotl启动器的Starlight专用启动器",
       "url": "https://github.com/ApTx2012/Starlight_Lancher",
-      "createdAt": "2026-10-08T13:27:48Z"
+      "createdAt": "2026-10-09T14:20:58Z"
     },
     {
       "id": "mock-2",
@@ -2154,7 +2154,7 @@
       "repo": "ApTx2012.github.io",
       "title": "ApTx2012.github.io",
       "url": "https://github.com/ApTx2012/ApTx2012.github.io",
-      "createdAt": "2026-10-08T08:33:15Z"
+      "createdAt": "2026-10-09T08:37:35Z"
     },
     {
       "id": "mock-3",

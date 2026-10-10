@@ -1,38 +1,38 @@
 [
   {
     "name": "Rust",
-    "bytes": 7996974,
-    "percent": 44.47,
+    "bytes": 7996970,
+    "percent": 44.31,
     "color": "#dea584"
   },
   {
     "name": "Vue",
-    "bytes": 4584304,
-    "percent": 25.49,
+    "bytes": 4608042,
+    "percent": 25.53,
     "color": "#41b883"
   },
   {
     "name": "TypeScript",
-    "bytes": 3115535,
-    "percent": 17.32,
+    "bytes": 3154492,
+    "percent": 17.48,
     "color": "#3178c6"
   },
   {
     "name": "JavaScript",
     "bytes": 767379,
-    "percent": 4.27,
+    "percent": 4.25,
     "color": "#f1e05a"
   },
   {
     "name": "HTML",
     "bytes": 647440,
-    "percent": 3.6,
+    "percent": 3.59,
     "color": "#e34c26"
   },
   {
     "name": "Python",
     "bytes": 625565,
-    "percent": 3.48,
+    "percent": 3.47,
     "color": "#3572A5"
   },
   {
