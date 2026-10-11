@@ -1,50 +1,50 @@
 [
   {
     "name": "Rust",
-    "bytes": 7996970,
-    "percent": 44.31,
+    "bytes": 8073510,
+    "percent": 44.03,
     "color": "#dea584"
   },
   {
     "name": "Vue",
-    "bytes": 4608042,
-    "percent": 25.53,
+    "bytes": 4757800,
+    "percent": 25.95,
     "color": "#41b883"
   },
   {
     "name": "TypeScript",
-    "bytes": 3154492,
-    "percent": 17.48,
+    "bytes": 3214467,
+    "percent": 17.53,
     "color": "#3178c6"
   },
   {
     "name": "JavaScript",
-    "bytes": 767379,
-    "percent": 4.25,
+    "bytes": 769926,
+    "percent": 4.2,
     "color": "#f1e05a"
   },
   {
     "name": "HTML",
     "bytes": 647440,
-    "percent": 3.59,
+    "percent": 3.53,
     "color": "#e34c26"
   },
   {
     "name": "Python",
     "bytes": 625565,
-    "percent": 3.47,
+    "percent": 3.41,
     "color": "#3572A5"
   },
   {
     "name": "SCSS",
     "bytes": 79311,
-    "percent": 0.44,
+    "percent": 0.43,
     "color": "#c6538c"
   },
   {
     "name": "Java",
     "bytes": 69944,
-    "percent": 0.39,
+    "percent": 0.38,
     "color": "#b07219"
   },
   {
@@ -56,7 +56,7 @@
   {
     "name": "C",
     "bytes": 30154,
-    "percent": 0.17,
+    "percent": 0.16,
     "color": "#555555"
   },
   {

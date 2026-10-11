@@ -1,7 +1,7 @@
 {
   "stats": {
     "login": "ApTx2012",
-    "name": "Ap_Tx",
+    "name": "AxTps",
     "avatarUrl": "https://avatars.githubusercontent.com/u/110907771?u=32644e98c0f377bed8ac3190aaee4cd46b890067&v=4",
     "bio": "Ax_Tps / ApTx2012 / Minecraft / Like a vegetable / Idiot",
     "followers": 1,
@@ -9,11 +9,11 @@
     "publicRepos": 9,
     "totalStars": 5,
     "totalForks": 0,
-    "totalCommits": 54,
-    "totalPRs": 4,
+    "totalCommits": 94,
+    "totalPRs": 14,
     "totalIssues": 1,
-    "contributedTo": 7,
-    "generatedAt": "2026-10-10T08:12:58.190Z"
+    "contributedTo": 9,
+    "generatedAt": "2026-10-11T08:26:35.658Z"
   },
   "repos": [
     {
@@ -24,7 +24,7 @@
       "forks": 0,
       "language": "Rust",
       "languageColor": "#dea584",
-      "updatedAt": "2026-10-09T14:20:58Z",
+      "updatedAt": "2026-10-11T07:53:53Z",
       "isFork": false
     },
     {
@@ -35,7 +35,7 @@
       "forks": 0,
       "language": "TypeScript",
       "languageColor": "#3178c6",
-      "updatedAt": "2026-10-09T08:37:35Z",
+      "updatedAt": "2026-10-10T08:13:02Z",
       "isFork": false
     },
     {
@@ -90,7 +90,7 @@
       "forks": 0,
       "language": null,
       "languageColor": null,
-      "updatedAt": "2026-10-10T05:09:45Z",
+      "updatedAt": "2026-10-11T04:59:51Z",
       "isFork": false
     },
     {
@@ -119,50 +119,50 @@
   "languages": [
     {
       "name": "Rust",
-      "bytes": 7996970,
-      "percent": 44.31,
+      "bytes": 8073510,
+      "percent": 44.03,
       "color": "#dea584"
     },
     {
       "name": "Vue",
-      "bytes": 4608042,
-      "percent": 25.53,
+      "bytes": 4757800,
+      "percent": 25.95,
       "color": "#41b883"
     },
     {
       "name": "TypeScript",
-      "bytes": 3154492,
-      "percent": 17.48,
+      "bytes": 3214467,
+      "percent": 17.53,
       "color": "#3178c6"
     },
     {
       "name": "JavaScript",
-      "bytes": 767379,
-      "percent": 4.25,
+      "bytes": 769926,
+      "percent": 4.2,
       "color": "#f1e05a"
     },
     {
       "name": "HTML",
       "bytes": 647440,
-      "percent": 3.59,
+      "percent": 3.53,
       "color": "#e34c26"
     },
     {
       "name": "Python",
       "bytes": 625565,
-      "percent": 3.47,
+      "percent": 3.41,
       "color": "#3572A5"
     },
     {
       "name": "SCSS",
       "bytes": 79311,
-      "percent": 0.44,
+      "percent": 0.43,
       "color": "#c6538c"
     },
     {
       "name": "Java",
       "bytes": 69944,
-      "percent": 0.39,
+      "percent": 0.38,
       "color": "#b07219"
     },
     {
@@ -174,7 +174,7 @@
     {
       "name": "C",
       "bytes": 30154,
-      "percent": 0.17,
+      "percent": 0.16,
       "color": "#555555"
     },
     {
@@ -191,20 +191,8 @@
     }
   ],
   "contributions": {
-    "total": 79,
+    "total": 131,
     "weeks": [
-      [
-        {
-          "date": "2025-10-10",
-          "count": 0,
-          "level": 0
-        },
-        {
-          "date": "2025-10-11",
-          "count": 0,
-          "level": 0
-        }
-      ],
       [
         {
           "date": "2025-10-12",
@@ -2125,8 +2113,15 @@
         },
         {
           "date": "2026-10-10",
-          "count": 0,
-          "level": 0
+          "count": 15,
+          "level": 4
+        }
+      ],
+      [
+        {
+          "date": "2026-10-11",
+          "count": 37,
+          "level": 4
         }
       ]
     ]
@@ -2135,18 +2130,18 @@
     {
       "id": "mock-0",
       "type": "commit",
-      "repo": "ApTx2012",
-      "title": "ApTx2012",
-      "url": "https://github.com/ApTx2012/ApTx2012",
-      "createdAt": "2026-10-10T05:09:45Z"
+      "repo": "Starlight_Lancher",
+      "title": "基于Axolotl启动器的Starlight专用启动器",
+      "url": "https://github.com/ApTx2012/Starlight_Lancher",
+      "createdAt": "2026-10-11T07:53:53Z"
     },
     {
       "id": "mock-1",
       "type": "commit",
-      "repo": "Starlight_Lancher",
-      "title": "基于Axolotl启动器的Starlight专用启动器",
-      "url": "https://github.com/ApTx2012/Starlight_Lancher",
-      "createdAt": "2026-10-09T14:20:58Z"
+      "repo": "ApTx2012",
+      "title": "ApTx2012",
+      "url": "https://github.com/ApTx2012/ApTx2012",
+      "createdAt": "2026-10-11T04:59:51Z"
     },
     {
       "id": "mock-2",
@@ -2154,7 +2149,7 @@
       "repo": "ApTx2012.github.io",
       "title": "ApTx2012.github.io",
       "url": "https://github.com/ApTx2012/ApTx2012.github.io",
-      "createdAt": "2026-10-09T08:37:35Z"
+      "createdAt": "2026-10-10T08:13:02Z"
     },
     {
       "id": "mock-3",
