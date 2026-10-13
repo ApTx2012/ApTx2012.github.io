@@ -13,7 +13,7 @@
     "totalPRs": 14,
     "totalIssues": 1,
     "contributedTo": 10,
-    "generatedAt": "2026-10-12T08:47:50.293Z"
+    "generatedAt": "2026-10-13T09:05:26.196Z"
   },
   "repos": [
     {
@@ -24,7 +24,7 @@
       "forks": 0,
       "language": "Rust",
       "languageColor": "#dea584",
-      "updatedAt": "2026-10-11T07:53:53Z",
+      "updatedAt": "2026-10-12T12:00:35Z",
       "isFork": false
     },
     {
@@ -35,7 +35,7 @@
       "forks": 0,
       "language": "TypeScript",
       "languageColor": "#3178c6",
-      "updatedAt": "2026-10-11T08:26:39Z",
+      "updatedAt": "2026-10-12T08:47:55Z",
       "isFork": false
     },
     {
@@ -90,7 +90,7 @@
       "forks": 0,
       "language": null,
       "languageColor": null,
-      "updatedAt": "2026-10-12T05:14:13Z",
+      "updatedAt": "2026-10-13T06:12:47Z",
       "isFork": false
     },
     {
@@ -119,14 +119,14 @@
   "languages": [
     {
       "name": "Rust",
-      "bytes": 8073510,
-      "percent": 44.03,
+      "bytes": 8077781,
+      "percent": 44.04,
       "color": "#dea584"
     },
     {
       "name": "Vue",
       "bytes": 4757800,
-      "percent": 25.95,
+      "percent": 25.94,
       "color": "#41b883"
     },
     {
@@ -194,11 +194,6 @@
     "total": 132,
     "weeks": [
       [
-        {
-          "date": "2025-10-12",
-          "count": 0,
-          "level": 0
-        },
         {
           "date": "2025-10-13",
           "count": 0,
@@ -2127,6 +2122,11 @@
           "date": "2026-10-12",
           "count": 0,
           "level": 0
+        },
+        {
+          "date": "2026-10-13",
+          "count": 0,
+          "level": 0
         }
       ]
     ]
@@ -2138,23 +2138,23 @@
       "repo": "ApTx2012",
       "title": "ApTx2012",
       "url": "https://github.com/ApTx2012/ApTx2012",
-      "createdAt": "2026-10-12T05:14:13Z"
+      "createdAt": "2026-10-13T06:12:47Z"
     },
     {
       "id": "mock-1",
       "type": "commit",
-      "repo": "ApTx2012.github.io",
-      "title": "ApTx2012.github.io",
-      "url": "https://github.com/ApTx2012/ApTx2012.github.io",
-      "createdAt": "2026-10-11T08:26:39Z"
+      "repo": "Starlight_Lancher",
+      "title": "基于Axolotl启动器的Starlight专用启动器",
+      "url": "https://github.com/ApTx2012/Starlight_Lancher",
+      "createdAt": "2026-10-12T12:00:35Z"
     },
     {
       "id": "mock-2",
       "type": "commit",
-      "repo": "Starlight_Lancher",
-      "title": "基于Axolotl启动器的Starlight专用启动器",
-      "url": "https://github.com/ApTx2012/Starlight_Lancher",
-      "createdAt": "2026-10-11T07:53:53Z"
+      "repo": "ApTx2012.github.io",
+      "title": "ApTx2012.github.io",
+      "url": "https://github.com/ApTx2012/ApTx2012.github.io",
+      "createdAt": "2026-10-12T08:47:55Z"
     },
     {
       "id": "mock-3",
