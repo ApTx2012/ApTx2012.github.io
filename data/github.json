@@ -10,10 +10,10 @@
     "totalStars": 5,
     "totalForks": 0,
     "totalCommits": 94,
-    "totalPRs": 14,
+    "totalPRs": 16,
     "totalIssues": 1,
     "contributedTo": 10,
-    "generatedAt": "2026-10-13T09:05:26.196Z"
+    "generatedAt": "2026-10-14T07:15:46.679Z"
   },
   "repos": [
     {
@@ -35,7 +35,7 @@
       "forks": 0,
       "language": "TypeScript",
       "languageColor": "#3178c6",
-      "updatedAt": "2026-10-12T08:47:55Z",
+      "updatedAt": "2026-10-13T09:05:31Z",
       "isFork": false
     },
     {
@@ -90,7 +90,7 @@
       "forks": 0,
       "language": null,
       "languageColor": null,
-      "updatedAt": "2026-10-13T06:12:47Z",
+      "updatedAt": "2026-10-14T04:15:15Z",
       "isFork": false
     },
     {
@@ -191,14 +191,9 @@
     }
   ],
   "contributions": {
-    "total": 132,
+    "total": 134,
     "weeks": [
       [
-        {
-          "date": "2025-10-13",
-          "count": 0,
-          "level": 0
-        },
         {
           "date": "2025-10-14",
           "count": 0,
@@ -2125,6 +2120,11 @@
         },
         {
           "date": "2026-10-13",
+          "count": 2,
+          "level": 1
+        },
+        {
+          "date": "2026-10-14",
           "count": 0,
           "level": 0
         }
@@ -2138,23 +2138,23 @@
       "repo": "ApTx2012",
       "title": "ApTx2012",
       "url": "https://github.com/ApTx2012/ApTx2012",
-      "createdAt": "2026-10-13T06:12:47Z"
+      "createdAt": "2026-10-14T04:15:15Z"
     },
     {
       "id": "mock-1",
+      "type": "commit",
+      "repo": "ApTx2012.github.io",
+      "title": "ApTx2012.github.io",
+      "url": "https://github.com/ApTx2012/ApTx2012.github.io",
+      "createdAt": "2026-10-13T09:05:31Z"
+    },
+    {
+      "id": "mock-2",
       "type": "commit",
       "repo": "Starlight_Lancher",
       "title": "基于Axolotl启动器的Starlight专用启动器",
       "url": "https://github.com/ApTx2012/Starlight_Lancher",
       "createdAt": "2026-10-12T12:00:35Z"
-    },
-    {
-      "id": "mock-2",
-      "type": "commit",
-      "repo": "ApTx2012.github.io",
-      "title": "ApTx2012.github.io",
-      "url": "https://github.com/ApTx2012/ApTx2012.github.io",
-      "createdAt": "2026-10-12T08:47:55Z"
     },
     {
       "id": "mock-3",
